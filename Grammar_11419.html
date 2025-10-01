@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>114-1-9英語文法練習-翰林版 - 新生國中特教組</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f3f4f6;
+            --card-bg-color: #ffffff;
+            --text-color: #1f2937;
+            --text-muted-color: #6b7280;
+            --border-color: #e5e7eb;
+            --correct-color: #10b981;
+            --incorrect-color: #ef4444;
+            --highlight-color: #f97316;
+            --structure-bg-color: #e5e7eb;
+            --structure-text-color: #374151;
+
+            /* Default Unit 1 Colors */
+            --accent-color: #4f46e5;
+            --tab-active-bg: #4f46e5;
+            --tab-active-text: #ffffff;
+            --tab-inactive-bg: #e0e7ff;
+            --tab-inactive-text: #4338ca;
+        }
+
+        html.dark {
+            --bg-color: #111827;
+            --card-bg-color: #1f2937;
+            --text-color: #f9fafb;
+            --text-muted-color: #9ca3af;
+            --border-color: #374151;
+            --highlight-color: #fb923c;
+            --structure-bg-color: #374151;
+            --structure-text-color: #d1d5db;
+            
+            /* Default Unit 1 Dark Colors */
+            --accent-color: #6366f1;
+            --tab-active-bg: #6366f1;
+            --tab-inactive-bg: #312e81;
+            --tab-inactive-text: #c7d2fe;
+        }
+        
+        /* Unit 2 Colors */
+        body[data-unit="unit2"] { --accent-color: #16a34a; --tab-active-bg: #16a34a; --tab-inactive-bg: #dcfce7; --tab-inactive-text: #15803d; }
+        html.dark body[data-unit="unit2"] { --accent-color: #22c55e; --tab-active-bg: #22c55e; --tab-inactive-bg: #14532d; --tab-inactive-text: #bbf7d0; }
+
+        /* Unit 3 Colors */
+        body[data-unit="unit3"] { --accent-color: #2563eb; --tab-active-bg: #2563eb; --tab-inactive-bg: #dbeafe; --tab-inactive-text: #1e40af; }
+        html.dark body[data-unit="unit3"] { --accent-color: #3b82f6; --tab-active-bg: #3b82f6; --tab-inactive-bg: #1e3a8a; --tab-inactive-text: #bfdbfe; }
+
+        /* Unit 4 Colors */
+        body[data-unit="unit4"] { --accent-color: #e11d48; --tab-active-bg: #e11d48; --tab-inactive-bg: #ffe4e6; --tab-inactive-text: #be123c; }
+        html.dark body[data-unit="unit4"] { --accent-color: #f43f5e; --tab-active-bg: #f43f5e; --tab-inactive-bg: #881337; --tab-inactive-text: #fecdd3; }
+
+        /* Unit 5 Colors */
+        body[data-unit="unit5"] { --accent-color: #ca8a04; --tab-active-bg: #ca8a04; --tab-inactive-bg: #fefce8; --tab-inactive-text: #a16207; }
+        html.dark body[data-unit="unit5"] { --accent-color: #eab308; --tab-active-bg: #eab308; --tab-inactive-bg: #713f12; --tab-inactive-text: #fef08a; }
+
+        /* Unit 6 Colors */
+        body[data-unit="unit6"] { --accent-color: #0d9488; --tab-active-bg: #0d9488; --tab-inactive-bg: #ccfbf1; --tab-inactive-text: #0f766e; }
+        html.dark body[data-unit="unit6"] { --accent-color: #14b8a6; --tab-active-bg: #14b8a6; --tab-inactive-bg: #134e4a; --tab-inactive-text: #99f6e4; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            touch-action: pan-y;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .card {
+            background-color: var(--card-bg-color);
+            transition: background-color 0.3s;
+        }
+
+        .text-muted { color: var(--text-muted-color); }
+        .text-accent { color: var(--accent-color); transition: color 0.3s; }
+        .border-default { border-color: var(--border-color); }
+        .bg-accent { background-color: var(--accent-color); transition: background-color 0.3s;}
+        .ring-accent { --tw-ring-color: var(--accent-color) }
+
+        .structure-block {
+            background-color: var(--structure-bg-color);
+            color: var(--structure-text-color);
+        }
+
+        .practice-input {
+            background-color: transparent;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-color);
+            transition: border-color 0.3s, color 0.3s;
+        }
+        .practice-input:focus {
+             border-color: var(--accent-color);
+        }
+        .practice-input.correct {
+            border-color: var(--correct-color);
+            color: var(--correct-color);
+        }
+        .practice-input.incorrect {
+            border-color: var(--incorrect-color);
+        }
+        
+        #login-modal {
+            background-color: rgba(0,0,0,0.5);
+            transition: opacity 0.3s;
+        }
+        
+        .explanation-point {
+            background-color: var(--tab-inactive-bg);
+            color: var(--tab-inactive-text);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1.1);
+                box-shadow: 0 0 15px var(--highlight-color);
+            }
+            50% {
+                transform: scale(1.15);
+                box-shadow: 0 0 25px var(--highlight-color);
+            }
+        }
+
+        .button-highlight {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        
+        .unit-tab {
+            background-color: var(--tab-inactive-bg);
+            color: var(--tab-inactive-text);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .unit-tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            font-weight: 700;
+        }
+        .speakable { cursor: pointer; }
+        .speakable:hover { opacity: 0.7; }
+
+        .word-piece {
+            transition: background-color 0.2s, color 0.2s, opacity 0.2s, transform 0.2s;
+        }
+        .word-piece:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: scale(0.95);
+        }
+        
+    </style>
+</head>
+<body data-unit="unit1">
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="card w-full max-w-sm p-8 rounded-2xl shadow-2xl">
+            <h2 class="text-2xl font-bold text-center mb-6">登入以保存進度</h2>
+            <form id="login-form">
+                <input type="text" id="user-id" placeholder="輸入您的 Email 或 LINE ID" class="w-full px-4 py-3 rounded-lg border-default focus:outline-none focus:ring-2 ring-accent" style="background-color: var(--bg-color); color: var(--text-color);" required>
+                <button type="submit" class="w-full mt-6 bg-accent text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition">開始學習</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="w-full max-w-2xl mx-auto p-4 md:p-6 flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="flex items-center justify-between mb-4">
+             <div>
+                <h1 class="text-xl md:text-3xl font-bold">114-1-9英語文法練習-翰林版 - 新生國中特教組</h1>
+                <h2 id="unit-title" class="text-xl font-semibold text-muted">Unit 1</h2>
+            </div>
+            <button id="theme-toggle" class="p-2 rounded-full text-muted hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            </button>
+        </header>
+
+        <!-- Unit Tabs -->
+        <nav id="unit-tabs" class="flex flex-wrap gap-2 mb-6">
+            <!-- Tabs will be generated by JS -->
+        </nav>
+
+        <!-- Slideshow Container -->
+        <main class="flex-grow flex flex-col justify-center">
+            <div id="slideshow-container" class="card rounded-2xl shadow-lg overflow-hidden relative" style="min-height: 550px;">
+                <div id="slide-content" class="p-6 md:p-8 flex flex-col justify-between h-full">
+                    <!-- Dynamic content goes here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Navigation -->
+        <nav id="main-nav" class="flex items-center justify-between mt-6">
+            <button id="prev-btn" class="card font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <div id="slide-counter" class="text-lg font-medium text-muted"></div>
+            <button id="next-btn" class="card font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                <span id="next-btn-text">下一個</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+            </button>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="text-center mt-8 py-4 border-t border-default">
+            <div id="usage-stats" class="text-muted text-sm mb-2"></div>
+        </footer>
+    </div>
+
+    <script>
+        const allUnitsData = {
+            'unit1': {
+                grammar: [
+                    { 
+                        title: '現在完成式 - 表達經驗', 
+                        explanation: ['常搭配的副詞(片語)有:ever(曾經)、never(從未)、before(以前)、數字/數量形容詞+ time(s)', 'Yes/No問句中常加入ever 來強調語氣, 表「曾經」。需放在過去分詞之前。', 'before 以及經驗次數(once、twice、three times...) 需放在句尾。', 'never 則使用於否定句,表示「從未」。需放在助動詞與過去分詞之間。'], 
+                        structure: '主詞 + have/has + (never/ever) + p.p. ... (before/once...)', 
+                        examples: [
+                            {en:'Have you ever been to Korea?', zh:'你有去過韓國嗎?'},
+                            {en:'Yes, I have. I have been there once.', zh:'是的,我有。我有去過一次。'},
+                            {en:"I have never been there before.", zh:"我以前沒有去過韓國。"},
+                            {en:"Has Kevin gone to Turkey? (He is still there.)", zh:"Kevin 去土耳其了嗎？(人還在那)"},
+                            {en:"He has been to Turkey. (He has returned.)", zh:"他曾經去過土耳其。(人已回來)"}
+                        ], 
+                        practices: [
+                            { question: 'A: _______ you ever been to Turkey? B: Yes, I have. I have been there two times.', answer: 'Have' },
+                            { question: 'A: Has Tina tried to lose weight? B: No, she hasn’t. She has _______ tried to do it.', answer: 'never' },
+                            { question: 'A: _______ the students ever cooked at school? B: Yes, they have. They’ve cooked many times.', answer: 'Have' }
+                        ]
+                    },
+                    { 
+                        title: '現在完成式 - 持續動作/狀態', 
+                        explanation: ['詢問「某事從過去到現在已持續多久」會用 how long 開頭。', '答句使用 for + 一段時間 或 since + 過去時間點。'], 
+                        structure: 'How long + have/has + S + p.p...? / S + have/has + p.p... + for/since...', 
+                        examples: [
+                            {en:'How long have you learned English?', zh:'你學英文多久了?'},
+                            {en:'I have learned English for ten years.', zh:'我學英文10年了。'},
+                            {en:'I have kept this cat since 2017.', zh:'我從2017年養到現在。'}
+                        ], 
+                        practices: [
+                            { question: 'A: _______ long has Oscar played the mobile game? B: He has played it for five hours.', answer: 'How' },
+                            { question: 'A: How long have you kept this cat? B: I have kept this cat _______ 2017.', answer: 'since' },
+                            { question: 'He has taught English _______ he was a college student.', answer: 'since' }
+                        ]
+                    },
+                    { 
+                        title: '現在完成式 - 完成動作', 
+                        explanation: ['常搭配的副詞有 already(已經)、yet(尚未)、just(剛才)。', 'already/just 用於肯定句，放在助動詞後。', 'yet 用於否定句和疑問句，放在句尾。'], 
+                        structure: "S + have/has + (just/already) + p.p. / S + hasn't/haven't + p.p. ... yet?", 
+                        examples: [
+                            {en:'Has Sean had lunch yet?', zh:'Sean 吃過午餐了嗎?'},
+                            {en:'Yes, he has already had it.', zh:'是的,他已經吃過午餐了。'},
+                            {en:"No, he hasn't had lunch yet.", zh:"不,他尚未吃過午餐。"},
+                            {en:"They've just talked on the phone.", zh:"他們剛剛才通過電話。"}
+                        ], 
+                        practices: [
+                            { question: 'A: Have you finished your homework _______? B: No, I haven’t finished it yet.', answer: 'yet' },
+                            { question: 'My sister has _______ got home.', answer: 'already' },
+                            { question: 'A: _______ Hank found his phone yet? B: Yes, he has already found it.', answer: 'Has' }
+                        ]
+                    },
+                    { 
+                        title: '現在完成式 - 附加問句', 
+                        explanation: ['主要子句為肯定，附加問句用否定 haven\'t/hasn\'t。', '主要子句為否定，附加問句用肯定 have/has。'], 
+                        structure: "S + have/has + p.p..., haven't/hasn't + pronoun? / S + haven't/hasn't + p.p..., have/has + pronoun?", 
+                        examples: [
+                            {en:"Dora has finished her homework, hasn't she?", zh:"Dora 已經完成她的作業了,不是嗎?"},
+                            {en:"You haven't seen my brother for a long time, have you?", zh:"你很久沒見到我哥哥了,對吧?"}
+                        ], 
+                        practices: [
+                            { question: "Steve has bought a house, _______ he?", answer: "hasn't" },
+                            { question: "They haven't eaten dinner, _______ they?", answer: "have" }
+                        ]
+                    }
+                ],
+                puzzles: [
+                    { jumbled: ['Have', 'you', 'ever', 'been', 'to', 'Korea', '?'], correct: 'Have you ever been to Korea?', zh: '你曾經去過韓國嗎？' },
+                    { jumbled: ['I', 'have', 'learned', 'English', 'for', 'ten', 'years', '.'], correct: 'I have learned English for ten years.', zh: '我學英文已經十年了。' },
+                    { jumbled: ['My', 'sister', 'has', 'already', 'got', 'home', '.'], correct: 'My sister has already got home.', zh: '我姊姊已經到家了。' },
+                    { jumbled: ['Has', 'Kevin', 'gone', 'to', 'Turkey', '?'], correct: 'Has Kevin gone to Turkey?', zh: 'Kevin 去土耳其了嗎？' },
+                    { jumbled: ['Dora', 'has', 'finished', 'her', 'homework', ',', "hasn't", 'she', '?'], correct: "Dora has finished her homework, hasn't she?", zh: 'Dora 已經完成她的作業了，不是嗎？' }
+                ]
+            },
+            'unit2': {
+                grammar: [
+                    { 
+                        title: '分詞當形容詞 (V-ing/p.p.)', 
+                        explanation: ['現在分詞 V-ing 表「令人感到...的」，修飾人、事、物。', '過去分詞 p.p. 表「(人)對...感到...的」，表示感受。', '注意搭配的介系詞，如 interested in, excited about, bored with, surprised at。'], 
+                        structure: '事物 + is/are + V-ing... / 人 + is/are + p.p. + 介系詞...', 
+                        examples: [
+                            {en:'The movie is interesting to me.', zh:'這電影令我感到有趣。'},
+                            {en:'I am interested in the movie.', zh:'我對這電影感到有興趣。'},
+                            {en:'His idea is surprising to me.', zh:'他的想法令我感到驚訝。'},
+                            {en:'I am surprised at his idea.', zh:'我對他的想法感到驚訝。'}
+                        ], 
+                        practices: [
+                            { question: 'The new game is _______ to the boys.', answer: 'exciting' },
+                            { question: 'The boys are _______ about the new game.', answer: 'excited' },
+                            { question: 'Watching news is _______ to us.', answer: 'boring' },
+                            { question: 'We are _______ with watching news.', answer: 'bored' }
+                        ]
+                    },
+                    { 
+                        title: 'so... that... (如此...以致於...)', 
+                        explanation: ['用來表示「因某人事物的某項特質,而導致某個結果」。'], 
+                        structure: '主詞 + V + so + 形容詞/副詞 + that + 結果子句', 
+                        examples: [
+                            {en:"The tea is so hot that Kevin can't drink it right now.", zh:"這茶太燙了,以致於Kevin無法立刻將它喝掉。"},
+                            {en:"Lena spoke so fast that no one understood her.", zh:"Lena 講得太快,以致於沒人理解她。"}
+                        ], 
+                        practices: [
+                            { question: 'Paul was _______ hungry that he ate the whole pizza.', answer: 'so' },
+                            { question: 'The bag is so heavy _______ I can’t lift it.', answer: 'that' },
+                            { question: 'Kelly got up so _______ that she didn’t come to school on time.', answer: 'late' }
+                        ]
+                    },
+                    { 
+                        title: 'enough to... / too to...', 
+                        explanation: ['enough...to... 意指「夠……得以…」。', 'too...to... 用來表示「太……而不能……」。', 'too...to... 的句型中，動詞前是 for + 人。'], 
+                        structure: 'adj. + enough + to V... / too + adj. + (for sb.) + to V...', 
+                        examples: [
+                            {en:'My sister is old enough to vote.', zh:'我姐姐夠年長,可以去投票。'},
+                            {en:"The boy is too young to ride a motorcycle.", zh:"這男孩太年輕以致於無法騎機車。"},
+                            {en:"That kite is flying too high for me to see clearly.", zh:"那個風箏飛得太高我看不清楚。"}
+                        ], 
+                        practices: [
+                            { question: 'Joe is smart _______ to solve the problem.', answer: 'enough' },
+                            { question: 'Matt is _______ excited to fall asleep.', answer: 'too' },
+                            { question: 'The jacket is too big _______ the little girl to wear.', answer: 'for' }
+                        ]
+                    }
+                ],
+                puzzles: [
+                    { jumbled: ['The', 'movie', 'is', 'interesting', 'to', 'me', '.'], correct: 'The movie is interesting to me.', zh: '這電影令我感到有趣。' },
+                    { jumbled: ['Paul', 'was', 'so', 'hungry', 'that', 'he', 'ate', 'the', 'pizza', '.'], correct: 'Paul was so hungry that he ate the pizza.', zh: 'Paul 太餓了以致於他吃了整個披薩。' },
+                    { jumbled: ['My', 'sister', 'is', 'old', 'enough', 'to', 'vote', '.'], correct: 'My sister is old enough to vote.', zh: '我姐姐夠大可以投票了。' },
+                    { jumbled: ['The', 'boy', 'is', 'too', 'young', 'to', 'ride', 'a', 'motorcycle', '.'], correct: 'The boy is too young to ride a motorcycle.', zh: '這個男孩太年輕無法騎摩托車。' }
+                ]
+            },
+            'unit3': {
+                grammar: [
+                    { 
+                        title: '被動語態 (be + p.p.)', 
+                        explanation: ['表達「某事物被...」。', '將主動句的「受詞」移到句首當「主詞」，動詞改為「be動詞 + 過去分詞(p.p.)」。', '原主動句的「主詞」用 by 連接放在句尾，若不重要或不明確則可省略。'], 
+                        structure: '主詞(受詞) + is/am/are/was/were + p.p. + (by + 原主詞)', 
+                        examples: [
+                            {en:'The man ate the cookies. (Active)', zh:'(主動) 那個男人吃了餅乾。'},
+                            {en:'The cookies were eaten by the man. (Passive)', zh:'(被動) 餅乾被那個男人吃了。'},
+                            {en:'English is spoken in the USA.', zh:'在美國，英文被使用。(by people省略)'}
+                        ], 
+                        practices: [
+                            { question: 'These animals _______ fed by Mr. Lin every day.', answer: 'are' },
+                            { question: 'The library is _______ every Monday.', answer: 'closed' },
+                            { question: 'The cake _______ made by my brother yesterday.', answer: 'was' }
+                        ]
+                    },
+                    { 
+                        title: '情態助動詞的被動語態', 
+                        explanation: ['情態助動詞 (should, can, will, must...) 後面接 be + p.p.。'], 
+                        structure: '主詞 + 情態助動詞 + be + p.p. ...', 
+                        examples: [
+                            {en:'You should do the work. (Active)', zh:'(主動) 你應該做這工作。'},
+                            {en:'The work should be done by you. (Passive)', zh:'(被動) 這工作應該被你做。'},
+                            {en:'Pets must be kept outside the restaurant.', zh:'寵物必須要被放置在餐廳外。'}
+                        ], 
+                        practices: [
+                            { question: 'This show can _______ seen at this theater now.', answer: 'be' },
+                            { question: 'The restaurant _______ be opened next Monday.', answer: 'will' }
+                        ]
+                    },
+                    { 
+                        title: '其他時態的被動語態', 
+                        explanation: ['現在完成式: has/have + been + p.p.', '現在進行式: is/are + being + p.p.', '未來式: is/are going to + be + p.p.'], 
+                        structure: '主詞 + has/have been / is being / is going to be + p.p. ...', 
+                        examples: [
+                            {en:'The car has been used by Kara for ten years.', zh:'這車被 Kara 使用已經十年了。'},
+                            {en:'A bird is being watched by Andy.', zh:'一隻鳥正在被 Andy 看。'},
+                            {en:'A novel is going to be bought by Rose.', zh:'一本小說將會被 Rose 買。'}
+                        ], 
+                        practices: [
+                            { question: 'Those shoes _______ been washed by Lily.', answer: 'have' },
+                            { question: 'The flower has _______ planted by our teacher since 2019.', answer: 'been' },
+                            { question: 'The kite is _______ flown by Robert.', answer: 'being' }
+                        ]
+                    }
+                ],
+                puzzles: [
+                    { jumbled: ['The', 'cookies', 'were', 'eaten', 'by', 'the', 'man', '.'], correct: 'The cookies were eaten by the man.', zh: '餅乾被那個男人吃了。' },
+                    { jumbled: ['The', 'work', 'should', 'be', 'done', 'by', 'you', '.'], correct: 'The work should be done by you.', zh: '這工作應該由你來完成。' },
+                    { jumbled: ['Those', 'shoes', 'have', 'been', 'washed', 'by', 'Lily', '.'], correct: 'Those shoes have been washed by Lily.', zh: '那些鞋子已經被 Lily 洗好了。' },
+                    { jumbled: ['English', 'is', 'spoken', 'in', 'the', 'USA', '.'], correct: 'English is spoken in the USA.', zh: '在美國人們說英語。' }
+                ]
+            },
+            'unit4': {
+                grammar: [
+                    { 
+                        title: 'wh-名詞子句 (間接問句)', 
+                        explanation: ['由 wh-疑問詞引導的子句，作為主要子句的受詞。', '子句內的語序為「wh-疑問詞 + 主詞 + 動詞」。', 'be動詞或助動詞要移到主詞後面。', 'do/does/did 要省略，並改變主要動詞型態。'], 
+                        structure: '主要子句 + wh-word + S + V...', 
+                        examples: [
+                            {en:"I don’t know when his birthday is.", zh:"我不知道他的生日是何時。"},
+                            {en:"Please tell me where the dog comes from.", zh:"請告訴我這隻狗從哪裡來。"},
+                            {en:'We are not sure when the bus will come.', zh:'我們不確定公車何時會來。'}
+                        ], 
+                        practices: [
+                            { question: "I’m not sure where Emily _______.", answer: 'is' },
+                            { question: 'Can you tell me what Tom _______ looking for?', answer: 'is' },
+                            { question: 'Zac wants to know where Ela _______.', answer: 'lives' },
+                            { question: "Do you know why Harry _______ show up at the party?", answer: "didn't" }
+                        ]
+                    },
+                    { 
+                        title: 'wh-不定詞片語', 
+                        explanation: ['當名詞子句的主詞與主要子句的主詞相同時，可簡化為「疑問詞 + to V」。', 'why 不可用於此句型。'], 
+                        structure: '主要子句 + wh-word + to V...', 
+                        examples: [
+                            {en:"I don’t know what to do.", zh:"我不知道該怎麼辦。"},
+                            {en:"Nolan doesn’t know when to leave here.", zh:"Nolan 不知道他何時可以離開這裡。"}
+                        ], 
+                        practices: [
+                            { question: 'She has no idea what _______ for dinner.', answer: 'to eat' },
+                            { question: 'Rose hasn’t decided who _______ to the game.', answer: 'to invite' },
+                            { question: "I haven’t decided where _______.", answer: 'to go' }
+                        ]
+                    },
+                    { 
+                        title: 'whether / if 名詞子句', 
+                        explanation: ['將 Yes/No 問句改為間接問句時，需加上 whether 或 if (是否)。', '句尾可選擇性地加上 or not。'], 
+                        structure: '主要子句 + whether/if + S + V... (or not)', 
+                        examples: [
+                            {en:"Gina isn’t sure whether the movie is scary or not.", zh:"Gina不確定這部電影是否很恐怖。"},
+                            {en:"Tell me whether Judy mopped the floor or not.", zh:"請告訴我 Judy 是否拖好地了。"},
+                            {en:"Can you tell me whether Uncle Tom will visit us?", zh:"你可以告訴我 Tom 叔叔將會來拜訪我們嗎?"}
+                        ], 
+                        practices: [
+                            { question: "I’d like to know _______ you are from the UK.", answer: 'whether' },
+                            { question: 'He is wondering _______ Lily liked the game.', answer: 'if' },
+                            { question: "William wants to know _______ you have met Ted.", answer: 'whether' }
+                        ]
+                    }
+                ],
+                puzzles: [
+                    { jumbled: ['I', "don't", 'know', 'who', 'these', 'people', 'are', '.'], correct: 'I don\'t know who these people are.', zh: '我不知道這些人是誰。' },
+                    { jumbled: ['Tell', 'me', 'what', 'to', 'do', '.'], correct: 'Tell me what to do.', zh: '告訴我該怎麼做。' },
+                    { jumbled: ['Do', 'you', 'know', 'if', 'he', 'will', 'come', '?'], correct: 'Do you know if he will come?', zh: '你知道他是否會來嗎？' },
+                    { jumbled: ["I'm", 'not', 'sure', 'where', 'Emily', 'is', '.'], correct: "I'm not sure where Emily is.", zh: '我不確定 Emily 在哪裡。' }
+                ]
+            },
+            'unit5': {
+                grammar: [
+                    { 
+                        title: '介系詞片語後位修飾', 
+                        explanation: ['介系詞片語當「形容詞」，要放在所修飾的名詞後面。', '常見用法: in + 衣物/顏色, with + 身體部位/配件。'], 
+                        structure: '名詞 + 介系詞片語 (in/with/at/under...)', 
+                        examples: [
+                            {en:'The man in a black jacket comes from Thailand.', zh:'那個穿著黑色夾克的男子來自泰國。'},
+                            {en:'I met the woman with short hair before.', zh:'我之前遇過這位有著短髮的女人。'},
+                            {en:'The students in the classroom are having a big test.', zh:'這些在教室的學生正在考大考。'}
+                        ], 
+                        practices: [
+                            { question: 'The little girl _______ red went hiking with us.', answer: 'in' },
+                            { question: 'Have you read the newspaper _______ a lot of pictures?', answer: 'with' },
+                            { question: 'The man _______ an umbrella wants to see you.', answer: 'with' }
+                        ]
+                    },
+                    { 
+                        title: '關係子句 (關代當主詞)', 
+                        explanation: ['關係代名詞(who/which/that)引導的子句，用來修飾前面的名詞(先行詞)。', '關代在子句中當主詞，後面直接接動詞。', '先行詞是「人」用 who/that，是「物」用 which/that。主格關代不可省略。'], 
+                        structure: '先行詞 + who/which/that + V...', 
+                        examples: [
+                            {en:'He likes the girl who has long hair.', zh:'他喜歡那個有一頭長髮的女孩。'},
+                            {en:'The students who like to play basketball are having a game.', zh:'那些喜歡打籃球的學生正在打比賽。'},
+                            {en:'The car which was bought by Mark is new.', zh:'那部被 Mark 買下的車子很新。'}
+                        ], 
+                        practices: [
+                            { question: 'Jack doesn’t know the boys _______ are fighting.', answer: 'who' },
+                            { question: 'We know the girl _______ is wearing a blue jacket.', answer: 'that' },
+                            { question: 'Sharon wants the cat _______ has a short tail.', answer: 'which' }
+                        ]
+                    }
+                ],
+                puzzles: [
+                    { jumbled: ['The', 'man', 'in', 'a', 'black', 'jacket', 'is', 'my', 'uncle', '.'], correct: 'The man in a black jacket is my uncle.', zh: '穿黑色夾克的那個男人是我叔叔。' },
+                    { jumbled: ['The', 'woman', 'with', 'long', 'hair', 'is', 'a', 'singer', '.'], correct: 'The woman with long hair is a singer.', zh: '那個有長髮的女人是一位歌手。' },
+                    { jumbled: ['He', 'likes', 'the', 'girl', 'who', 'has', 'long', 'hair', '.'], correct: 'He likes the girl who has long hair.', zh: '他喜歡那個有長髮的女孩。' },
+                    { jumbled: ['The', 'car', 'which', 'is', 'new', 'was', 'bought', 'by', 'Mark', '.'], correct: 'The car which is new was bought by Mark.', zh: '那部新車是 Mark 買的。' }
+                ]
+            },
+            'unit6': {
+                grammar: [
+                    { 
+                        title: '關係子句 (關代當受詞)', 
+                        explanation: ['關代在子句中當受詞，後面接「主詞 + 動詞」。', '先行詞是「人」用 who/that，是「物」用 which/that。', '當受詞的關代經常可以省略。'], 
+                        structure: '先行詞 + (who/which/that) + S + V...', 
+                        examples: [
+                            {en:'He likes the girl (who) he is talking to.', zh:'他喜歡那個正在跟他聊天的女孩。'},
+                            {en:'The car (which) Nina is driving is expensive.', zh:'那部 Nina 正在開的車子很昂貴。'},
+                            {en:'The song (that) we are listening to makes us happy.', zh:'這首我們正在聽的歌曲讓我們很開心。'}
+                        ], 
+                        practices: [
+                            { question: 'The girl (_______) I know can speak English well.', answer: 'who' },
+                            { question: 'She is a PE teacher (_______) everyone likes.', answer: 'that' },
+                            { question: 'Yumi is reading the postcard (_______) her boyfriend wrote.', answer: 'which' }
+                        ]
+                    },
+                    { 
+                        title: '只能用 that 的關代', 
+                        explanation: ['先行詞是「人+物」。', '先行詞前有「最高級」或「序數」。', '先行詞前有 the only, the very, all, any, no 等字。', '為避免重複 who/which。'], 
+                        structure: '先行詞 + that + ...', 
+                        examples: [
+                            {en:'I need to help the old man and the dog that are crossing the road.', zh:'我需要去幫助那個正在過馬路的老人與狗。'},
+                            {en:'She is the prettiest girl that I have ever seen.', zh:'她是我所看過最漂亮的女孩。'},
+                            {en:'Andy is the first man that came to the office.', zh:'Andy 是第一個進到辦公室的人。'}
+                        ], 
+                        practices: [
+                            { question: 'This is the biggest pumpkin _______ the farmer has ever grown.', answer: 'that' },
+                            { question: 'Ben was the first student _______ came to school this morning.', answer: 'that' },
+                            { question: 'Stacy is the last woman _______ I want to talk to.', answer: 'that' }
+                        ]
+                    }
+                ],
+                puzzles: [
+                    { jumbled: ['He', 'likes', 'the', 'girl', 'he', 'is', 'talking', 'to', '.'], correct: 'He likes the girl he is talking to.', zh: '他喜歡他正在對話的那個女孩。' },
+                    { jumbled: ['The', 'car', 'Nina', 'is', 'driving', 'is', 'expensive', '.'], correct: 'The car Nina is driving is expensive.', zh: 'Nina 開的那輛車很貴。' },
+                    { jumbled: ['She', 'is', 'the', 'prettiest', 'girl', 'that', 'I', 'have', 'ever', 'seen', '.'], correct: 'She is the prettiest girl that I have ever seen.', zh: '她是我見過最漂亮的女孩。' },
+                    { jumbled: ['All', 'that', 'you', 'have', 'to', 'do', 'is', 'leave', '.'], correct: 'All that you have to do is leave.', zh: '你唯一需要做的就是離開。' }
+                ]
+            }
+        };
+
+        let currentUnit = 'unit1';
+        let currentSlide = 0;
+        let currentPuzzle = 0;
+        let viewMode = 'grammar'; // 'grammar' or 'puzzle'
+        let userData = {};
+        let isSpeaking = false;
+        let currentPuzzleAnswer = [];
+        
+        const slideContentEl = document.getElementById('slide-content');
+        const slideCounterEl = document.getElementById('slide-counter');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const nextBtnText = document.getElementById('next-btn-text');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIconDark = document.getElementById('theme-icon-dark');
+        const themeIconLight = document.getElementById('theme-icon-light');
+        const loginModal = document.getElementById('login-modal');
+        const loginForm = document.getElementById('login-form');
+        const userIdInput = document.getElementById('user-id');
+        const usageStatsEl = document.getElementById('usage-stats');
+        const unitTabsEl = document.getElementById('unit-tabs');
+        const unitTitleEl = document.getElementById('unit-title');
+
+        // --- Core Functions ---
+        function render() {
+            if (viewMode === 'grammar') {
+                renderGrammarSlide();
+            } else {
+                renderPuzzleView();
+            }
+            updateNav();
+            saveProgress();
+        }
+
+        function renderGrammarSlide() {
+            const unitData = allUnitsData[currentUnit];
+            if (!unitData || !unitData.grammar || !unitData.grammar[currentSlide]) {
+                console.error(`Data not found for unit: ${currentUnit}, slide: ${currentSlide}`);
+                slideContentEl.innerHTML = `<p class="text-red-500">無法載入此頁面內容。</p>`;
+                return;
+            }
+            const slide = unitData.grammar[currentSlide];
+            slideContentEl.innerHTML = `
+                <div class="flex-grow overflow-y-auto">
+                    <div class="flex items-center justify-between mb-4 speakable">
+                        <h3 class="text-3xl md:text-4xl font-bold text-accent">${slide.title}</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-muted" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                        ${slide.explanation.map(exp => `<p class="explanation-point text-md font-medium px-3 py-1 rounded-md speakable">${exp}</p>`).join('')}
+                    </div>
+                    <p class="text-lg font-mono p-3 rounded-lg structure-block speakable">${slide.structure}</p>
+                </div>
+                <div class="mt-4 border-t border-default pt-4">
+                     <div class="mb-4 space-y-2">
+                        <p class="text-md font-semibold text-muted">例句：</p>
+                        ${slide.examples.map(ex => `<div class="speakable"><p class="text-lg">${ex.en}</p><p class="text-md text-muted">${ex.zh}</p></div>`).join('')}
+                    </div>
+                    <div class="practice-section mt-4">
+                        <p class="text-md font-semibold text-muted mb-2 speakable">練習：</p>
+                        <div class="space-y-2">
+                        ${slide.practices.map((p, index) => `
+                            <p class="text-lg">${p.question.replace(/_{2,}/, `<input type="text" data-index="${index}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="practice-input w-24 text-center text-lg font-bold p-0 m-0 bg-transparent focus:outline-none">`)}</p>
+                        `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.querySelectorAll('.practice-input').forEach(input => {
+                input.addEventListener('input', handleTyping);
+            });
+            const firstInput = document.querySelector('.practice-input');
+            if(firstInput) firstInput.focus();
+        }
+        
+        function renderPuzzleView() {
+            const puzzle = allUnitsData[currentUnit].puzzles[currentPuzzle];
+            currentPuzzleAnswer = [];
+            slideContentEl.innerHTML = `
+                <div class="flex flex-col h-full">
+                    <h3 class="text-2xl font-bold text-accent mb-2 speakable">文法拼圖練習</h3>
+                    <p class="text-lg font-semibold text-muted mb-4 speakable">${puzzle.zh}</p>
+                    
+                    <div id="answer-area" class="w-full min-h-[60px] p-3 rounded-lg border-2 border-dashed border-default mb-4 flex items-center text-xl font-bold flex-wrap gap-2"></div>
+                    
+                    <div class="flex items-center mb-6 gap-4">
+                         <button id="back-to-grammar-btn" class="text-sm text-muted hover:text-accent font-semibold py-2 px-3 rounded-md bg-gray-100 dark:bg-gray-700">返回文法</button>
+                         <button id="clear-answer-btn" class="text-sm text-muted hover:text-accent font-semibold py-2 px-3 rounded-md bg-gray-100 dark:bg-gray-700">清除</button>
+                         <p id="feedback-message" class="ml-4 font-semibold"></p>
+                    </div>
+
+                    <div id="word-pool" class="flex flex-wrap gap-2 mb-auto">
+                       ${[...puzzle.jumbled].sort(() => Math.random() - 0.5).map(word => `<button class="word-piece bg-accent text-white font-bold py-2 px-4 rounded-lg hover:opacity-80 active:scale-95">${word}</button>`).join('')}
+                    </div>
+                    
+                    <div class="flex items-center justify-between mt-6">
+                       <button id="check-answer-btn" class="bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition">檢查答案</button>
+                        <div class="flex items-center gap-4">
+                             <button id="prev-puzzle-btn" class="text-muted hover:text-accent disabled:opacity-30"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
+                             <p class="font-bold text-lg">${currentPuzzle + 1} / ${allUnitsData[currentUnit].puzzles.length}</p>
+                             <button id="next-puzzle-btn" class="text-muted hover:text-accent disabled:opacity-30"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            attachPuzzleListeners();
+        }
+
+        function updateNav() {
+            const grammarSlides = allUnitsData[currentUnit].grammar;
+            const puzzleSlides = allUnitsData[currentUnit].puzzles;
+
+            if (viewMode === 'grammar') {
+                slideCounterEl.textContent = `文法 ${currentSlide + 1} / ${grammarSlides.length}`;
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = false;
+                if (currentSlide === grammarSlides.length - 1) {
+                    nextBtnText.textContent = '開始練習';
+                } else {
+                    nextBtnText.textContent = '下一個';
+                }
+            } else { // Puzzle mode navigation is handled by its own buttons
+                slideCounterEl.textContent = `拼圖 ${currentPuzzle + 1} / ${puzzleSlides.length}`;
+                prevBtn.disabled = true; // Main nav disabled in puzzle
+                nextBtn.disabled = true; // Main nav disabled in puzzle
+            }
+             document.getElementById('main-nav').style.display = viewMode === 'grammar' ? 'flex' : 'none';
+        }
+
+        function navigate(direction) {
+            if (viewMode === 'grammar') {
+                const isLastGrammarSlide = currentSlide === allUnitsData[currentUnit].grammar.length - 1;
+                if (direction === 1 && isLastGrammarSlide) {
+                    viewMode = 'puzzle';
+                    currentPuzzle = 0;
+                } else {
+                    currentSlide = Math.max(0, Math.min(currentSlide + direction, allUnitsData[currentUnit].grammar.length - 1));
+                }
+            }
+            render();
+        }
+        
+        function switchUnit(unitId) {
+            if (unitId === currentUnit) return;
+            currentUnit = unitId;
+            document.body.dataset.unit = currentUnit;
+            unitTitleEl.textContent = `Unit ${unitId.replace('unit','')}`;
+            
+            if (userData.progress && !userData.progress[currentUnit]) {
+                userData.progress[currentUnit] = { lastGrammarIndex: 0, lastPuzzleIndex: 0, usageCount: 0 };
+            }
+
+            if(userData.progress && userData.progress[currentUnit]) {
+                userData.progress[currentUnit].usageCount++;
+            }
+
+            currentSlide = userData.progress[currentUnit]?.lastGrammarIndex || 0;
+            currentPuzzle = userData.progress[currentUnit]?.lastPuzzleIndex || 0;
+            viewMode = 'grammar';
+            
+            render();
+            updateActiveTab();
+        }
+
+        function updateActiveTab() {
+            document.querySelectorAll('.unit-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.unit === currentUnit);
+            });
+        }
+
+        // --- Feature Functions ---
+
+        function speakText(text) {
+            if (isSpeaking || !text) return;
+            isSpeaking = true;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.8; // Adjust speech rate
+                utterance.lang = 'en-US';
+                if (text.match(/[\u3400-\u9FBF]/)) { // Check for CJK characters
+                    utterance.lang = 'zh-TW';
+                }
+                utterance.onend = () => { isSpeaking = false; };
+                utterance.onerror = (e) => { 
+                    console.error('SpeechSynthesis Error:', e);
+                    isSpeaking = false; 
+                };
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('抱歉，您的瀏覽器不支援語音合成功能。');
+                isSpeaking = false;
+            }
+        }
+        
+        function handleTyping(e) {
+            const input = e.target;
+            const index = parseInt(input.dataset.index, 10);
+            const correctWord = allUnitsData[currentUnit].grammar[currentSlide].practices[index].answer.toLowerCase();
+            const typedWord = input.value.trim().toLowerCase();
+
+            if (typedWord === correctWord) {
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+                input.disabled = true;
+                checkAllPracticesComplete();
+            } else if (correctWord.startsWith(typedWord)) {
+                 input.classList.remove('incorrect');
+                 input.classList.remove('correct');
+            } else {
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+            }
+        }
+
+        function checkAllPracticesComplete() {
+            const allInputs = document.querySelectorAll('.practice-input');
+            const allCorrect = [...allInputs].every(input => input.classList.contains('correct'));
+            if (allCorrect) {
+                nextBtn.classList.add('button-highlight');
+            }
+        }
+
+        function attachPuzzleListeners() {
+            document.querySelectorAll('.word-piece').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentPuzzleAnswer.push(btn.textContent);
+                    document.getElementById('answer-area').textContent = currentPuzzleAnswer.join(' ');
+                    btn.disabled = true;
+                });
+            });
+            document.getElementById('clear-answer-btn').addEventListener('click', () => {
+                currentPuzzleAnswer = [];
+                document.getElementById('answer-area').textContent = '';
+                document.querySelectorAll('.word-piece').forEach(btn => btn.disabled = false);
+                document.getElementById('feedback-message').textContent = '';
+            });
+             document.getElementById('back-to-grammar-btn').addEventListener('click', () => {
+                viewMode = 'grammar';
+                render();
+            });
+            document.getElementById('check-answer-btn').addEventListener('click', () => {
+                const answerText = currentPuzzleAnswer.join(' ').replace(/\s+([,.?])/g, '$1');
+                const correct = allUnitsData[currentUnit].puzzles[currentPuzzle].correct;
+                const feedback = document.getElementById('feedback-message');
+                if (answerText === correct) {
+                    feedback.textContent = '正確！';
+                    feedback.style.color = 'var(--correct-color)';
+                    speakText(answerText);
+                } else {
+                    feedback.textContent = '再試一次！';
+                    feedback.style.color = 'var(--incorrect-color)';
+                    speakText('Try again.');
+                }
+            });
+
+            document.getElementById('prev-puzzle-btn').addEventListener('click', () => {
+                if (currentPuzzle > 0) {
+                    currentPuzzle--;
+                    renderPuzzleView();
+                    updateNav();
+                }
+            });
+             document.getElementById('next-puzzle-btn').addEventListener('click', () => {
+                if (currentPuzzle < allUnitsData[currentUnit].puzzles.length - 1) {
+                    currentPuzzle++;
+                    renderPuzzleView();
+                    updateNav();
+                }
+            });
+            document.getElementById('prev-puzzle-btn').disabled = currentPuzzle === 0;
+            document.getElementById('next-puzzle-btn').disabled = currentPuzzle === allUnitsData[currentUnit].puzzles.length - 1;
+        }
+        
+        // --- Theme Management ---
+        function applyTheme(theme) {
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            themeIconLight.classList.toggle('hidden', theme !== 'dark');
+            themeIconDark.classList.toggle('hidden', theme === 'dark');
+        }
+
+        function toggleTheme() {
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            applyTheme(newTheme);
+            if (userData.id) {
+                userData.theme = newTheme;
+                saveUserData();
+            }
+        }
+
+        // --- User Data & History ---
+        function loadUserData() {
+            try {
+                const savedData = localStorage.getItem('engGrammarAppUserDataV3');
+                if (savedData) {
+                    userData = JSON.parse(savedData);
+                    currentUnit = userData.lastUnit || 'unit1';
+                    return true;
+                }
+            } catch (e) {
+                console.error("Failed to load user data:", e);
+                localStorage.removeItem('engGrammarAppUserDataV3');
+            }
+            return false;
+        }
+
+        function saveUserData() {
+             try {
+                userData.lastUnit = currentUnit;
+                localStorage.setItem('engGrammarAppUserDataV3', JSON.stringify(userData));
+            } catch (e) {
+                 console.error("Failed to save user data:", e);
+            }
+        }
+
+        function initUser() {
+            if (loadUserData()) {
+                if (!userData.progress) userData.progress = {};
+                if (!userData.progress[currentUnit]) {
+                    userData.progress[currentUnit] = { lastGrammarIndex: 0, lastPuzzleIndex: 0, usageCount: 0 };
+                }
+                userData.progress[currentUnit].usageCount++;
+                currentSlide = userData.progress[currentUnit].lastGrammarIndex || 0;
+                currentPuzzle = userData.progress[currentUnit].lastPuzzleIndex || 0;
+                loginModal.classList.add('hidden');
+                mainInit();
+            } else {
+                loginModal.classList.remove('hidden');
+                applyTheme('light');
+            }
+        }
+
+        function saveProgress() {
+            if (userData.progress && userData.progress[currentUnit]) {
+                if(viewMode === 'grammar') {
+                    userData.progress[currentUnit].lastGrammarIndex = currentSlide;
+                } else {
+                    userData.progress[currentUnit].lastPuzzleIndex = currentPuzzle;
+                }
+                saveUserData();
+                updateUsageStats();
+            }
+        }
+
+        function updateUsageStats() {
+            if (userData.progress && userData.progress[currentUnit]) {
+                const grammarSlides = allUnitsData[currentUnit].grammar;
+                const totalProgress = `Unit ${currentUnit.replace('unit','')} - ${currentSlide + 1} / ${grammarSlides.length}`;
+                const usageCount = `本單元使用: ${userData.progress[currentUnit].usageCount} 次`;
+                usageStatsEl.textContent = `學習進度: ${totalProgress} | ${usageCount}`;
+            }
+        }
+
+        function createTabs() {
+            unitTabsEl.innerHTML = '';
+            Object.keys(allUnitsData).forEach((unitId) => {
+                const unitNum = unitId.replace('unit', '');
+                const tab = document.createElement('button');
+                tab.textContent = `Unit ${unitNum}`;
+                tab.dataset.unit = unitId;
+                tab.className = 'unit-tab px-4 py-2 rounded-lg text-sm font-medium transition';
+                tab.addEventListener('click', () => switchUnit(unitId));
+                unitTabsEl.appendChild(tab);
+            });
+        }
+
+        // --- Event Listeners ---
+        prevBtn.addEventListener('click', () => navigate(-1));
+        nextBtn.addEventListener('click', () => navigate(1));
+        themeToggle.addEventListener('click', toggleTheme);
+        slideContentEl.addEventListener('click', (e) => {
+            const speakableElement = e.target.closest('.speakable');
+            if (speakableElement) {
+                // Avoid speaking the whole practice section
+                if(!e.target.closest('.practice-section')) {
+                    speakText(speakableElement.innerText);
+                }
+            }
+        });
+        
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userId = userIdInput.value.trim();
+            if (userId) {
+                userData = {
+                    id: userId,
+                    theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+                    lastUnit: 'unit1',
+                    progress: {}
+                };
+                Object.keys(allUnitsData).forEach(unitId => {
+                    userData.progress[unitId] = { lastGrammarIndex: 0, lastPuzzleIndex: 0, usageCount: 0 };
+                });
+                userData.progress['unit1'].usageCount = 1;
+                saveUserData();
+                loginModal.classList.add('hidden');
+                mainInit();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            const practiceInputs = document.querySelectorAll('.practice-input');
+            const isTyping = [...practiceInputs].some(input => document.activeElement === input);
+
+            if (isTyping || !loginModal.classList.contains('hidden')) return;
+
+            if (e.key === 'ArrowRight' && viewMode === 'grammar') navigate(1);
+            else if (e.key === 'ArrowLeft' && viewMode === 'grammar') navigate(-1);
+        });
+
+        // --- Initialization ---
+        function mainInit() {
+            createTabs();
+            applyTheme(userData.theme || 'light');
+            document.body.dataset.unit = currentUnit;
+            unitTitleEl.textContent = `Unit ${currentUnit.replace('unit','')}`;
+            render();
+            updateActiveTab();
+        }
+
+        document.addEventListener('DOMContentLoaded', initUser);
+
+    </script>
+</body>
+</html>
+
+
+
+
+
