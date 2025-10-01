@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>114-1英語文法練習-翰林版 - 新生國中特教組</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f3f4f6;
+            --card-bg-color: #ffffff;
+            --text-color: #1f2937;
+            --text-muted-color: #6b7280;
+            --border-color: #e5e7eb;
+            --correct-color: #10b981;
+            --incorrect-color: #ef4444;
+            --highlight-color: #f97316;
+            --structure-bg-color: #e5e7eb;
+            --structure-text-color: #374151;
+
+            /* Default Unit 1 Colors */
+            --accent-color: #4f46e5;
+            --tab-active-bg: #4f46e5;
+            --tab-active-text: #ffffff;
+            --tab-inactive-bg: #e0e7ff;
+            --tab-inactive-text: #4338ca;
+        }
+
+        html.dark {
+            --bg-color: #111827;
+            --card-bg-color: #1f2937;
+            --text-color: #f9fafb;
+            --text-muted-color: #9ca3af;
+            --border-color: #374151;
+            --highlight-color: #fb923c;
+            --structure-bg-color: #374151;
+            --structure-text-color: #d1d5db;
+            
+            /* Default Unit 1 Dark Colors */
+            --accent-color: #6366f1;
+            --tab-active-bg: #6366f1;
+            --tab-inactive-bg: #312e81;
+            --tab-inactive-text: #c7d2fe;
+        }
+        
+        /* Unit 2 Colors */
+        body[data-unit="unit2"] { --accent-color: #16a34a; --tab-active-bg: #16a34a; --tab-inactive-bg: #dcfce7; --tab-inactive-text: #15803d; }
+        html.dark body[data-unit="unit2"] { --accent-color: #22c55e; --tab-active-bg: #22c55e; --tab-inactive-bg: #14532d; --tab-inactive-text: #bbf7d0; }
+
+        /* Unit 3 Colors */
+        body[data-unit="unit3"] { --accent-color: #2563eb; --tab-active-bg: #2563eb; --tab-inactive-bg: #dbeafe; --tab-inactive-text: #1e40af; }
+        html.dark body[data-unit="unit3"] { --accent-color: #3b82f6; --tab-active-bg: #3b82f6; --tab-inactive-bg: #1e3a8a; --tab-inactive-text: #bfdbfe; }
+
+        /* Unit 4 Colors */
+        body[data-unit="unit4"] { --accent-color: #e11d48; --tab-active-bg: #e11d48; --tab-inactive-bg: #ffe4e6; --tab-inactive-text: #be123c; }
+        html.dark body[data-unit="unit4"] { --accent-color: #f43f5e; --tab-active-bg: #f43f5e; --tab-inactive-bg: #881337; --tab-inactive-text: #fecdd3; }
+
+        /* Unit 6 Colors */
+        body[data-unit="unit6"] { --accent-color: #0d9488; --tab-active-bg: #0d9488; --tab-inactive-bg: #ccfbf1; --tab-inactive-text: #0f766e; }
+        html.dark body[data-unit="unit6"] { --accent-color: #14b8a6; --tab-active-bg: #14b8a6; --tab-inactive-bg: #134e4a; --tab-inactive-text: #99f6e4; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            touch-action: pan-y;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .card {
+            background-color: var(--card-bg-color);
+            transition: background-color 0.3s;
+        }
+
+        .text-muted { color: var(--text-muted-color); }
+        .text-accent { color: var(--accent-color); transition: color 0.3s; }
+        .border-default { border-color: var(--border-color); }
+        .bg-accent { background-color: var(--accent-color); transition: background-color 0.3s;}
+        .ring-accent { --tw-ring-color: var(--accent-color) }
+
+        .structure-block {
+            background-color: var(--structure-bg-color);
+            color: var(--structure-text-color);
+        }
+
+        .practice-input {
+            background-color: transparent;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-color);
+            transition: border-color 0.3s, color 0.3s;
+        }
+        .practice-input:focus {
+             border-color: var(--accent-color);
+        }
+        .practice-input.correct {
+            border-color: var(--correct-color);
+            color: var(--correct-color);
+        }
+        .practice-input.incorrect {
+            border-color: var(--incorrect-color);
+        }
+        
+        #login-modal {
+            background-color: rgba(0,0,0,0.5);
+            transition: opacity 0.3s;
+        }
+        
+        .explanation-point {
+            background-color: var(--tab-inactive-bg);
+            color: var(--tab-inactive-text);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1.1);
+                box-shadow: 0 0 15px var(--highlight-color);
+            }
+            50% {
+                transform: scale(1.15);
+                box-shadow: 0 0 25px var(--highlight-color);
+            }
+        }
+
+        .button-highlight {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        
+        .unit-tab {
+            background-color: var(--tab-inactive-bg);
+            color: var(--tab-inactive-text);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .unit-tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            font-weight: 700;
+        }
+        .speakable { cursor: pointer; }
+        .speakable:hover { opacity: 0.7; }
+        
+        .word-piece {
+            transition: background-color 0.2s, color 0.2s, opacity 0.2s, transform 0.2s;
+        }
+        .word-piece:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body data-unit="unit1">
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="card w-full max-w-sm p-8 rounded-2xl shadow-2xl">
+            <h2 class="text-2xl font-bold text-center mb-6">登入以保存進度</h2>
+            <form id="login-form">
+                <input type="text" id="user-id" placeholder="輸入您的 Email 或 LINE ID" class="w-full px-4 py-3 rounded-lg border-default focus:outline-none focus:ring-2 ring-accent" style="background-color: var(--bg-color); color: var(--text-color);" required>
+                <button type="submit" class="w-full mt-6 bg-accent text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition">開始學習</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="w-full max-w-2xl mx-auto p-4 md:p-6 flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="flex items-center justify-between mb-4">
+             <div>
+                <h1 class="text-3xl font-bold">114-1英語文法練習-翰林版</h1>
+                <h2 id="unit-title" class="text-xl font-semibold text-muted">Unit 1</h2>
+            </div>
+            <button id="theme-toggle" class="p-2 rounded-full text-muted hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            </button>
+        </header>
+
+        <!-- Unit Tabs -->
+        <nav id="unit-tabs" class="flex flex-wrap gap-2 mb-6">
+            <!-- Tabs will be generated by JS -->
+        </nav>
+
+        <!-- Slideshow Container -->
+        <main class="flex-grow flex flex-col justify-center">
+            <div id="slideshow-container" class="card rounded-2xl shadow-lg overflow-hidden relative" style="min-height: 550px;">
+                <div id="slide-content" class="p-6 md:p-8 flex flex-col justify-between h-full">
+                    <!-- Dynamic content goes here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Navigation -->
+        <nav id="main-nav" class="flex items-center justify-between mt-6">
+            <button id="prev-btn" class="card font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <div id="slide-counter" class="text-lg font-medium text-muted"></div>
+            <button id="next-btn" class="card font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                <span id="next-btn-text">下一個</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+            </button>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="text-center mt-8 py-4 border-t border-default">
+            <div id="usage-stats" class="text-muted text-sm mb-2"></div>
+            <p class="text-muted text-sm">作者: 新生國中特教組</p>
+        </footer>
+    </div>
+
+    <script>
+        const allUnitsData = {
+            'unit1': {
+                grammar: [
+                    { title: 'be 動詞直述句與否定句', explanation: ['用來描述主詞的狀態、身份或職業。', '否定句在 be 動詞後面加上 not。'], structure: '主詞 + am/is/are + (not) + a/an + 職業/形容詞.', examples: [{en:'He is a handsome boy.', zh:'他是一個帥氣的男孩。'},{en:'She is not a teacher.', zh:'她不是一位老師。'},{en:'I am a student.', zh:'我是一位學生。'},{en:'They are happy.', zh:'他們很快樂。'},{en:'This car is new.', zh:'這輛車是新的。'}], 
+                      practices: [
+                          { question: 'You _______ not a writer.', answer: 'are' },
+                          { question: 'I _______ a student.', answer: 'am' },
+                          { question: 'She _______ my sister.', answer: 'is' },
+                          { question: 'They _______ not here.', answer: 'are' },
+                          { question: 'He _______ very young.', answer: 'is' }
+                      ]
+                    },
+                    { title: 'be 動詞 Yes/No 問答句', explanation: ['將 be 動詞移到句首，用來詢問是非。', '回答時使用 Yes/No，主詞需用代名詞。'], structure: 'Am/Is/Are + 主詞 + ...?', examples: [{en:'Are you a police officer?', zh:'你是一位警察嗎？'},{en:'Is she your classmate?', zh:'她是你的同學嗎？'},{en:'Are they young?', zh:'他們年輕嗎？'},{en:'Is your father a cook?', zh:'你爸爸是一位廚師嗎？'},{en:'Am I your best friend?', zh:'我是你最好的朋友嗎？'}], 
+                      practices: [
+                          { question: '_______ you a singer?', answer: 'Are' },
+                          { question: '_______ he your brother?', answer: 'Is' },
+                          { question: '_______ I late?', answer: 'Am' },
+                          { question: '_______ they your cousins?', answer: 'Are' },
+                          { question: '_______ this your book?', answer: 'Is' }
+                      ]
+                    },
+                    { title: 'Who 問句', explanation: ['用來詢問人的姓名或身份。'], structure: 'Who + be動詞 + 主詞？', examples: [{en:"Who's that handsome boy?", zh:'那個帥氣的男孩是誰？'},{en:'Who is your English teacher?', zh:'誰是你的英文老師？'},{en:'Who are they?', zh:'他們是誰？'},{en:"Who's the girl with long hair?", zh:'那個長髮的女孩是誰？'},{en:'Who is the writer of this book?', zh:'這本書的作者是誰？'}], 
+                      practices: [
+                          { question: 'A: _______ is she? B: She’s my cousin.', answer: 'Who' },
+                          { question: '_______ is that man over there?', answer: 'Who' },
+                          { question: '_______ are those people?', answer: 'Who' },
+                          { question: "A: _______'s he? B: He's my uncle.", answer: "Who" },
+                          { question: '_______ is your favorite singer?', answer: 'Who' }
+                      ]
+                    }
+                ],
+                puzzles: [
+                    { jumbled: ['He', 'is', 'a', 'handsome', 'boy', '.'], correct: 'He is a handsome boy.', zh: '他是一位英俊的男孩。' },
+                    { jumbled: ['She', 'is', 'not', 'a', 'teacher', '.'], correct: 'She is not a teacher.', zh: '她不是一位老師。' },
+                    { jumbled: ['Are', 'you', 'a', 'student', '?'], correct: 'Are you a student?', zh: '你是一位學生嗎？' },
+                    { jumbled: ['Who', 'is', 'that', 'woman', '?'], correct: 'Who is that woman?', zh: '那位女士是誰？' },
+                    { jumbled: ['My', 'father', 'is', 'young', '.'], correct: 'My father is young.', zh: '我的爸爸很年輕。' },
+                    { jumbled: ['They', 'are', 'my', 'classmates', '.'], correct: 'They are my classmates.', zh: '他們是我的同學。' },
+                    { jumbled: ['Is', 'your', 'aunt', 'a', 'nurse', '?'], correct: 'Is your aunt a nurse?', zh: '你的阿姨是護士嗎？' },
+                    { jumbled: ['I', 'am', 'not', 'a', 'singer', '.'], correct: 'I am not a singer.', zh: '我不是一位歌手。' },
+                    { jumbled: ['That', 'school', 'is', 'very', 'beautiful', '.'], correct: 'That school is very beautiful.', zh: '那所學校非常漂亮。' },
+                    { jumbled: ['Who', 'is', 'your', 'cousin', '?'], correct: 'Who is your cousin?', zh: '誰是你的堂/表兄弟姊妹？' }
+                ]
+            },
+            'unit2': {
+                grammar: [
+                    { title: '指示詞 these, those 與複數名詞', explanation: ['these 指「近的」複數人事物；those 指「遠的」複數人事物。', '複數名詞通常在字尾加 -s 或 -es。'], structure: 'What are these/those?', examples: [{en:'What are those?', zh:'那些是什麼？'},{en:'These are my comic books.', zh:'這些是我的漫畫書。'},{en:'Those are not my pencils.', zh:'那些不是我的鉛筆。'},{en:'Are these your gifts?', zh:'這些是你的禮物嗎？'},{en:'These apples are sweet.', zh:'這些蘋果很甜。'}], 
+                      practices: [
+                          { question: 'These _______ watches.', answer: 'are' },
+                          { question: '_______ are my notebooks.', answer: 'These' },
+                          { question: 'What are _______?', answer: 'those' },
+                          { question: 'This is a book, and these _______ books.', answer: 'are' },
+                          { question: 'Are _______ your family pictures?', answer: 'these' }
+                      ]
+                    },
+                    { title: 'Where 的疑問句', explanation: ['用來詢問「地點」。', '回答時常搭配 in, on, under, near, behind 等介系詞。'], structure: 'Where + be動詞 + 主詞?', examples: [{en:'Where is the notebook?', zh:'筆記本在哪裡？'},{en:'Where are my parents?', zh:'我的父母在哪裡？'},{en:'My cat is under the table.', zh:'我的貓在桌子底下。'},{en:'The school is near the park.', zh:'學校在公園附近。'},{en:'Your pencil case is on the desk.', zh:'你的鉛筆盒在書桌上。'}], 
+                      practices: [
+                          { question: 'A: _____ our dog? B: It’s under the bed.', answer: 'Where’s' },
+                          { question: '_______ are you?', answer: 'Where' },
+                          { question: 'The cat is _______ the box.', answer: 'in' },
+                          { question: 'My hat is _______ the tree.', answer: 'on' },
+                          { question: 'The park is _______ to the school.', answer: 'next' }
+                      ]
+                    }
+                ],
+                puzzles: [
+                    { jumbled: ['What', 'are', 'these', '?'], correct: 'What are these?', zh: '這些是什麼？' },
+                    { jumbled: ['Those', 'are', 'my', 'books', '.'], correct: 'Those are my books.', zh: '那些是我的書。' },
+                    { jumbled: ['Where', 'is', 'your', 'school', '?'], correct: 'Where is your school?', zh: '你的學校在哪裡？' },
+                    { jumbled: ['The', 'cat', 'is', 'under', 'the', 'chair', '.'], correct: 'The cat is under the chair.', zh: '貓在椅子下面。' },
+                    { jumbled: ['Are', 'these', 'your', 'markers', '?'], correct: 'Are these your markers?', zh: '這些是你的彩色筆嗎？' },
+                    { jumbled: ['My', 'notebooks', 'are', 'in', 'the', 'bag', '.'], correct: 'My notebooks are in the bag.', zh: '我的筆記本在書包裡。' },
+                    { jumbled: ['Where', 'are', 'your', 'parents', '?'], correct: 'Where are your parents?', zh: '你的父母在哪裡？' },
+                    { jumbled: ['These', 'are', 'not', 'my', 'pencils', '.'], correct: 'These are not my pencils.', zh: '這些不是我的鉛筆。' },
+                    { jumbled: ['The', 'sofa', 'is', 'near', 'the', 'window', '.'], correct: 'The sofa is near the window.', zh: '沙發在窗戶附近。' },
+                    { jumbled: ['He', 'is', 'behind', 'the', 'tree', '.'], correct: 'He is behind the tree.', zh: '他在樹的後面。' }
+                ]
+            },
+            'unit3': {
+                grammar: [
+                    { title: '祈使句', explanation: ['用來表達「命令」、「請求」或「建議」。', '句子以「原形動詞」開頭，主詞 you 被省略。', '否定句在原形動詞前加 Don’t。'], structure: '(Please) + (Don’t) + 原形動詞...', examples: [{en:'Please close the door.', zh:'請關門。'},{en:"Don't run in the classroom.", zh:'不要在教室裡跑。'},{en:'Be careful.', zh:'要小心。'},{en:'Open your book, please.', zh:'請打開你的書。'},{en:"Let's not talk here.", zh:'我們不要在這裡說話。'}], 
+                      practices: [
+                          { question: '_____ sing in the library.', answer: 'Don’t' },
+                          { question: 'Please _______ quiet.', answer: 'be' },
+                          { question: '_______ your hands.', answer: 'Wash' },
+                          { question: '_______ here, please.', answer: 'Look' },
+                          { question: 'Don’t _______ in class.', answer: 'talk' }
+                      ]
+                    },
+                    { title: "Let's 的用法", explanation: ['用來提議「讓我們一起做某事」。'], structure: 'Let’s + (not) + 原形動詞...', examples: [{en:'Let’s watch TV.', zh:'我們來看電視吧。'},{en:"Let's go to the museum.", zh:'我們去博物館吧。'},{en:"Let's not fight.", zh:'我們不要吵架。'},{en:'Let’s play basketball after school.', zh:'我們放學後去打籃球吧。'},{en:'Let’s clean up the classroom.', zh:'我們來打掃教室吧。'}], 
+                      practices: [
+                          { question: 'A: Let’s _____ play the game now. B: OK.', answer: 'not' },
+                          { question: 'Let’s _______ to the park.', answer: 'go' },
+                          { question: 'Let’s _______ TV.', answer: 'watch' },
+                          { question: 'Let’s not _______ here.', answer: 'eat' },
+                          { question: '_______ help Mom.', answer: 'Let’s' }
+                      ]
+                    },
+                    { title: '助動詞 can', explanation: ['表示「能力 (會)」、「請求」或「許可 (可以)」。', 'can 後面必須接「原形動詞」。'], structure: '主詞 + can/can’t + 原形動詞...', examples: [{en:'He can play baseball.', zh:'他會打棒球。'},{en:'I can’t swim.', zh:'我不會游泳。'},{en:'Can you help me?', zh:'你可以幫我嗎？'},{en:'She can sing very well.', zh:'她很會唱歌。'},{en:'You can use my pen.', zh:'你可以用我的筆。'}], 
+                      practices: [
+                          { question: 'A: Can you jump? B: Yes, I _____.', answer: 'can' },
+                          { question: 'He _______ play basketball.', answer: 'can' },
+                          { question: 'She _______ cook.', answer: 'can’t' },
+                          { question: 'What _______ you do?', answer: 'can' },
+                          { question: 'The bird _______ sing.', answer: 'can' }
+                      ]
+                    }
+                ],
+                puzzles: [
+                    { jumbled: ['Open', 'the', 'door', ',', 'please', '.'], correct: 'Open the door, please.', zh: '請開門。' },
+                    { jumbled: ['Don’t', 'run', 'here', '.'], correct: 'Don’t run here.', zh: '不要在這裡跑。' },
+                    { jumbled: ['Let’s', 'go', 'home', '.'], correct: 'Let’s go home.', zh: '我們回家吧。' },
+                    { jumbled: ['I', 'can', 'speak', 'English', '.'], correct: 'I can speak English.', zh: '我會說英文。' },
+                    { jumbled: ['Can', 'you', 'dance', '?'], correct: 'Can you dance?', zh: '你會跳舞嗎？' },
+                    { jumbled: ['Let’s', 'not', 'be', 'late', '.'], correct: 'Let’s not be late.', zh: '我們不要遲到。' },
+                    { jumbled: ['Wash', 'your', 'hands', '.'], correct: 'Wash your hands.', zh: '洗你的手。' },
+                    { jumbled: ['He', 'can’t', 'run', 'very', 'fast', '.'], correct: 'He can’t run very fast.', zh: '他跑得不是很快。' },
+                    { jumbled: ['Be', 'quiet', ',', 'please', '.'], correct: 'Be quiet, please.', zh: '請安靜。' },
+                    { jumbled: ['Can', 'I', 'use', 'your', 'phone', '?'], correct: 'Can I use your phone?', zh: '我可以用你的電話嗎？' }
+                ]
+            },
+            'unit4': {
+                grammar: [
+                     { title: 'What day 問星期', explanation: ['用來詢問「星期幾」。', '若指特定日子，回答時星期前要加 on。'], structure: 'What day is ...?', examples: [{en:'What day is the concert?', zh:'演唱會是星期幾？'},{en:'The party is on Friday.', zh:'派對在星期五。'},{en:'What day is today?', zh:'今天星期幾？'},{en:'My birthday is on Saturday.', zh:'我的生日在星期六。'},{en:'We have an English class on Monday.', zh:'我們星期一有英文課。'}], 
+                       practices: [
+                           { question: 'The baseball game is _______ Wednesday.', answer: 'on' },
+                           { question: 'What _______ is it today?', answer: 'day' },
+                           { question: 'The concert is _______ Friday.', answer: 'on' },
+                           { question: 'Today _______ Sunday.', answer: 'is' },
+                           { question: 'My class is _______ this Tuesday.', answer: 'on' }
+                       ]
+                     },
+                     { title: 'What time 問時間', explanation: ['用來詢問「幾點幾分」。', '若指特定事件的時間，回答時時間前要加 at。'], structure: 'What time is it / ...?', examples: [{en:'What time is the party?', zh:'派對是在幾點？'},{en:'The movie is at 7 p.m.', zh:'電影在晚上七點。'},{en:'What time is it now?', zh:'現在幾點了？'},{en:'The class starts at 8:10 a.m.', zh:'課程在早上八點十分開始。'},{en:'Let’s meet at the school gate at noon.', zh:'我們中午在校門口見吧。'}], 
+                       practices: [
+                           { question: 'The game is _____ two thirty.', answer: 'at' },
+                           { question: 'What _______ is it?', answer: 'time' },
+                           { question: 'It’s _____ 9 a.m.', answer: 'at' },
+                           { question: 'The party is _______ ten o’clock.', answer: 'at' },
+                           { question: 'My English class is _______ 3:00.', answer: 'at' }
+                       ]
+                     },
+                     { title: '現在進行式', explanation: ['描述「當下正在進行」的動作。', '動詞形式為 be 動詞 + V-ing。'], structure: '主詞 + be動詞 + V-ing...', examples: [{en:'John is playing basketball now.', zh:'John 現在正在打籃球。'},{en:'What are you doing?', zh:'你正在做什麼？'},{en:'My mom is cooking in the kitchen.', zh:'我媽媽正在廚房煮飯。'},{en:'They are not studying.', zh:'他們沒有在讀書。'},{en:'I am watching a music video.', zh:'我正在看一支音樂影片。'}], 
+                       practices: [
+                           { question: 'My kids _____ waiting for me at school.', answer: 'are' },
+                           { question: 'What are you _______?', answer: 'doing' },
+                           { question: 'He is _______ a book.', answer: 'reading' },
+                           { question: 'I _______ studying English.', answer: 'am' },
+                           { question: 'They are _______ soccer.', answer: 'playing' }
+                       ]
+                     }
+                ],
+                puzzles: [
+                    { jumbled: ['What', 'day', 'is', 'today', '?'], correct: 'What day is today?', zh: '今天星期幾？' },
+                    { jumbled: ['The', 'concert', 'is', 'on', 'Sunday', '.'], correct: 'The concert is on Sunday.', zh: '演唱會在星期天。' },
+                    { jumbled: ['What', 'time', 'is', 'it', '?'], correct: 'What time is it?', zh: '現在幾點了？' },
+                    { jumbled: ['What', 'are', 'you', 'doing', '?'], correct: 'What are you doing?', zh: '你正在做什麼？' },
+                    { jumbled: ['He', 'is', 'reading', 'a', 'book', '.'], correct: 'He is reading a book.', zh: '他正在讀一本書。' },
+                    { jumbled: ['The', 'party', 'is', 'at', '8', 'p.m.', '.'], correct: 'The party is at 8 p.m.', zh: '派對在晚上八點。' },
+                    { jumbled: ['We', 'are', 'watching', 'TV', '.'], correct: 'We are watching TV.', zh: '我們正在看電視。' },
+                    { jumbled: ['Is', 'she', 'singing', '?'], correct: 'Is she singing?', zh: '她正在唱歌嗎？' },
+                    { jumbled: ['They', 'are', 'not', 'playing', 'games', '.'], correct: 'They are not playing games.', zh: '他們沒有在玩遊戲。' },
+                    { jumbled: ['My', 'birthday', 'is', 'on', 'Monday', '.'], correct: 'My birthday is on Monday.', zh: '我的生日在星期一。' }
+                ]
+            },
+            'unit6': {
+                grammar: [
+                    { title: 'There is / There are 句型', explanation: ['表示「某地有某物」的存在事實。', 'There is 接「單數」名詞；There are 接「複數」名詞。'], structure: 'There + is/are + (not) + 主詞 + 地方.', examples: [{en:'There are some elephants over there.', zh:'那裡有一些大象。'},{en:'There is a book on the desk.', zh:'書桌上有一本書。'},{en:"There aren't any tigers in the zoo.", zh:'動物園裡沒有任何老虎。'},{en:'There is a king in the castle.', zh:'城堡裡有一位國王。'},{en:'There are many monkeys in the tree.', zh:'樹上有很多猴子。'}], 
+                      practices: [
+                          { question: 'There _____ any cats under the car.', answer: 'aren’t' },
+                          { question: 'There _____ a bird in the tree.', answer: 'is' },
+                          { question: 'There are _______ books on the table.', answer: 'some' },
+                          { question: '_______ is a pen in my bag.', answer: 'There' },
+                          { question: 'There _______ many people here.', answer: 'are' }
+                      ]
+                    },
+                    { title: 'There is / There are 問答句', explanation: ['將 be 動詞移到句首形成問句。', '簡答時用 Yes, there is/are. 或 No, there isn’t/aren’t。'], structure: 'Is/Are there ...?', examples: [{en:'Is there a TV in your room?', zh:'在你房間裡有電視嗎？'},{en:'Are there any students in the classroom?', zh:'教室裡有任何學生嗎？'},{en:'Is there a lion under the tree?', zh:'樹下有獅子嗎？'},{en:'Are there many books in your bag?', zh:'你的書包裡有很多書嗎？'},{en:'Is there a bug on your hand?', zh:'你的手上有蟲嗎？'}], 
+                      practices: [
+                          { question: '_____ there any notebooks on the desk?', answer: 'Are' },
+                          { question: '_____ there a dog in the house?', answer: 'Is' },
+                          { question: 'A: Are there any elephants? B: Yes, there _____.', answer: 'are' },
+                          { question: 'A: Is there a pen? B: No, there _____.', answer: 'isn’t' },
+                          { question: 'Are _______ any tigers here?', answer: 'there' }
+                      ]
+                    }
+                ],
+                puzzles: [
+                    { jumbled: ['There', 'is', 'a', 'book', 'on', 'the', 'desk', '.'], correct: 'There is a book on the desk.', zh: '書桌上有一本書。' },
+                    { jumbled: ['Are', 'there', 'any', 'lions', 'in', 'the', 'zoo', '?'], correct: 'Are there any lions in the zoo?', zh: '動物園裡有獅子嗎？' },
+                    { jumbled: ['There', 'are', 'not', 'any', 'people', 'here', '.'], correct: 'There are not any people here.', zh: '這裡沒有任何人。' },
+                    { jumbled: ['Is', 'there', 'a', 'cat', 'under', 'the', 'tree', '?'], correct: 'Is there a cat under the tree?', zh: '樹下有一隻貓嗎？' },
+                    { jumbled: ['There', 'are', 'many', 'monkeys', 'in', 'the', 'mountains', '.'], correct: 'There are many monkeys in the mountains.', zh: '山裡有很多猴子。' },
+                    { jumbled: ['There', 'is', 'a', 'big', 'sofa', 'in', 'my', 'house', '.'], correct: 'There is a big sofa in my house.', zh: '我的房子裡有一個大沙發。' },
+                    { jumbled: ['Are', 'there', 'any', 'pencils', 'in', 'your', 'pencil case', '?'], correct: 'Are there any pencils in your pencil case?', zh: '你的鉛筆盒裡有任何鉛筆嗎？' },
+                    { jumbled: ['There', 'is', 'no', 'food', 'in', 'the', 'kitchen', '.'], correct: 'There is no food in the kitchen.', zh: '廚房裡沒有食物。' },
+                    { jumbled: ['Is', 'there', 'a', 'zebra', 'over', 'there', '?'], correct: 'Is there a zebra over there?', zh: '那邊有一隻斑馬嗎？' },
+                    { jumbled: ['There', 'are', 'some', 'cookies', 'on', 'the', 'table', '.'], correct: 'There are some cookies on the table.', zh: '桌上有一些餅乾。' }
+                ]
+            }
+        };
+
+        let currentUnit = 'unit1';
+        let currentSlide = 0;
+        let currentPuzzle = 0;
+        let viewMode = 'grammar'; // 'grammar' or 'puzzle'
+        let userData = {};
+        let isSpeaking = false;
+        let currentPuzzleAnswer = [];
+        
+        const slideContentEl = document.getElementById('slide-content');
+        const slideCounterEl = document.getElementById('slide-counter');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const nextBtnText = document.getElementById('next-btn-text');
+        const slideshowContainer = document.getElementById('slideshow-container');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIconDark = document.getElementById('theme-icon-dark');
+        const themeIconLight = document.getElementById('theme-icon-light');
+        const loginModal = document.getElementById('login-modal');
+        const loginForm = document.getElementById('login-form');
+        const userIdInput = document.getElementById('user-id');
+        const usageStatsEl = document.getElementById('usage-stats');
+        const unitTabsEl = document.getElementById('unit-tabs');
+        const unitTitleEl = document.getElementById('unit-title');
+
+        // --- Core Functions ---
+        function render() {
+            if (viewMode === 'grammar') {
+                renderGrammarSlide();
+            } else {
+                renderPuzzleView();
+            }
+            updateNav();
+            saveProgress();
+        }
+
+        function renderGrammarSlide() {
+            const slide = allUnitsData[currentUnit].grammar[currentSlide];
+            slideContentEl.innerHTML = `
+                <div class="flex-grow overflow-y-auto">
+                    <div class="flex items-center justify-between mb-4 speakable">
+                        <h3 class="text-3xl md:text-4xl font-bold text-accent">${slide.title}</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-muted" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                        ${slide.explanation.map(exp => `<p class="explanation-point text-md font-medium px-3 py-1 rounded-md speakable">${exp}</p>`).join('')}
+                    </div>
+                    <p class="text-lg font-mono p-3 rounded-lg structure-block speakable">${slide.structure}</p>
+                </div>
+                <div class="mt-4 border-t border-default pt-4">
+                     <div class="mb-4 space-y-2">
+                        <p class="text-md font-semibold text-muted">例句：</p>
+                        ${slide.examples.map(ex => `<div class="speakable"><p class="text-lg">${ex.en}</p><p class="text-md text-muted">${ex.zh}</p></div>`).join('')}
+                    </div>
+                    <div class="practice-section mt-4">
+                        <p class="text-md font-semibold text-muted mb-2 speakable">練習：</p>
+                        <div class="space-y-2">
+                        ${slide.practices.map((p, index) => `
+                            <p class="text-lg">${p.question.replace(/_{2,}/, `<input type="text" data-index="${index}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="practice-input w-24 text-center text-lg font-bold p-0 m-0 bg-transparent focus:outline-none">`)}</p>
+                        `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.querySelectorAll('.practice-input').forEach(input => {
+                input.addEventListener('input', handleTyping);
+            });
+            document.querySelector('.practice-input')?.focus();
+        }
+
+        function renderPuzzleView() {
+            const puzzle = allUnitsData[currentUnit].puzzles[currentPuzzle];
+            currentPuzzleAnswer = [];
+            slideContentEl.innerHTML = `
+                <div class="flex flex-col h-full">
+                    <h3 class="text-2xl font-bold text-accent mb-2 speakable">文法拼圖練習</h3>
+                    <p class="text-lg font-semibold text-muted mb-4 speakable">${puzzle.zh}</p>
+                    
+                    <div id="answer-area" class="w-full min-h-[60px] p-3 rounded-lg border-2 border-dashed border-default mb-4 flex items-center text-xl font-bold flex-wrap gap-2"></div>
+                    
+                    <div class="flex items-center mb-6 gap-4">
+                         <button id="back-to-grammar-btn" class="text-sm text-muted hover:text-accent font-semibold py-2 px-3 rounded-md bg-gray-100 dark:bg-gray-700">返回文法</button>
+                         <button id="clear-answer-btn" class="text-sm text-muted hover:text-accent font-semibold py-2 px-3 rounded-md bg-gray-100 dark:bg-gray-700">清除</button>
+                         <p id="feedback-message" class="ml-4 font-semibold"></p>
+                    </div>
+
+                    <div id="word-pool" class="flex flex-wrap gap-2 mb-auto">
+                       ${[...puzzle.jumbled].sort(() => Math.random() - 0.5).map(word => `<button class="word-piece bg-accent text-white font-bold py-2 px-4 rounded-lg hover:opacity-80 active:scale-95">${word}</button>`).join('')}
+                    </div>
+                    
+                    <div class="flex items-center justify-between mt-6">
+                       <button id="check-answer-btn" class="bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition">檢查答案</button>
+                        <div class="flex items-center gap-4">
+                             <button id="prev-puzzle-btn" class="text-muted hover:text-accent disabled:opacity-30"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
+                             <p class="font-bold text-lg">${currentPuzzle + 1} / ${allUnitsData[currentUnit].puzzles.length}</p>
+                             <button id="next-puzzle-btn" class="text-muted hover:text-accent disabled:opacity-30"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            attachPuzzleListeners();
+        }
+
+        function updateNav() {
+            const grammarSlides = allUnitsData[currentUnit].grammar;
+            const puzzleSlides = allUnitsData[currentUnit].puzzles;
+
+            if (viewMode === 'grammar') {
+                slideCounterEl.textContent = `文法 ${currentSlide + 1} / ${grammarSlides.length}`;
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = false;
+                if (currentSlide === grammarSlides.length - 1) {
+                    nextBtnText.textContent = '開始練習';
+                } else {
+                    nextBtnText.textContent = '下一個';
+                }
+            } else { // Puzzle mode navigation is handled by its own buttons
+                slideCounterEl.textContent = `拼圖 ${currentPuzzle + 1} / ${puzzleSlides.length}`;
+                prevBtn.disabled = true; // Main nav disabled in puzzle
+                nextBtn.disabled = true; // Main nav disabled in puzzle
+            }
+             document.getElementById('main-nav').style.display = viewMode === 'grammar' ? 'flex' : 'none';
+        }
+
+        function navigate(direction) {
+            if (viewMode === 'grammar') {
+                const isLastGrammarSlide = currentSlide === allUnitsData[currentUnit].grammar.length - 1;
+                if (direction === 1 && isLastGrammarSlide) {
+                    viewMode = 'puzzle';
+                    currentPuzzle = 0;
+                } else {
+                    currentSlide = Math.max(0, Math.min(currentSlide + direction, allUnitsData[currentUnit].grammar.length - 1));
+                }
+            }
+            render();
+        }
+        
+        function switchUnit(unitId) {
+            if (unitId === currentUnit) return;
+            currentUnit = unitId;
+            document.body.dataset.unit = currentUnit;
+            
+            if (userData.progress && !userData.progress[currentUnit]) {
+                userData.progress[currentUnit] = { lastGrammarIndex: 0, lastPuzzleIndex: 0, usageCount: 0 };
+            }
+
+            if(userData.progress && userData.progress[currentUnit]) {
+                userData.progress[currentUnit].usageCount++;
+            }
+
+            currentSlide = userData.progress[currentUnit]?.lastGrammarIndex || 0;
+            currentPuzzle = userData.progress[currentUnit]?.lastPuzzleIndex || 0;
+            viewMode = 'grammar';
+            
+            render();
+            updateActiveTab();
+        }
+
+        function updateActiveTab() {
+            document.querySelectorAll('.unit-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.unit === currentUnit);
+            });
+        }
+
+        // --- Feature Functions ---
+
+        function speakText(text) {
+            if (isSpeaking || !text) return;
+            isSpeaking = true;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                if (text.match(/[\u3400-\u9FBF]/)) { // Check for CJK characters
+                    utterance.lang = 'zh-TW';
+                }
+                utterance.onend = () => { isSpeaking = false; };
+                utterance.onerror = (e) => { 
+                    console.error('SpeechSynthesis Error:', e);
+                    isSpeaking = false; 
+                };
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('抱歉，您的瀏覽器不支援語音合成功能。');
+                isSpeaking = false;
+            }
+        }
+        
+        function handleTyping(e) {
+            const input = e.target;
+            const index = parseInt(input.dataset.index, 10);
+            const correctWord = allUnitsData[currentUnit].grammar[currentSlide].practices[index].answer.toLowerCase();
+            const typedWord = input.value.trim().toLowerCase();
+
+            if (typedWord === correctWord) {
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+                input.disabled = true;
+                checkAllPracticesComplete();
+            } else if (correctWord.startsWith(typedWord)) {
+                 input.classList.remove('incorrect');
+                 input.classList.remove('correct');
+            } else {
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+            }
+        }
+
+        function checkAllPracticesComplete() {
+            const allInputs = document.querySelectorAll('.practice-input');
+            const allCorrect = [...allInputs].every(input => input.classList.contains('correct'));
+            if (allCorrect) {
+                nextBtn.classList.add('button-highlight');
+            }
+        }
+
+        function attachPuzzleListeners() {
+            document.querySelectorAll('.word-piece').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentPuzzleAnswer.push(btn.textContent);
+                    document.getElementById('answer-area').textContent = currentPuzzleAnswer.join(' ');
+                    btn.disabled = true;
+                });
+            });
+            document.getElementById('clear-answer-btn').addEventListener('click', () => {
+                currentPuzzleAnswer = [];
+                document.getElementById('answer-area').textContent = '';
+                document.querySelectorAll('.word-piece').forEach(btn => btn.disabled = false);
+                document.getElementById('feedback-message').textContent = '';
+            });
+             document.getElementById('back-to-grammar-btn').addEventListener('click', () => {
+                viewMode = 'grammar';
+                render();
+            });
+            document.getElementById('check-answer-btn').addEventListener('click', () => {
+                const answerText = currentPuzzleAnswer.join(' ').replace(/\s+([,.?])/g, '$1');
+                const correct = allUnitsData[currentUnit].puzzles[currentPuzzle].correct;
+                const feedback = document.getElementById('feedback-message');
+                if (answerText === correct) {
+                    feedback.textContent = '正確！';
+                    feedback.style.color = 'var(--correct-color)';
+                    speakText('Correct!');
+                } else {
+                    feedback.textContent = '再試一次！';
+                    feedback.style.color = 'var(--incorrect-color)';
+                    speakText('Try again.');
+                }
+            });
+
+            document.getElementById('prev-puzzle-btn').addEventListener('click', () => {
+                if (currentPuzzle > 0) {
+                    currentPuzzle--;
+                    renderPuzzleView();
+                    updateNav();
+                }
+            });
+             document.getElementById('next-puzzle-btn').addEventListener('click', () => {
+                if (currentPuzzle < allUnitsData[currentUnit].puzzles.length - 1) {
+                    currentPuzzle++;
+                    renderPuzzleView();
+                    updateNav();
+                }
+            });
+            document.getElementById('prev-puzzle-btn').disabled = currentPuzzle === 0;
+            document.getElementById('next-puzzle-btn').disabled = currentPuzzle === allUnitsData[currentUnit].puzzles.length - 1;
+        }
+        
+        // --- Theme Management ---
+        function applyTheme(theme) {
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            themeIconLight.classList.toggle('hidden', theme !== 'dark');
+            themeIconDark.classList.toggle('hidden', theme === 'dark');
+        }
+
+        function toggleTheme() {
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            applyTheme(newTheme);
+            if (userData.id) {
+                userData.theme = newTheme;
+                saveUserData();
+            }
+        }
+
+        // --- User Data & History ---
+        function loadUserData() {
+            const savedData = localStorage.getItem('engGrammarAppUserDataV2');
+            if (savedData) {
+                userData = JSON.parse(savedData);
+                currentUnit = userData.lastUnit || 'unit1';
+                return true;
+            }
+            return false;
+        }
+
+        function saveUserData() {
+            userData.lastUnit = currentUnit;
+            localStorage.setItem('engGrammarAppUserDataV2', JSON.stringify(userData));
+        }
+
+        function initUser() {
+            if (loadUserData()) {
+                if (!userData.progress) userData.progress = {};
+                if (!userData.progress[currentUnit]) {
+                    userData.progress[currentUnit] = { lastGrammarIndex: 0, lastPuzzleIndex: 0, usageCount: 0 };
+                }
+                userData.progress[currentUnit].usageCount++;
+                currentSlide = userData.progress[currentUnit].lastGrammarIndex || 0;
+                currentPuzzle = userData.progress[currentUnit].lastPuzzleIndex || 0;
+                loginModal.classList.add('hidden');
+                mainInit();
+            } else {
+                loginModal.classList.remove('hidden');
+                applyTheme('light');
+            }
+        }
+
+        function saveProgress() {
+            if (userData.progress && userData.progress[currentUnit]) {
+                if(viewMode === 'grammar') {
+                    userData.progress[currentUnit].lastGrammarIndex = currentSlide;
+                } else {
+                    userData.progress[currentUnit].lastPuzzleIndex = currentPuzzle;
+                }
+                saveUserData();
+                updateUsageStats();
+            }
+        }
+
+        function updateUsageStats() {
+            if (userData.progress && userData.progress[currentUnit]) {
+                const grammarSlides = allUnitsData[currentUnit].grammar;
+                usageStatsEl.textContent = `學習進度: Unit ${currentUnit.replace('unit','')} - ${currentSlide + 1} / ${grammarSlides.length} | 本單元使用: ${userData.progress[currentUnit].usageCount} 次`;
+            }
+        }
+
+        function createTabs() {
+            unitTabsEl.innerHTML = '';
+            Object.keys(allUnitsData).forEach((unitId) => {
+                const unitNum = unitId.replace('unit', '');
+                const tab = document.createElement('button');
+                tab.textContent = `Unit ${unitNum}`;
+                tab.dataset.unit = unitId;
+                tab.className = 'unit-tab px-4 py-2 rounded-lg text-sm font-medium transition';
+                tab.addEventListener('click', () => switchUnit(unitId));
+                unitTabsEl.appendChild(tab);
+            });
+        }
+
+        // --- Event Listeners ---
+        prevBtn.addEventListener('click', () => navigate(-1));
+        nextBtn.addEventListener('click', () => navigate(1));
+        themeToggle.addEventListener('click', toggleTheme);
+        slideContentEl.addEventListener('click', (e) => {
+            const speakableElement = e.target.closest('.speakable');
+            if (speakableElement) {
+                speakText(speakableElement.innerText);
+            }
+        });
+        
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userId = userIdInput.value.trim();
+            if (userId) {
+                userData = {
+                    id: userId,
+                    theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+                    lastUnit: 'unit1',
+                    progress: {}
+                };
+                Object.keys(allUnitsData).forEach(unitId => {
+                    userData.progress[unitId] = { lastGrammarIndex: 0, lastPuzzleIndex: 0, usageCount: 0 };
+                });
+                userData.progress['unit1'].usageCount = 1;
+                saveUserData();
+                loginModal.classList.add('hidden');
+                mainInit();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            const practiceInputs = document.querySelectorAll('.practice-input');
+            const isTyping = [...practiceInputs].some(input => document.activeElement === input);
+
+            if (isTyping || !loginModal.classList.contains('hidden')) return;
+
+            if (e.key === 'ArrowRight') navigate(1);
+            else if (e.key === 'ArrowLeft') navigate(-1);
+        });
+
+        // --- Initialization ---
+        function mainInit() {
+            createTabs();
+            applyTheme(userData.theme || 'light');
+            document.body.dataset.unit = currentUnit;
+            render();
+            updateActiveTab();
+        }
+
+        document.addEventListener('DOMContentLoaded', initUser);
+
+    </script>
+</body>
+</html>
+
+
