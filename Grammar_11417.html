@@ -166,7 +166,7 @@
         <!-- Header -->
         <header class="flex items-center justify-between mb-4">
              <div>
-                <h1 class="text-3xl font-bold">114-1英語文法練習-翰林版</h1>
+                <h1 class="text-3xl font-bold">114-1-7英語文法練習-翰林版</h1>
                 <h2 id="unit-title" class="text-xl font-semibold text-muted">Unit 1</h2>
             </div>
             <button id="theme-toggle" class="p-2 rounded-full text-muted hover:bg-gray-200 dark:hover:bg-gray-700 transition">
@@ -584,6 +584,7 @@
                 if (text.match(/[\u3400-\u9FBF]/)) { // Check for CJK characters
                     utterance.lang = 'zh-TW';
                 }
+                utterance.rate = 0.8; // 調整語速
                 utterance.onend = () => { isSpeaking = false; };
                 utterance.onerror = (e) => { 
                     console.error('SpeechSynthesis Error:', e);
@@ -649,7 +650,7 @@
                 if (answerText === correct) {
                     feedback.textContent = '正確！';
                     feedback.style.color = 'var(--correct-color)';
-                    speakText('Correct!');
+                    speakText(correct);
                 } else {
                     feedback.textContent = '再試一次！';
                     feedback.style.color = 'var(--incorrect-color)';
@@ -811,5 +812,8 @@
     </script>
 </body>
 </html>
+
+
+
 
 
