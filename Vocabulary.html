@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英語單字練習 - 新生國中特教組</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f3f4f6;
+            --card-bg-color: #ffffff;
+            --text-color: #1f2937;
+            --text-muted-color: #6b7280;
+            --border-color: #e5e7eb;
+            --correct-color: #10b981;
+            --incorrect-color: #ef4444;
+            --highlight-color: #f97316;
+
+            /* Default Unit 1 Colors */
+            --accent-color: #4f46e5;
+            --tab-active-bg: #4f46e5;
+            --tab-active-text: #ffffff;
+            --tab-inactive-bg: #e0e7ff;
+            --tab-inactive-text: #4338ca;
+        }
+
+        html.dark {
+            --bg-color: #111827;
+            --card-bg-color: #1f2937;
+            --text-color: #f9fafb;
+            --text-muted-color: #9ca3af;
+            --border-color: #374151;
+            --highlight-color: #fb923c;
+            
+            /* Default Unit 1 Dark Colors */
+            --accent-color: #6366f1;
+            --tab-active-bg: #6366f1;
+            --tab-inactive-bg: #312e81;
+            --tab-inactive-text: #c7d2fe;
+        }
+        
+        /* Unit 2 Colors */
+        body[data-unit="unit2"] { --accent-color: #16a34a; --tab-active-bg: #16a34a; --tab-inactive-bg: #dcfce7; --tab-inactive-text: #15803d; }
+        html.dark body[data-unit="unit2"] { --accent-color: #22c55e; --tab-active-bg: #22c55e; --tab-inactive-bg: #14532d; --tab-inactive-text: #bbf7d0; }
+
+        /* Unit 3 Colors */
+        body[data-unit="unit3"] { --accent-color: #2563eb; --tab-active-bg: #2563eb; --tab-inactive-bg: #dbeafe; --tab-inactive-text: #1e40af; }
+        html.dark body[data-unit="unit3"] { --accent-color: #3b82f6; --tab-active-bg: #3b82f6; --tab-inactive-bg: #1e3a8a; --tab-inactive-text: #bfdbfe; }
+
+        /* Unit 4 Colors */
+        body[data-unit="unit4"] { --accent-color: #e11d48; --tab-active-bg: #e11d48; --tab-inactive-bg: #ffe4e6; --tab-inactive-text: #be123c; }
+        html.dark body[data-unit="unit4"] { --accent-color: #f43f5e; --tab-active-bg: #f43f5e; --tab-inactive-bg: #881337; --tab-inactive-text: #fecdd3; }
+
+        /* Unit 5 Colors */
+        body[data-unit="unit5"] { --accent-color: #d97706; --tab-active-bg: #d97706; --tab-inactive-bg: #fef3c7; --tab-inactive-text: #b45309; }
+        html.dark body[data-unit="unit5"] { --accent-color: #f59e0b; --tab-active-bg: #f59e0b; --tab-inactive-bg: #78350f; --tab-inactive-text: #fde68a; }
+        
+        /* Unit 6 Colors */
+        body[data-unit="unit6"] { --accent-color: #0d9488; --tab-active-bg: #0d9488; --tab-inactive-bg: #ccfbf1; --tab-inactive-text: #0f766e; }
+        html.dark body[data-unit="unit6"] { --accent-color: #14b8a6; --tab-active-bg: #14b8a6; --tab-inactive-bg: #134e4a; --tab-inactive-text: #99f6e4; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            touch-action: pan-y;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .card {
+            background-color: var(--card-bg-color);
+            transition: background-color 0.3s;
+        }
+
+        .text-muted { color: var(--text-muted-color); }
+        .text-accent { color: var(--accent-color); transition: color 0.3s; }
+        .border-default { border-color: var(--border-color); }
+        .bg-accent { background-color: var(--accent-color); transition: background-color 0.3s;}
+        .ring-accent { --tw-ring-color: var(--accent-color) }
+
+
+        #practice-input {
+            background-color: transparent;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-color);
+            transition: border-color 0.3s, color 0.3s;
+        }
+        #practice-input:focus {
+             border-color: var(--accent-color);
+        }
+        #practice-input.correct {
+            border-color: var(--correct-color);
+            color: var(--correct-color);
+        }
+        #practice-input.incorrect {
+            border-color: var(--incorrect-color);
+        }
+        
+        #login-modal {
+            background-color: rgba(0,0,0,0.5);
+            transition: opacity 0.3s;
+        }
+
+        .syllable, .word-part {
+            transition: color 0.2s ease-in-out;
+        }
+        .syllable-highlight, .word-part-highlight {
+            color: var(--highlight-color);
+        }
+        .word-part-highlight {
+            font-weight: 700;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1.1);
+                box-shadow: 0 0 15px var(--highlight-color);
+            }
+            50% {
+                transform: scale(1.15);
+                box-shadow: 0 0 25px var(--highlight-color);
+            }
+        }
+
+        .button-highlight {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        
+        .unit-tab {
+            background-color: var(--tab-inactive-bg);
+            color: var(--tab-inactive-text);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .unit-tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body data-unit="unit1">
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="card w-full max-w-sm p-8 rounded-2xl shadow-2xl">
+            <h2 class="text-2xl font-bold text-center mb-6">登入以保存進度</h2>
+            <form id="login-form">
+                <input type="text" id="user-id" placeholder="輸入您的 Email 或 LINE ID" class="w-full px-4 py-3 rounded-lg border-default focus:outline-none focus:ring-2 ring-accent" style="background-color: var(--bg-color); color: var(--text-color);" required>
+                <button type="submit" class="w-full mt-6 bg-accent text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition">開始學習</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="w-full max-w-2xl mx-auto p-4 md:p-6 flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="flex items-center justify-between mb-4">
+             <div>
+                <h1 class="text-3xl font-bold">英語單字練習</h1>
+                <h2 id="unit-title" class="text-xl font-semibold text-muted">Unit 1</h2>
+            </div>
+            <button id="theme-toggle" class="p-2 rounded-full text-muted hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            </button>
+        </header>
+
+        <!-- Unit Tabs -->
+        <nav id="unit-tabs" class="flex flex-wrap gap-2 mb-6">
+            <!-- Tabs will be generated by JS -->
+        </nav>
+
+        <!-- Slideshow Container -->
+        <main class="flex-grow flex flex-col justify-center">
+            <div id="slideshow-container" class="card rounded-2xl shadow-lg overflow-hidden relative" style="min-height: 520px;">
+                <div id="slide-content" class="p-6 md:p-10 flex flex-col justify-between h-full">
+                    <!-- Dynamic content goes here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Navigation -->
+        <nav class="flex items-center justify-between mt-6">
+            <button id="prev-btn" class="card font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <div id="slide-counter" class="text-lg font-medium text-muted"></div>
+            <button id="next-btn" class="card font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+            </button>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="text-center mt-8 py-4 border-t border-default">
+            <div id="usage-stats" class="text-muted text-sm mb-2"></div>
+            <p class="text-muted text-sm">作者: 新生國中特教組</p>
+        </footer>
+    </div>
+
+    <script>
+        const allUnitsData = {
+            'unit1': [
+                { word: 'handsome', wordParts: ['hand', 'some'], syllables: ['ˋhæn', 'səm'], partOfSpeech: 'adj.', definition: '英俊的', example: 'Your father is handsome.', example_zh: '你爸爸很英俊。' },
+                { word: 'new', wordParts: ['new'], syllables: ['nju'], partOfSpeech: 'adj.', definition: '新的', example: 'Is this your new school bag?', example_zh: '這是你的新書包嗎？' },
+                { word: 'classmate', wordParts: ['class', 'mate'], syllables: ['ˋklæs', '͵met'], partOfSpeech: 'n.', definition: '同學', example: "That's Zoe. She's my classmate.", example_zh: '那是柔伊。她是我的同學。' },
+                { word: 'young', wordParts: ['young'], syllables: ['jʌŋ'], partOfSpeech: 'adj.', definition: '年輕的', example: "He's young.", example_zh: '他真年輕。' },
+                { word: 'woman', wordParts: ['wo', 'man'], syllables: ['ˋwʊ', 'mən'], partOfSpeech: 'n.', definition: '女人', example: "Who's that beautiful tall woman?", example_zh: '那個又高又漂亮的女人是誰？' },
+                { word: 'very', wordParts: ['ve', 'ry'], syllables: ['ˋvɛ', 'rɪ'], partOfSpeech: 'adv.', definition: '非常', example: 'This tree is very tall.', example_zh: '這棵樹很高。' },
+                { word: 'beautiful', wordParts: ['beau', 'ti', 'ful'], syllables: ['ˋbju', 'tə', 'fəl'], partOfSpeech: 'adj.', definition: '美麗的', example: 'Your school is big and beautiful.', example_zh: '你的學校又大又漂亮。' },
+                { word: 'too', wordParts: ['too'], syllables: ['tu'], partOfSpeech: 'adv.', definition: '也', example: 'My dad is a teacher, too.', example_zh: '我爸爸也是老師。' },
+                { word: 'Nice to meet you.', wordParts: ['Nice', ' to', ' meet', ' you.'], syllables: ['͵naɪs', ' tə', ' `mit', ' ͵ju'], partOfSpeech: '', definition: '很高興認識你', example: 'Nice to meet you, Mr. Brown.', example_zh: '很高興認識你，布朗先生。' },
+                { word: 'cousin', wordParts: ['cou', 'sin'], syllables: ['ˋkʌ', 'zn'], partOfSpeech: 'n.', definition: '堂表兄弟姐妹', example: 'Sharon is my cousin, not my sister.', example_zh: '雪倫是我的表姊，不是親姊姊。' },
+                { word: 'really', wordParts: ['rea', 'lly'], syllables: ['ˋrɪə', 'lɪ'], partOfSpeech: 'adv.', definition: '真地', example: 'Oh, really? I am, too.', example_zh: '喔，真的嗎？我也是。' },
+                { word: 'years old', wordParts: ['years', ' old'], syllables: ['͵jɪrz', ' ˋold'], partOfSpeech: '', definition: '…歲', example: 'Her son is 17 years old.', example_zh: '她的兒子十七歲。' },
+                { word: 'I see.', wordParts: ['I', ' see.'], syllables: ['͵aɪ', ' ˋsi'], partOfSpeech: '', definition: '我知道了。', example: 'I see.', example_zh: '我知道了。' },
+                { word: 'singer', wordParts: ['sing', 'er'], syllables: ['ˋsɪŋ', 'ɚ'], partOfSpeech: 'n.', definition: '歌手', example: "He’s a singer.", example_zh: '他是一名歌手。' },
+                { word: 'office worker', wordParts: ['of', 'fice', ' work', 'er'], syllables: ['ˋɔ', 'fɪs', ' ͵wɝ', 'kɚ'], partOfSpeech: 'n.', definition: '上班族', example: 'I am an office worker, and my wife is, too.', example_zh: '我是上班族，我的妻子也是。' },
+                { word: 'housewife', wordParts: ['house', 'wife'], syllables: ['ˋhaʊs', '͵waɪf'], partOfSpeech: 'n.', definition: '家庭主婦', example: 'My grandmother is a housewife.', example_zh: '我的奶奶是家庭主婦。' },
+                { word: 'police officer', wordParts: ['po', 'lice', ' of', 'fi', 'cer'], syllables: ['pə', 'ˋlis', ' ͵ɔ', 'fɪ', 'sɚ'], partOfSpeech: 'n.', definition: '警察', example: 'He is a police officer.', example_zh: '他是一名警察。' },
+                { word: 'writer', wordParts: ['writ', 'er'], syllables: ['ˋraɪ', 'tɚ'], partOfSpeech: 'n.', definition: '作家', example: 'Are you a writer?', example_zh: '你是一名作家嗎？' },
+                { word: 'uncle', wordParts: ['un', 'cle'], syllables: ['ˋʌŋk', 'l'], partOfSpeech: 'n.', definition: '叔伯；舅舅', example: 'My uncle is a good cook.', example_zh: '我叔叔是一名很棒的廚師。' },
+                { word: 'aunt', wordParts: ['aunt'], syllables: ['ænt'], partOfSpeech: 'n.', definition: '阿姨；姑姑', example: 'Aunt Shelly is my mother’s good friend.', example_zh: '雪莉阿姨是我媽媽的好朋友。' },
+                { word: 'wife', wordParts: ['wife'], syllables: ['waɪf'], partOfSpeech: 'n.', definition: '妻子', example: 'Isn’t his wife a doctor?', example_zh: '他的妻子不是醫生嗎？' },
+                { word: 'daughter', wordParts: ['daugh', 'ter'], syllables: ['ˋdɔ', 'tɚ'], partOfSpeech: 'n.', definition: '女兒', example: 'Julia is Mr. and Mrs. Wilson’s daughter.', example_zh: '朱麗亞是威爾森夫婦的女兒。' },
+                { word: 'husband', wordParts: ['hus', 'band'], syllables: ['ˋhʌz', 'bənd'], partOfSpeech: 'n.', definition: '丈夫', example: 'Her husband is a nurse.', example_zh: '她的丈夫是一位護理師。' },
+                { word: 'son', wordParts: ['son'], syllables: ['sʌn'], partOfSpeech: 'n.', definition: '兒子', example: 'Mrs. Fang is a mother of three sons.', example_zh: '方太太是三個兒子的媽媽。' },
+                { word: 'dear', wordParts: ['dear'], syllables: ['dɪr'], partOfSpeech: 'adj.', definition: '親愛的', example: 'This is a picture of my dear students.', example_zh: '這張照片裡是我親愛的學生們。' },
+                { word: 'family', wordParts: ['fa', 'mi', 'ly'], syllables: ['ˋfæ', 'mə', 'lɪ'], partOfSpeech: 'n.', definition: '家庭；家人', example: 'How’s your family?', example_zh: '你的家人過得好嗎？' },
+                { word: 'elementary school', wordParts: ['e', 'le', 'men', 'ta', 'ry', ' school'], syllables: ['͵ɛ', 'lə', 'ˋmɛn', 'tə', 'rɪ', ' ͵skul'], partOfSpeech: 'n.', definition: '國小', example: 'She is an elementary school student.', example_zh: '她是國小生。' },
+                { word: 'junior high school', wordParts: ['ju', 'nior', ' high', ' school'], syllables: ['͵dʒun', 'jɚ', ' ˋhaɪ', ' ͵skul'], partOfSpeech: 'n.', definition: '國中', example: 'Their mom is a junior high school teacher.', example_zh: '他們的母親是名國中老師。' },
+                { word: 'baby', wordParts: ['ba', 'by'], syllables: ['ˋbe', 'bɪ'], partOfSpeech: 'n.; adj.', definition: '嬰兒；年幼的', example: "The baby's father is Mr. Martin.", example_zh: '這個嬰兒的父親是馬丁先生。' }
+            ],
+            'unit2': [
+                { word: 'house', wordParts: ['house'], syllables: ['haʊs'], partOfSpeech: 'n.', definition: '房子', example: 'Jimmy is not in the house.', example_zh: '吉米不在這棟房子裡。' },
+                { word: 'parents', wordParts: ['pa', 'rents'], syllables: ['ˋpɛr', 'ənts'], partOfSpeech: 'n.', definition: '父母親', example: 'Her parents are very nice.', example_zh: '她的父母親人非常好。' },
+                { word: 'living room', wordParts: ['li', 'ving', ' room'], syllables: ['ˋlɪv', 'ɪŋ', ' ͵rum'], partOfSpeech: 'n.', definition: '客廳', example: 'The new sofa is in the living room.', example_zh: '新的沙發在客廳裡。' },
+                { word: 'wall', wordParts: ['wall'], syllables: ['wɔl'], partOfSpeech: 'n.', definition: '牆壁', example: 'The walls of this room are thin.', example_zh: '這間房間的牆壁是薄的。' },
+                { word: 'purple', wordParts: ['pur', 'ple'], syllables: ['ˋpɝ', 'pl'], partOfSpeech: 'adj.; n.', definition: '紫色（的）', example: "The singer's hair is purple.", example_zh: '那名歌手的頭髮是紫色的。' },
+                { word: 'favorite', wordParts: ['fa', 'vo', 'rite'], syllables: ['ˋfev', 'ər', 'ɪt'], partOfSpeech: 'adj.; n.', definition: '最喜愛（的）', example: "This is my favorite park. It's nice and big.", example_zh: '這是我最喜愛的公園。它又好又大。' },
+                { word: 'color', wordParts: ['co', 'lor'], syllables: ['ˋkʌ', 'lɚ'], partOfSpeech: 'n.', definition: '顏色', example: 'My favorite color is blue.', example_zh: '我最喜愛的顏色是藍色。' },
+                { word: 'kitchen', wordParts: ['kitch', 'en'], syllables: ['ˋkɪtʃ', 'ən'], partOfSpeech: 'n.', definition: '廚房', example: 'Is your aunt in the kitchen?', example_zh: '你的阿姨在廚房嗎？' },
+                { word: 'dining room', wordParts: ['di', 'ning', ' room'], syllables: ['ˋdaɪn', 'ɪŋ', ' ͵rum'], partOfSpeech: 'n.', definition: '飯廳', example: "Aren't the eggs on the dining room table?", example_zh: '雞蛋不是在飯廳的桌上嗎？' },
+                { word: 'but', wordParts: ['but'], syllables: ['bʌt'], partOfSpeech: 'conj.', definition: '但是', example: 'My room is big, but my bed is not.', example_zh: '我的房間很大，但床不大。' },
+                { word: 'gray', wordParts: ['gray'], syllables: ['gre'], partOfSpeech: 'adj.; n.', definition: '灰色（的）', example: "My dad's car is gray.", example_zh: '我爸爸的車是灰色的。' },
+                { word: 'brown', wordParts: ['brown'], syllables: ['braʊn'], partOfSpeech: 'adj.; n.', definition: '棕色（的）', example: 'Jerry’s dog is brown.', example_zh: '傑瑞的狗是棕色的。' },
+                { word: 'cookie', wordParts: ['coo', 'kie'], syllables: ['ˈkʊk', 'ɪ'], partOfSpeech: 'n.', definition: '餅乾', example: 'They are cookies for my mom.', example_zh: '它們是要給我媽媽的餅乾。' },
+                { word: 'mice', wordParts: ['mice'], syllables: ['maɪs'], partOfSpeech: 'n.', definition: '老鼠（複數）', example: 'Two white mice are in the box.', example_zh: '箱子裡有兩隻白老鼠。' },
+                { word: 'maybe', wordParts: ['may', 'be'], syllables: ['ˋme', 'bɪ'], partOfSpeech: 'adv.', definition: '可能', example: "Maybe he's in his dog house.", example_zh: '他可能在他的狗屋裡。' },
+                { word: 'sofa', wordParts: ['so', 'fa'], syllables: ['ˋso', 'fə'], partOfSpeech: 'n.', definition: '沙發', example: "The old sofa is in my grandfather's bedroom.", example_zh: '那張舊的沙發在我爺爺的臥室。' },
+                { word: 'hungry', wordParts: ['hun', 'gry'], syllables: ['ˋhʌŋ', 'grɪ'], partOfSpeech: 'adj.', definition: '餓的', example: "I'm hungry.", example_zh: '我好餓。' },
+                { word: 'notebook', wordParts: ['note', 'book'], syllables: ['ˋnot', '͵bʊk'], partOfSpeech: 'n.', definition: '筆記本', example: 'My notebooks are in my schoolbag.', example_zh: '我的筆記本在我書包裡。' },
+                { word: 'marker', wordParts: ['mark', 'er'], syllables: ['ˋ mɑr', 'kɚ'], partOfSpeech: 'n.', definition: '彩色筆', example: 'Where is my pink marker?', example_zh: '我粉紅色的彩色筆在哪裡？' },
+                { word: 'brush', wordParts: ['brush'], syllables: ['brʌʃ'], partOfSpeech: 'n.', definition: '毛筆；筆刷', example: 'Your brush is under your bed.', example_zh: '你的毛筆在床底下。' },
+                { word: 'gift', wordParts: ['gift'], syllables: ['gɪft'], partOfSpeech: 'n.', definition: '禮物', example: 'It’s a gift for you.', example_zh: '這是給你的禮物。' },
+                { word: 'pencil case', wordParts: ['pen', 'cil', ' case'], syllables: ['ˋpɛn', 'sl', ' ͵kes'], partOfSpeech: 'n.', definition: '鉛筆盒', example: 'My pencil case is on the desk.', example_zh: '我的鉛筆盒在書桌上。' },
+                { word: 'bathroom', wordParts: ['bath', 'room'], syllables: ['ˋbæθ', '͵rum'], partOfSpeech: 'n.', definition: '浴室；廁所', example: 'Are you in the bathroom, Mom?', example_zh: '媽，你在浴室裡嗎？' },
+                { word: 'table', wordParts: ['ta', 'ble'], syllables: ['ˋteb', 'l'], partOfSpeech: 'n.', definition: '桌子', example: 'Sammy, your pencil is on the table.', example_zh: '薩米，你的鉛筆在桌上。' },
+                { word: 'bedroom', wordParts: ['bed', 'room'], syllables: ['ˋbɛd', '͵rum'], partOfSpeech: 'n.', definition: '臥室', example: 'Her bedroom is next to the living room.', example_zh: '她的臥室在客廳旁邊。' },
+                { word: 'near', wordParts: ['near'], syllables: ['nɪr'], partOfSpeech: 'prep.', definition: '在…附近', example: "My uncle's farm is near the zoo.", example_zh: '我舅舅的農場在動物園附近。' },
+                { word: 'between', wordParts: ['be', 'tween'], syllables: ['bɪ', 'ˋtwin'], partOfSpeech: 'prep.', definition: '在…之間', example: 'Who is that between your mom and dad?', example_zh: '在你爸媽中間的那個人是誰？' },
+                { word: 'behind', wordParts: ['be', 'hind'], syllables: ['bɪ', 'ˋhaɪnd'], partOfSpeech: 'prep.', definition: '在…後面', example: "Look! Kenny's cat is behind the tree.", example_zh: '你看！肯尼的貓在樹的後面。' },
+                { word: 'in front of', wordParts: ['in', ' front', ' of'], syllables: ['ɪn', ' ˋfrʌnt', ' əv'], partOfSpeech: 'prep.', definition: '在…前面', example: 'The old tree is in front of our school.', example_zh: '那棵老樹在我們的學校前面。' },
+                { word: 'special', wordParts: ['spe', 'cial'], syllables: ['ˋspɛʃ', 'əl'], partOfSpeech: 'adj.', definition: '特別的', example: "What's special about this pencil?", example_zh: '這枝鉛筆有什麼特別呢？' },
+                { word: 'inside', wordParts: ['in', 'side'], syllables: ['ɪn', 'ˋsaɪd'], partOfSpeech: 'prep.', definition: '在…裡面', example: "What's inside the box?", example_zh: '盒子裡面是什麼？' },
+                { word: 'right', wordParts: ['right'], syllables: ['raɪt'], partOfSpeech: 'adv.', definition: '就', example: 'My house is right next to a park.', example_zh: '我的房子就在公園旁邊。' },
+                { word: 'each other', wordParts: ['each', ' o', 'ther'], syllables: ['͵itʃ', ' ˋʌð', 'ɚ'], partOfSpeech: 'pron.', definition: '彼此；互相', example: 'My classmates are nice to each other.', example_zh: '我的同學們對彼此很友善。' },
+                { word: 'above', wordParts: ['a', 'bove'], syllables: ['ə', 'ˋbʌv'], partOfSpeech: 'prep.; adv.', definition: '在…上方', example: 'The clock is above the TV.', example_zh: '那面時鐘在電視的上方。' },
+                { word: 'enough', wordParts: ['e', 'nough'], syllables: ['ə', 'ˋnʌf'], partOfSpeech: 'adj.; adv.; pron.', definition: '足夠（的）', example: 'it’s enough for a family of three.', example_zh: '對三口之家來說足夠了。' },
+                { word: 'person', wordParts: ['per', 'son'], syllables: ['ˋpɝs', 'n'], partOfSpeech: 'n.', definition: '人', example: 'Jeremy is a nice person.', example_zh: '傑瑞米是個好人。' }
+            ],
+            'unit3': [
+                { word: 'guy', wordParts: ['guy'], syllables: ['gaɪ'], partOfSpeech: 'n.', definition: '人；傢伙', example: 'Guys, don’t run in the classroom.', example_zh: '大家，不要在教室裡奔跑。' },
+                { word: 'magic', wordParts: ['ma', 'gic'], syllables: ['ˋmædʒ', 'ɪk'], partOfSpeech: 'adj.; n.', definition: '神奇的；魔法', example: 'Sally is a fan of magic.', example_zh: '莎莉是一個魔術迷。' },
+                { word: 'with', wordParts: ['with'], syllables: ['wɪð'], partOfSpeech: 'prep.', definition: '用；和', example: 'She’s in the car with Dad.', example_zh: '她跟爸爸在車裡。' },
+                { word: 'can', wordParts: ['can'], syllables: ['kæn'], partOfSpeech: 'aux.', definition: '可以；會', example: 'We can’t eat in the lab.', example_zh: '我們不能在實驗室裡吃東西。' },
+                { word: 'many', wordParts: ['ma', 'ny'], syllables: ['ˋmɛn', 'ɪ'], partOfSpeech: 'adj.; pron.', definition: '許多（的）', example: 'Many English teachers are women.', example_zh: '許多英文老師都是女性。' },
+                { word: 'place', wordParts: ['place'], syllables: ['ples'], partOfSpeech: 'n.', definition: '地方', example: 'What is this place?', example_zh: '這是哪裡？' },
+                { word: 'use', wordParts: ['use'], syllables: ['juz'], partOfSpeech: 'v.; n.', definition: '使用', example: 'Can I use the bathroom?', example_zh: '我能用一下廁所嗎？' },
+                { word: 'sure', wordParts: ['sure'], syllables: ['ʃʊr'], partOfSpeech: 'adv.; adj.', definition: '當然；確定的', example: 'I’m not sure.', example_zh: '我不確定。' },
+                { word: 'let’s', wordParts: ['let’s'], syllables: ['lɛts'], partOfSpeech: '', definition: '讓我們一起…', example: 'Let’s watch TV now.', example_zh: '我們現在來看電視吧。' },
+                { word: 'careful', wordParts: ['care', 'ful'], syllables: ['ˋkɛr', 'fəl'], partOfSpeech: 'adj.', definition: '小心的', example: 'Hey, be careful.', example_zh: '嘿，小心。' },
+                { word: 'museum', wordParts: ['mu', 'se', 'um'], syllables: ['mju', 'ˋzɪ', 'əm'], partOfSpeech: 'n.', definition: '博物館', example: 'Please don’t run in the museum.', example_zh: '請不要在博物館裡奔跑。' },
+                { word: 'Hurry', wordParts: ['Hur', 'ry'], syllables: ['ˋhɝ', 'ɪ'], partOfSpeech: '', definition: '快點！', example: 'Hurry up, Sandy!', example_zh: '快一點，珊迪！' },
+                { word: 'please', wordParts: ['please'], syllables: ['pliz'], partOfSpeech: 'int.', definition: '請；拜託', example: 'Please close the door for me.', example_zh: '請幫我關門。' },
+                { word: 'wait', wordParts: ['wait'], syllables: ['wet'], partOfSpeech: 'v.', definition: '等待', example: 'Wait. Where is my bag?', example_zh: '等等。我的包包在哪？' },
+                { word: 'man', wordParts: ['man'], syllables: ['mæn'], partOfSpeech: 'n.', definition: '男人', example: 'That man is my uncle.', example_zh: '那男人是我叔叔。' },
+                { word: 'now', wordParts: ['now'], syllables: ['naʊ'], partOfSpeech: 'adv.', definition: '現在', example: 'Freddy is in the bathroom now.', example_zh: '佛萊迪現在在廁所。' },
+                { word: 'or', wordParts: ['or'], syllables: ['ɔr'], partOfSpeech: 'conj.', definition: '或者', example: 'Don’t eat or drink on the bus.', example_zh: '不要在公車上吃或喝東西。' },
+                { word: 'time', wordParts: ['time'], syllables: ['taɪm'], partOfSpeech: 'n.', definition: '次；時間', example: 'Please be careful this time.', example_zh: '這次請小心。' },
+                { word: 'wake up', wordParts: ['wake', ' up'], syllables: ['͵wek', ' ˋʌp'], partOfSpeech: '', definition: '醒來；叫醒…', example: 'Can you go wake your sister up?', example_zh: '你能去叫醒你姊姊嗎？' },
+                { word: 'class', wordParts: ['class'], syllables: ['klæs'], partOfSpeech: 'n.', definition: '課；班級', example: 'Please follow class rules.', example_zh: '請遵守課堂規則。' },
+                { word: 'Oh my!', wordParts: ['Oh', ' my!'], syllables: ['ˋo', ' ˋmaɪ'], partOfSpeech: '', definition: '天哪！', example: 'Oh my! It’s a mummy.', example_zh: '我的天！那是一具木乃伊。' },
+                { word: 'see', wordParts: ['see'], syllables: ['si'], partOfSpeech: 'v.', definition: '看見', example: 'Can you see the bird in the tree?', example_zh: '你看得到樹上的那隻鳥嗎？' },
+                { word: 'quiet', wordParts: ['qui', 'et'], syllables: ['ˋkwaɪ', 'ət'], partOfSpeech: 'adj.', definition: '安靜的', example: 'Ken is a quiet student.', example_zh: '肯是個安靜的學生。' },
+                { word: 'turn off', wordParts: ['turn', ' off'], syllables: ['͵tɝn', ' ˋɔf'], partOfSpeech: '', definition: '關掉', example: 'Sam, turn off the TV and go to bed now.', example_zh: '山姆，現在關掉電視，去睡覺。' },
+                { word: 'sign', wordParts: ['sign'], syllables: ['saɪn'], partOfSpeech: 'n.', definition: '標誌', example: 'Look at the sign. You can’t eat here.', example_zh: '看那標示。你不能在這吃東西。' },
+                { word: 'talk', wordParts: ['talk'], syllables: ['tɔk'], partOfSpeech: 'v.', definition: '說話', example: 'Let’s not talk here.', example_zh: '我們不要在這說話。' },
+                { word: 'fight', wordParts: ['fight'], syllables: ['faɪt'], partOfSpeech: 'v.; n.', definition: '吵架；打架', example: 'Leo, don’t fight with your brother.', example_zh: '李奧，不要跟你的哥哥吵架。' },
+                { word: 'turn', wordParts: ['turn'], syllables: ['tɝn'], partOfSpeech: 'n.', definition: '（依次輪到的）機會', example: 'Is it my turn?', example_zh: '輪到我了嗎？' },
+                { word: 'follow', wordParts: ['fol', 'low'], syllables: ['ˋfɑl', 'o'], partOfSpeech: 'v.', definition: '遵守；跟隨', example: 'Guys, please follow the museum rules and be good.', example_zh: '大家，請遵守博物館規則，安分點。' },
+                { word: 'rule', wordParts: ['rule'], syllables: ['rul'], partOfSpeech: 'n.', definition: '規則', example: 'It’s a classroom rule.', example_zh: '這是教室規定。' },
+                { word: 'safe', wordParts: ['safe'], syllables: ['sef'], partOfSpeech: 'adj.', definition: '安全的', example: 'Do not run in the lab. That’s not safe.', example_zh: '不要在實驗室裡奔跑。那不安全。' },
+                { word: 'wash', wordParts: ['wash'], syllables: ['wɑʃ'], partOfSpeech: 'v.', definition: '清洗', example: 'We can wash your dad’s car this afternoon.', example_zh: '我們今天下午可以洗你爸爸的車。' },
+                { word: 'hand', wordParts: ['hand'], syllables: ['hænd'], partOfSpeech: 'n.', definition: '手', example: 'What’s that in your hand?', example_zh: '你手上那個東西是什麼？' },
+                { word: 'after class', wordParts: ['af', 'ter', ' class'], syllables: ['͵æf', 'tɚ', ' ˋklæs'], partOfSpeech: '', definition: '下課後', example: 'Let’s play basketball after class.', example_zh: '我們下課後去打籃球吧。' }
+            ],
+            'unit4': [
+                { word: 'music video', wordParts: ['mu','sic',' vi','deo'], syllables: ['͵mju','zɪk',' ˋvɪd','ɪo'], partOfSpeech: 'n.', definition: '音樂影片', example: 'I am watching Mayday’s new music video.', example_zh: '我在看五月天新出的音樂影片。' },
+                { word: 'band', wordParts: ['band'], syllables: ['bænd'], partOfSpeech: 'n.', definition: '樂團', example: 'My favorite band is singing on stage.', example_zh: '我最愛的樂團正在臺上唱歌。' },
+                { word: 'take a look', wordParts: ['take',' a',' look'], syllables: ['͵tek',' ə',' ˋlʊk'], partOfSpeech: '', definition: '看一看', example: 'Come take a look.', example_zh: '快來看。' },
+                { word: 'all', wordParts: ['all'], syllables: ['ɔl'], partOfSpeech: 'adj.', definition: '所有的', example: 'All the books in the box are from my aunt Lisa.', example_zh: '這個箱子裡所有的書都來自我的阿姨莉莎。' },
+                { word: 'cute', wordParts: ['cute'], syllables: ['kjut'], partOfSpeech: 'adj.', definition: '可愛的', example: 'Toto is a really cute dog.', example_zh: '多多真是一隻可愛的狗。' },
+                { word: 'great', wordParts: ['great'], syllables: ['gret'], partOfSpeech: 'adj.', definition: '棒的', example: 'Really? That’s great!', example_zh: '真的嗎？太好了！' },
+                { word: 'free', wordParts: ['free'], syllables: ['fri'], partOfSpeech: 'adj.', definition: '有空的', example: 'Are you free for the meet-and-greet on Sunday?', example_zh: '你有空參加禮拜天的見面會嗎？' },
+                { word: 'weekend', wordParts: ['week','end'], syllables: ['ˋwik','͵ɛnd'], partOfSpeech: 'n.', definition: '週末', example: 'The baseball game is this weekend.', example_zh: '那場棒球賽是在這週末。' },
+                { word: 'Saturday', wordParts: ['Sa','tur','day'], syllables: ['ˋsæt','ɚ','de'], partOfSpeech: 'n.', definition: '星期六', example: 'The welcome party is on Saturday night.', example_zh: '歡迎派對是在星期六晚上。' },
+                { word: 'together', wordParts: ['to','ge','ther'], syllables: ['tə','ˋgɛð','ɚ'], partOfSpeech: 'adv.', definition: '一起', example: "Let's go to school together.", example_zh: '我們一起去上學吧。' },
+                { word: 'ready', wordParts: ['rea','dy'], syllables: ['ˋrɛd','ɪ'], partOfSpeech: 'adj.', definition: '準備好的', example: 'Are you ready for school?', example_zh: '你準備好要去學校了嗎？' },
+                { word: 'p.m.', wordParts: ['p.m.'], syllables: ['ˋpi',' ˋɛm'], partOfSpeech: 'adv.', definition: '下午; 晚上', example: 'It’s 8:25 p.m. now.', example_zh: '現在是晚上八點二十五分。' },
+                { word: 'o’clock', wordParts: ['o’','clock'], syllables: ['ə','ˋklɑk'], partOfSpeech: 'adv.', definition: '…點鐘', example: 'Can you wake me up at three o’clock in the afternoon?', example_zh: '你下午三點的時候可以叫醒我嗎？' },
+                { word: 'day', wordParts: ['day'], syllables: ['de'], partOfSpeech: 'n.', definition: '日；天', example: "It's a great day today.", example_zh: '今天是個好日子。' },
+                { word: 'today', wordParts: ['to','day'], syllables: ['tə','ˋde'], partOfSpeech: 'adv.; n.', definition: '今天', example: 'It is Teacher’s Day today.', example_zh: '今天是教師節。' },
+                { word: 'Friday', wordParts: ['Fri','day'], syllables: ['ˋfraɪ','de'], partOfSpeech: 'n.', definition: '星期五', example: 'It’s Friday.', example_zh: '星期五。' },
+                { word: 'Sunday', wordParts: ['Sun','day'], syllables: ['ˋsʌn','de'], partOfSpeech: 'n.', definition: '星期日', example: 'The zoo is not open on Sundays.', example_zh: '動物園星期日沒開。' },
+                { word: 'Monday', wordParts: ['Mon','day'], syllables: ['ˋmʌn','de'], partOfSpeech: 'n.', definition: '星期一', example: 'The music class is on Monday afternoon.', example_zh: '音樂課是在星期一的下午。' },
+                { word: 'Tuesday', wordParts: ['Tues','day'], syllables: ['ˋtjuz','de'], partOfSpeech: 'n.', definition: '星期二', example: 'Can I go to your house on Tuesday?', example_zh: '我星期二可以去你家嗎？' },
+                { word: 'Wednesday', wordParts: ['Wed','nes','day'], syllables: ['ˋwɛnz','de'], partOfSpeech: 'n.', definition: '星期三', example: 'Brenda is free this Wednesday.', example_zh: '布蘭達這星期三有空。' },
+                { word: 'Thursday', wordParts: ['Thurs','day'], syllables: ['ˋθɝz','de'], partOfSpeech: 'n.', definition: '星期四', example: 'Thursday is between Wednesday and Friday.', example_zh: '星期四是在星期三和星期五之間。' },
+                { word: 'week', wordParts: ['week'], syllables: ['wik'], partOfSpeech: 'n.', definition: '週；星期', example: 'The new museum is open this week.', example_zh: '那間新的博物館會在這星期開幕。' },
+                { word: 'a.m.', wordParts: ['a.m.'], syllables: ['ˋe',' ˋɛm'], partOfSpeech: 'adv.', definition: '上午；凌晨', example: "Isn't the basketball game at 10:50 a.m.?", example_zh: '籃球比賽不是在早上十點五十分嗎？' },
+                { word: 'study', wordParts: ['stu','dy'], syllables: ['ˋstʌd','ɪ'], partOfSpeech: 'v.', definition: '研讀', example: 'Peter is studying in his room.', example_zh: '彼得正在他的房裡讀書。' },
+                { word: 'English', wordParts: ['Eng','lish'], syllables: ['ˋɪŋg','lɪʃ'], partOfSpeech: 'n.', definition: '英文', example: 'Mr. Cheng is my English teacher.', example_zh: '鄭老師是我的英文老師。' },
+                { word: 'take a walk', wordParts: ['take',' a',' walk'], syllables: ['͵tek',' ə',' ˋwɔk'], partOfSpeech: '', definition: '散步', example: 'Let’s take a walk together.', example_zh: '我們一起去散步吧。' },
+                { word: 'movie', wordParts: ['mo','vie'], syllables: ['ˋmuv','ɪ'], partOfSpeech: 'n.', definition: '電影', example: 'Is the new movie good?', example_zh: '那部新的電影好看嗎？' },
+                { word: 'take a picture', wordParts: ['take',' a',' pic','ture'], syllables: ['͵tek',' ə',' ˋpɪk','tʃɚ'], partOfSpeech: '', definition: '拍照', example: 'Everyone is taking a picture with his or her favorite teacher.', example_zh: '大家都在和自己最喜歡的老師拍照。' },
+                { word: 'party', wordParts: ['par','ty'], syllables: ['ˋpɑr','tɪ'], partOfSpeech: 'n.', definition: '派對；宴會', example: 'I’m at Timothy’s party.', example_zh: '我在提摩西的派對上。' },
+                { word: 'report', wordParts: ['re','port'], syllables: ['rɪ','ˋpɔrt'], partOfSpeech: 'v.; n.', definition: '報導', example: 'The woman on TV is reporting from the singer’s new house.', example_zh: '電視上的女子正在那位歌手的新家現場報導。' },
+                { word: 'popular', wordParts: ['po','pu','lar'], syllables: ['ˋpɑp','jə','lɚ'], partOfSpeech: 'adj.', definition: '受歡迎的', example: 'The singer is very handsome and popular.', example_zh: '那位歌手很英俊而且也很受歡迎。' },
+                { word: 'fan', wordParts: ['fan'], syllables: ['fæn'], partOfSpeech: 'n.', definition: '…迷', example: 'The fan is taking a picture with the writer.', example_zh: '那名粉絲正和作家拍照。' },
+                { word: 'shake hands', wordParts: ['shake',' hands'], syllables: ['͵ʃek',' ˋhændz'], partOfSpeech: '', definition: '握手', example: 'James is shaking hands with his teacher.', example_zh: '詹姆斯正在和他的老師握手。' },
+                { word: 'everyone', wordParts: ['e','ve','ry','one'], syllables: ['ˋɛv','rɪ','͵wʌn'], partOfSpeech: 'pron.', definition: '每個人', example: 'The drinks are not enough for everyone.', example_zh: '這些飲料不夠分給所有的人。' },
+                { word: 'sign', wordParts: ['sign'], syllables: ['saɪn'], partOfSpeech: 'v.', definition: '簽名', example: 'Can you sign this picture for me?', example_zh: '你可以幫我在這張照片上簽名嗎？' }
+            ],
+            'unit5': [
+                { word: 'date', wordParts: ['date'], syllables: ['det'], partOfSpeech: 'n.', definition: '日期', example: 'The date of the concert is September twenty-first.', example_zh: '那場演唱會的日期是九月二十一日。' },
+                { word: 'November', wordParts: ['No','vem','ber'], syllables: ['no','ˈvɛm','bɚ'], partOfSpeech: 'n.', definition: '十一月', example: 'Thanksgiving is in November.', example_zh: '感恩節是在十一月。' },
+                { word: 'first', wordParts: ['first'], syllables: ['fɝst'], partOfSpeech: 'adj.; adv.; n.', definition: '第一（的）', example: 'Sunday is the first day of the week.', example_zh: '星期日是一個星期的第一天。' },
+                { word: 'Thanksgiving', wordParts: ['Thanks','giv','ing'], syllables: ['͵θæŋks','ˋgɪv','ɪŋ'], partOfSpeech: 'n.', definition: '感恩節', example: 'People can have a day off on Thanksgiving in the USA.', example_zh: '在美國，人們在感恩節可以放一天假。' },
+                { word: 'important', wordParts: ['im','por','tant'], syllables: ['ɪm','ˋpɔr','tn̩t'], partOfSpeech: 'adj.', definition: '重要的', example: 'Basketball is important to Jesse.', example_zh: '籃球對傑西來說是重要的。' },
+                { word: 'holiday', wordParts: ['ho','li','day'], syllables: ['ˋhɑl','ə','͵de'], partOfSpeech: 'n.', definition: '節日；假日', example: 'Christmas is my favorite holiday.', example_zh: '聖誕節是我最喜歡的節日。' },
+                { word: 'when', wordParts: ['when'], syllables: ['(h)wɛn'], partOfSpeech: 'adv.', definition: '何時', example: 'When is their meet-and-greet?', example_zh: '他們的見面會是在什麼時候？' },
+                { word: 'fourth', wordParts: ['fourth'], syllables: ['fɔrθ'], partOfSpeech: 'adj.; adv.; n.', definition: '第四（的）', example: 'The fourth class today is English.', example_zh: '今天第四節課是英文課。' },
+                { word: 'birthday', wordParts: ['birth','day'], syllables: ['ˋbɝθ','͵de'], partOfSpeech: 'n.', definition: '生日', example: 'Tomorrow is my birthday.', example_zh: '明天是我的生日。' },
+                { word: 'also', wordParts: ['al','so'], syllables: ['ˋɔl','so'], partOfSpeech: 'adv.', definition: '也；此外', example: 'Ted is my cousin, and he’s also my classmate.', example_zh: '泰德是我的表哥，而且他也是我的同學。' },
+                { word: 'before', wordParts: ['be','fore'], syllables: ['bɪ','ˋfɔr'], partOfSpeech: 'prep.', definition: '在…之前', example: 'Let’s play a game before dinner.', example_zh: '我們在吃晚餐前來玩個遊戲吧。' },
+                { word: 'around', wordParts: ['a','round'], syllables: ['ə','ˋraʊnd'], partOfSpeech: 'adv.; prep.', definition: '圍繞；在…附近', example: 'Are there many houses around the park?', example_zh: '公園周遭有很多房子嗎？' },
+                { word: 'How about', wordParts: ['How',' about'], syllables: ['͵haʊ',' əˋbaʊt'], partOfSpeech: '', definition: '那…呢？', example: 'How about you, Lauren?', example_zh: '你呢，勞倫？' },
+                { word: 'second', wordParts: ['se','cond'], syllables: ['ˋsɛk','ənd'], partOfSpeech: 'adj.; adv. ; n.', definition: '第二（的）', example: 'Rose is Mr. Bean’s second daughter.', example_zh: '蘿絲是豆豆先生的二女兒。' },
+                { word: 'next', wordParts: ['next'], syllables: ['nɛkst'], partOfSpeech: 'adj.', definition: '下一個的', example: 'Christmas Eve is next week.', example_zh: '平安夜是在下週。' },
+                { word: 'month', wordParts: ['month'], syllables: ['mʌnθ'], partOfSpeech: 'n.', definition: '月份', example: 'My sister is seven months old.', example_zh: '我妹妹七個月大。' },
+                { word: 'January', wordParts: ['Ja','nu','a','ry'], syllables: ['ˋdʒæn','jʊ','͵ɛr','ɪ'], partOfSpeech: 'n.', definition: '一月', example: 'January is the first month of the year.', example_zh: '一月是一年中的第一個月。' },
+                { word: 'February', wordParts: ['Fe','bru','a','ry'], syllables: ['ˋfɛb','rʊ','͵ɛr','ɪ'], partOfSpeech: 'n.', definition: '二月', example: 'The holiday is in February.', example_zh: '這個節日在二月。' },
+                { word: 'March', wordParts: ['March'], syllables: ['mɑrtʃ'], partOfSpeech: 'n.', definition: '三月', example: 'The baseball game is on March fifteenth.', example_zh: '棒球賽在三月十五號。' },
+                { word: 'April', wordParts: ['A','pril'], syllables: ['ˋep','rəl'], partOfSpeech: 'n.', definition: '四月', example: 'April is between March and May.', example_zh: '四月在三月和五月之間。' },
+                { word: 'May', wordParts: ['May'], syllables: ['me'], partOfSpeech: 'n.', definition: '五月', example: 'Mother’s Day is on the second Sunday of May.', example_zh: '母親節在五月的第二個星期天。' },
+                { word: 'June', wordParts: ['June'], syllables: ['dʒun'], partOfSpeech: 'n.', definition: '六月', example: 'June first is on Saturday this year.', example_zh: '今年六月一號是在星期六。' },
+                { word: 'July', wordParts: ['Ju','ly'], syllables: ['dʒu','ˋlaɪ'], partOfSpeech: 'n.', definition: '七月', example: 'July fourth is a very important day in the USA.', example_zh: '七月四號在美國是非常重要的日子。' },
+                { word: 'August', wordParts: ['Au','gust'], syllables: ['ɔ','ˋgʌst'], partOfSpeech: 'n.', definition: '八月', example: 'Father’s Day in Taiwan is on August eighth.', example_zh: '在臺灣，父親節是八月八號。' },
+                { word: 'September', wordParts: ['Sep','tem','ber'], syllables: ['sɛp','ˋtɛm','bɚ'], partOfSpeech: 'n.', definition: '九月', example: 'September twenty-eighth is Confucius’ birthday.', example_zh: '九月二十八是孔子的生日。' },
+                { word: 'October', wordParts: ['Oc','to','ber'], syllables: ['ɑk','ˋtob','ɚ'], partOfSpeech: 'n.', definition: '十月', example: 'October is after September.', example_zh: '十月是在九月之後。' },
+                { word: 'December', wordParts: ['De','cem','ber'], syllables: ['dɪ','ˋsɛm','bɚ'], partOfSpeech: 'n.', definition: '十二月', example: 'Christmas is in December.', example_zh: '聖誕節在十二月。' },
+                { word: 'New Year’s Eve', wordParts: ['New',' Year’s',' Eve'], syllables: ['͵nju',' jɪrz',' ˋiv'], partOfSpeech: 'n.', definition: '元旦前夕', example: 'New Year’s Eve is on December 31.', example_zh: '跨年夜是在十二月三十一號。' },
+                { word: 'Christmas', wordParts: ['Christ','mas'], syllables: ['ˋkrɪs','məs'], partOfSpeech: 'n.', definition: '聖誕節', example: 'It’s Christmas today.', example_zh: '今天是聖誕節。' },
+                { word: 'third', wordParts: ['third'], syllables: ['θɝd'], partOfSpeech: 'adj.; adv. ; n.', definition: '第三（的）', example: 'March is the third month of the year.', example_zh: '三月是一年中的第三個月。' },
+                { word: 'animal', wordParts: ['a','ni','mal'], syllables: ['ˋæn','ə','m!'], partOfSpeech: 'n.', definition: '動物', example: 'What’s your favorite animal?', example_zh: '你最喜歡的動物是什麼？' },
+                { word: 'cow', wordParts: ['cow'], syllables: ['kaʊ'], partOfSpeech: 'n.', definition: '牛；乳牛', example: 'Don’t touch the cow. It’s eating.', example_zh: '不要碰那隻牛。牠在吃東西。' },
+                { word: 'think', wordParts: ['think'], syllables: ['θɪŋk'], partOfSpeech: 'v.', definition: '想；認為', example: 'I’m thinking about Ma’s Kitchen.', example_zh: '在考慮馬家廚房。' },
+                { word: 'lucky', wordParts: ['luck','y'], syllables: ['ˋlʌk','ɪ'], partOfSpeech: 'adj.', definition: '幸運地', example: 'Twelve is my lucky number.', example_zh: '十二是我的幸運數字。' },
+                { word: 'only', wordParts: ['on','ly'], syllables: ['ˋonl','ɪ'], partOfSpeech: 'adv.; adj.', definition: '只是；唯一的', example: 'He is only a boy, not a man.', example_zh: '他只是個男孩，不是男人。' },
+                { word: 'dinner', wordParts: ['din','ner'], syllables: ['ˋdɪn','ɚ'], partOfSpeech: 'n.', definition: '晚餐', example: 'Sammy is having dinner with her family.', example_zh: '珊米正在和她的家人吃晚餐。' }
+            ],
+            'unit6': [
+                { word: 'lion', wordParts: ['li','on'], syllables: ['ˋlaɪ','ən'], partOfSpeech: 'n.', definition: '獅子', example: 'Is there a lion under the tree?', example_zh: '那棵樹下有隻獅子嗎？' },
+                { word: 'over there', wordParts: ['o','ver',' there'], syllables: ['͵ov','ɚ',' ˋðɛr'], partOfSpeech: '', definition: '在那裡', example: 'The woman over there is a cook.', example_zh: '在那邊的女人是個廚師。' },
+                { word: 'king', wordParts: ['king'], syllables: ['kɪŋ'], partOfSpeech: 'n.', definition: '國王', example: 'The beautiful house is for the king.', example_zh: '那間漂亮的房子是要給國王的。' },
+                { word: 'some', wordParts: ['some'], syllables: ['sʌm'], partOfSpeech: 'adj.; pron.', definition: '一些（的）', example: 'There are some comic books on the desk.', example_zh: '書桌上有一些漫畫書。' },
+                { word: 'elephant', wordParts: ['e','le','phant'], syllables: ['ˋɛl','ə','fənt'], partOfSpeech: 'n.', definition: '大象', example: 'There’s an elephant in front of the bus.', example_zh: '公車前面有一隻大象。' },
+                { word: 'so', wordParts: ['so'], syllables: ['so'], partOfSpeech: 'adv.', definition: '如此地', example: 'Uncle Peter’s farm is so big.', example_zh: '彼得叔叔的農場很大。' },
+                { word: 'any', wordParts: ['a','ny'], syllables: ['ˋɛn','ɪ'], partOfSpeech: 'adj.; pron.', definition: '任何（的）', example: "There aren't any chairs in the classroom.", example_zh: '教室裡沒有任何一張椅子。' },
+                { word: 'tiger', wordParts: ['ti','ger'], syllables: ['ˋtaɪ','gɚ'], partOfSpeech: 'n.', definition: '老虎', example: 'Lions and tigers are big cats.', example_zh: '獅子和老虎都是大貓。' },
+                { word: 'zebra', wordParts: ['ze','bra'], syllables: ['ˋzib','rə'], partOfSpeech: 'n.', definition: '斑馬', example: 'There are no zebras near here.', example_zh: '這裡附近沒有斑馬。' },
+                { word: 'back', wordParts: ['back'], syllables: ['bæk'], partOfSpeech: 'n.', definition: '背；後面', example: 'Is that a bird on the dog’s back?', example_zh: '在小狗背上的是一隻小鳥嗎？' },
+                { word: 'help', wordParts: ['help'], syllables: ['hɛlp'], partOfSpeech: 'n.; v.', definition: '幫助；幫忙', example: 'The watch is a great help to me.', example_zh: '這隻手錶對我幫助很大。' },
+                { word: 'right', wordParts: ['right'], syllables: ['raɪt'], partOfSpeech: 'adj.', definition: '正確的', example: 'That’s right.', example_zh: '沒錯。' },
+                { word: 'monkey', wordParts: ['mon','key'], syllables: ['ˋmʌŋk','ɪ'], partOfSpeech: 'n.', definition: '猴子', example: 'There are three monkeys in the tree.', example_zh: '樹上有三隻猴子。' },
+                { word: 'fox', wordParts: ['fox'], syllables: ['fɑks'], partOfSpeech: 'n.', definition: '狐狸', example: 'Are there two foxes over there?', example_zh: '那邊有兩隻狐狸嗎？' },
+                { word: 'horse', wordParts: ['horse'], syllables: ['hɔrs'], partOfSpeech: 'n.', definition: '馬', example: 'This horse is very old.', example_zh: '這匹馬很老了。' },
+                { word: 'rat', wordParts: ['rat'], syllables: ['ræt'], partOfSpeech: 'n.', definition: '老鼠', example: 'There is a big rat in the kitchen.', example_zh: '廚房裡有隻大老鼠。' },
+                { word: 'bear', wordParts: ['bear'], syllables: ['bɛr'], partOfSpeech: 'n.', definition: '熊', example: 'Are there any bears in Africa?', example_zh: '非洲有任何熊嗎？' },
+                { word: 'world', wordParts: ['world'], syllables: ['ˋwɝld'], partOfSpeech: 'n.', definition: '世界', example: 'The lion is the king of the animal world.', example_zh: '獅子是動物世界的王。' },
+                { word: 'example', wordParts: ['ex','am','ple'], syllables: ['ɪɡ','ˈzæm','pl'], partOfSpeech: 'n.', definition: '實例', example: 'The Lins are a great example of a happy family.', example_zh: '林家是幸福家庭的典範。' },
+                { word: 'bug', wordParts: ['bug'], syllables: ['bʌg'], partOfSpeech: 'n.', definition: '蟲子', example: 'There is a bug in the pencil box.', example_zh: '有隻蟲子在這個鉛筆盒裡。' },
+                { word: 'food', wordParts: ['food'], syllables: ['fud'], partOfSpeech: 'n.', definition: '食物', example: 'Let’s eat some food.', example_zh: '我們來吃東西吧。' },
+                { word: 'clean up', wordParts: ['clean',' up'], syllables: ['͵klin',' ˋʌp'], partOfSpeech: '', definition: '清理；打掃', example: 'Tom is cleaning up his room.', example_zh: '湯姆正在清理他的房間。' },
+                { word: 'full', wordParts: ['full'], syllables: ['fʊl'], partOfSpeech: 'adj.', definition: '飽的；滿的', example: 'I’m full.', example_zh: '我很飽。' },
+                { word: 'healthy', wordParts: ['health','y'], syllables: ['ˋhɛlθ','ɪ'], partOfSpeech: 'adj.', definition: '健康的', example: 'Mary’s daughter is a healthy girl.', example_zh: '瑪莉的女兒是個健康的女孩。' },
+                { word: 'thanks to', wordParts: ['thanks',' to'], syllables: ['ˋθæŋks',' tə'], partOfSpeech: '', definition: '幸虧；由於', example: 'Thanks to Mom, we can have a great dinner.', example_zh: '多虧了媽媽，我們可以有頓很棒的晚餐。' },
+                { word: 'clean', wordParts: ['clean'], syllables: ['klin'], partOfSpeech: 'adj.', definition: '乾淨的', example: 'Their house is very clean.', example_zh: '他們的房子很乾淨。' }
+            ]
+        };
+
+        let currentUnit = 'unit1';
+        let currentSlide = 0;
+        let userData = {};
+        let isSpeaking = false;
+        let slidesData = allUnitsData[currentUnit];
+
+        const slideContentEl = document.getElementById('slide-content');
+        const slideCounterEl = document.getElementById('slide-counter');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const slideshowContainer = document.getElementById('slideshow-container');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIconDark = document.getElementById('theme-icon-dark');
+        const themeIconLight = document.getElementById('theme-icon-light');
+        const loginModal = document.getElementById('login-modal');
+        const loginForm = document.getElementById('login-form');
+        const userIdInput = document.getElementById('user-id');
+        const usageStatsEl = document.getElementById('usage-stats');
+        const unitTabsEl = document.getElementById('unit-tabs');
+        const unitTitleEl = document.getElementById('unit-title');
+
+        // --- Core Functions ---
+
+        function renderSlide() {
+            slidesData = allUnitsData[currentUnit];
+            const slide = slidesData[currentSlide];
+            slideContentEl.innerHTML = `
+                <div>
+                    <div class="flex items-center mb-1">
+                        <h3 class="text-4xl md:text-5xl font-bold text-accent mr-4 capitalize">
+                            ${slide.wordParts.map(part => `<span class="word-part">${part}</span>`).join('')}
+                        </h3>
+                        <button id="speak-btn" class="text-muted hover:text-accent transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd" /></svg>
+                        </button>
+                    </div>
+                     <input type="text" id="practice-input" placeholder="請在此輸入單字練習..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                           class="w-full text-4xl md:text-5xl font-bold p-0 m-0 border-b-2 bg-transparent focus:outline-none capitalize" style="height: 60px; border-radius: 0;">
+                    <div id="pronunciation-container" class="text-lg text-muted mt-4 mb-6">
+                        [${slide.syllables.map(syl => `<span class="syllable">${syl}</span>`).join('')}]
+                    </div>
+                     <p class="text-xl"><span class="font-semibold">${slide.partOfSpeech}</span> ${slide.definition}</p>
+                </div>
+                <div class="mt-6 border-t border-default pt-4">
+                    <p class="text-md font-semibold text-muted mb-2">例句：</p>
+                    <p class="text-lg mb-1">${slide.example}</p>
+                    <p class="text-md text-muted">${slide.example_zh}</p>
+                </div>
+            `;
+            document.getElementById('speak-btn').addEventListener('click', speakWord);
+            document.getElementById('practice-input').addEventListener('input', handleTyping);
+            updateNav();
+            saveProgress();
+        }
+        
+        function updateNav() {
+            slidesData = allUnitsData[currentUnit];
+            slideCounterEl.textContent = `${currentSlide + 1} / ${slidesData.length}`;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slidesData.length - 1;
+            unitTitleEl.textContent = `Unit ${currentUnit.replace('unit', '')}`;
+        }
+
+        function showNextSlide() {
+            slidesData = allUnitsData[currentUnit];
+            nextBtn.classList.remove('button-highlight');
+            if (currentSlide < slidesData.length - 1) {
+                currentSlide++;
+                renderSlide();
+            }
+        }
+        
+        function showPrevSlide() {
+            nextBtn.classList.remove('button-highlight');
+            if (currentSlide > 0) {
+                currentSlide--;
+                renderSlide();
+            }
+        }
+
+        function switchUnit(unitId) {
+            if (unitId === currentUnit) return;
+            currentUnit = unitId;
+            document.body.dataset.unit = currentUnit;
+            
+            // Initialize progress for the new unit if it doesn't exist
+            if (userData.progress && !userData.progress[currentUnit]) {
+                userData.progress[currentUnit] = { lastWordIndex: 0, usageCount: 0 };
+            }
+
+            // Increment usage count for the current unit
+            if(userData.progress && userData.progress[currentUnit]) {
+                userData.progress[currentUnit].usageCount++;
+            }
+
+            currentSlide = userData.progress[currentUnit]?.lastWordIndex || 0;
+            
+            slidesData = allUnitsData[currentUnit];
+            renderSlide();
+            updateActiveTab();
+        }
+
+        function updateActiveTab() {
+            const tabs = document.querySelectorAll('.unit-tab');
+            tabs.forEach(tab => {
+                if (tab.dataset.unit === currentUnit) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+        }
+
+        // --- Feature Functions ---
+
+        function speakWord() {
+            if (isSpeaking) return;
+            isSpeaking = true;
+            slidesData = allUnitsData[currentUnit];
+            const slide = slidesData[currentSlide];
+            
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(slide.word);
+                utterance.lang = 'en-US';
+                utterance.onend = () => { isSpeaking = false; };
+                utterance.onerror = (e) => { 
+                    console.error('SpeechSynthesis Error:', e);
+                    isSpeaking = false; 
+                };
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('抱歉，您的瀏覽器不支援語音合成功能。');
+                isSpeaking = false;
+                return;
+            }
+
+            const syllableSpans = document.querySelectorAll('.syllable');
+            const wordPartSpans = document.querySelectorAll('.word-part');
+
+            syllableSpans.forEach(span => span.classList.remove('syllable-highlight'));
+            wordPartSpans.forEach(span => span.classList.remove('word-part-highlight'));
+
+            let delay = 0;
+            const highlightDelay = 350;
+
+            slide.syllables.forEach((syllable, index) => {
+                setTimeout(() => {
+                    if (syllableSpans[index]) syllableSpans[index].classList.add('syllable-highlight');
+                    if (wordPartSpans[index]) wordPartSpans[index].classList.add('word-part-highlight');
+                }, delay);
+                delay += highlightDelay;
+            });
+            
+            setTimeout(() => {
+                 syllableSpans.forEach(span => span.classList.remove('syllable-highlight'));
+                 wordPartSpans.forEach(span => span.classList.remove('word-part-highlight'));
+            }, delay + 200);
+        }
+
+        function handleTyping(e) {
+            const input = e.target;
+            slidesData = allUnitsData[currentUnit];
+            const correctWord = slidesData[currentSlide].word.replace(/[\.\s]/g, '').toLowerCase();
+            const typedWord = input.value.replace(/[\.\s]/g, '').toLowerCase();
+
+            if (typedWord === correctWord) {
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+                input.disabled = true;
+                if (!nextBtn.disabled) {
+                    nextBtn.classList.add('button-highlight');
+                }
+            } else if (correctWord.startsWith(typedWord)) {
+                 input.classList.remove('incorrect');
+                 input.classList.remove('correct');
+            } else {
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+            }
+        }
+        
+        // --- Theme Management ---
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeIconLight.classList.remove('hidden');
+                themeIconDark.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIconDark.classList.remove('hidden');
+                themeIconLight.classList.add('hidden');
+            }
+        }
+
+        function toggleTheme() {
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            applyTheme(newTheme);
+            if (userData.id) {
+                userData.theme = newTheme;
+                saveUserData();
+            }
+        }
+
+        // --- User Data & History ---
+        function loadUserData() {
+            const savedData = localStorage.getItem('engAppUserDataV3');
+            if (savedData) {
+                userData = JSON.parse(savedData);
+                currentUnit = userData.lastUnit || 'unit1';
+                return true;
+            }
+            return false;
+        }
+
+        function saveUserData() {
+            userData.lastUnit = currentUnit;
+            localStorage.setItem('engAppUserDataV3', JSON.stringify(userData));
+        }
+
+        function initUser() {
+            if (loadUserData()) {
+                if (userData.progress && userData.progress[currentUnit]) {
+                    currentSlide = userData.progress[currentUnit].lastWordIndex || 0;
+                    userData.progress[currentUnit].usageCount = (userData.progress[currentUnit].usageCount || 0) + 1;
+                } else {
+                    // Initialize progress for current unit if it doesn't exist
+                    if (!userData.progress) userData.progress = {};
+                    userData.progress[currentUnit] = { lastWordIndex: 0, usageCount: 1 };
+                    currentSlide = 0;
+                }
+                loginModal.classList.add('hidden');
+                mainInit();
+            } else {
+                loginModal.classList.remove('hidden');
+                applyTheme('light');
+            }
+        }
+
+        function saveProgress() {
+            if (userData && userData.progress && userData.progress[currentUnit]) {
+                userData.progress[currentUnit].lastWordIndex = currentSlide;
+                saveUserData();
+                updateUsageStats();
+            }
+        }
+
+        function updateUsageStats() {
+            if (userData && userData.progress && userData.progress[currentUnit]) {
+                slidesData = allUnitsData[currentUnit];
+                usageStatsEl.textContent = `學習進度: ${currentSlide + 1} / ${slidesData.length} | 本單元使用: ${userData.progress[currentUnit].usageCount} 次`;
+            }
+        }
+
+        function createTabs() {
+            unitTabsEl.innerHTML = '';
+            Object.keys(allUnitsData).forEach((unitId, index) => {
+                const unitNum = index + 1;
+                const tab = document.createElement('button');
+                tab.textContent = `Unit ${unitNum}`;
+                tab.dataset.unit = unitId;
+                tab.className = 'unit-tab px-4 py-2 rounded-lg text-sm font-medium transition';
+                tab.addEventListener('click', () => switchUnit(unitId));
+                unitTabsEl.appendChild(tab);
+            });
+        }
+
+
+        // --- Event Listeners ---
+        prevBtn.addEventListener('click', showPrevSlide);
+        nextBtn.addEventListener('click', showNextSlide);
+        themeToggle.addEventListener('click', toggleTheme);
+        
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userId = userIdInput.value.trim();
+            if (userId) {
+                userData = {
+                    id: userId,
+                    theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+                    lastUnit: 'unit1',
+                    progress: {
+                        'unit1': { lastWordIndex: 0, usageCount: 1 }
+                    }
+                };
+                saveUserData();
+                loginModal.classList.add('hidden');
+                mainInit();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            const practiceInput = document.getElementById('practice-input');
+            if (document.activeElement === practiceInput || loginModal.classList.contains('hidden') === false) return;
+            if (e.key === 'ArrowRight') showNextSlide();
+            else if (e.key === 'ArrowLeft') showPrevSlide();
+        });
+
+        let touchstartX = 0;
+        slideshowContainer.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; });
+        slideshowContainer.addEventListener('touchend', e => {
+            const touchendX = e.changedTouches[0].screenX;
+            if (touchendX < touchstartX && (touchstartX - touchendX > 50)) showNextSlide();
+            if (touchendX > touchstartX && (touchendX - touchstartX > 50)) showPrevSlide();
+        });
+
+        // --- Initialization ---
+        function mainInit() {
+            createTabs();
+            applyTheme(userData.theme || 'light');
+            document.body.dataset.unit = currentUnit;
+            slidesData = allUnitsData[currentUnit];
+            renderSlide();
+            updateActiveTab();
+        }
+
+        document.addEventListener('DOMContentLoaded', initUser);
+
+    </script>
+</body>
+</html>
+
