@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>114-1-7英語單字練習-翰林版 - 新生國中特教組</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --card-bg-color: #f9fafb;
+            --text-color: #0c0a09;
+            --text-muted-color: #57534e;
+            --border-color: #e7e5e4;
+            --correct-color: #15803d;
+            --incorrect-color: #b91c1c;
+            --highlight-color: #f59e0b;
+
+            /* Default Unit 1 Colors */
+            --accent-color: #4f46e5;
+            --tab-active-bg: #4f46e5;
+            --tab-active-text: #ffffff;
+            --tab-inactive-bg: #e0e7ff;
+            --tab-inactive-text: #3730a3;
+        }
+
+        html.dark {
+            --bg-color: #1c1917;
+            --card-bg-color: #292524;
+            --text-color: #f5f5f4;
+            --text-muted-color: #a8a29e;
+            --border-color: #57534e;
+            --highlight-color: #fcd34d;
+            
+            /* Default Unit 1 Dark Colors */
+            --accent-color: #818cf8;
+            --tab-active-bg: #6366f1;
+            --tab-inactive-bg: #312e81;
+            --tab-inactive-text: #e0e7ff;
+        }
+        
+        /* Unit 2 Colors */
+        body[data-unit="unit2"] { --accent-color: #16a34a; --tab-active-bg: #16a34a; --tab-inactive-bg: #dcfce7; --tab-inactive-text: #166534; }
+        html.dark body[data-unit="unit2"] { --accent-color: #4ade80; --tab-active-bg: #22c55e; --tab-inactive-bg: #14532d; --tab-inactive-text: #dcfce7; }
+
+        /* Unit 3 Colors */
+        body[data-unit="unit3"] { --accent-color: #2563eb; --tab-active-bg: #2563eb; --tab-inactive-bg: #dbeafe; --tab-inactive-text: #1e40af; }
+        html.dark body[data-unit="unit3"] { --accent-color: #60a5fa; --tab-active-bg: #3b82f6; --tab-inactive-bg: #1e3a8a; --tab-inactive-text: #dbeafe; }
+
+        /* Unit 4 Colors */
+        body[data-unit="unit4"] { --accent-color: #e11d48; --tab-active-bg: #e11d48; --tab-inactive-bg: #ffe4e6; --tab-inactive-text: #9f1239; }
+        html.dark body[data-unit="unit4"] { --accent-color: #fb7185; --tab-active-bg: #f43f5e; --tab-inactive-bg: #881337; --tab-inactive-text: #ffe4e6; }
+
+        /* Unit 5 Colors */
+        body[data-unit="unit5"] { --accent-color: #d97706; --tab-active-bg: #d97706; --tab-inactive-bg: #fef3c7; --tab-inactive-text: #92400e; }
+        html.dark body[data-unit="unit5"] { --accent-color: #facc15; --tab-active-bg: #f59e0b; --tab-inactive-bg: #78350f; --tab-inactive-text: #fef3c7; }
+        
+        /* Unit 6 Colors */
+        body[data-unit="unit6"] { --accent-color: #0d9488; --tab-active-bg: #0d9488; --tab-inactive-bg: #ccfbf1; --tab-inactive-text: #115e59; }
+        html.dark body[data-unit="unit6"] { --accent-color: #2dd4bf; --tab-active-bg: #14b8a6; --tab-inactive-bg: #134e4a; --tab-inactive-text: #ccfbf1; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            touch-action: pan-y;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .card {
+            background-color: var(--card-bg-color);
+            transition: background-color 0.3s;
+        }
+
+        .text-muted { color: var(--text-muted-color); }
+        .text-accent { color: var(--accent-color); transition: color 0.3s; }
+        .border-default { border-color: var(--border-color); }
+        .bg-accent { background-color: var(--accent-color); transition: background-color 0.3s;}
+        .ring-accent { --tw-ring-color: var(--accent-color) }
+        .speakable { cursor: pointer; }
+        .speakable:hover { background-color: rgba(128, 128, 128, 0.1); border-radius: 4px;}
+
+        #practice-input {
+            background-color: transparent;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-color);
+            transition: border-color 0.3s, color 0.3s;
+        }
+        #practice-input:focus {
+             border-color: var(--accent-color);
+        }
+        #practice-input.correct {
+            border-color: var(--correct-color);
+            color: var(--correct-color);
+        }
+        #practice-input.incorrect {
+            border-color: var(--incorrect-color);
+        }
+        
+        .modal {
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            transition: opacity 0.3s;
+        }
+
+        .syllable, .word-part {
+            transition: color 0.2s ease-in-out;
+        }
+        .syllable-highlight, .word-part-highlight {
+            color: var(--highlight-color);
+        }
+        .word-part-highlight {
+            font-weight: 700;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1.1);
+                box-shadow: 0 0 15px var(--highlight-color);
+            }
+            50% {
+                transform: scale(1.15);
+                box-shadow: 0 0 25px var(--highlight-color);
+            }
+        }
+
+        .button-highlight {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        
+        .unit-tab {
+            background-color: var(--tab-inactive-bg);
+            color: var(--tab-inactive-text);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .unit-tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            font-weight: 700;
+        }
+
+        .puzzle-piece {
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+        }
+        .puzzle-piece:active {
+            cursor: grabbing;
+        }
+        .puzzle-slot {
+            min-width: 80px;
+            height: 50px;
+        }
+
+    </style>
+</head>
+<body data-unit="unit1">
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal fixed inset-0 z-50 flex items-center justify-center">
+        <div class="card w-full max-w-sm p-8 rounded-2xl shadow-2xl">
+            <h2 class="text-2xl font-bold text-center mb-6">登入以記錄學習排行</h2>
+            <form id="login-form">
+                <input type="text" id="user-id" placeholder="輸入您的 Email 或 LINE ID" class="w-full px-4 py-3 rounded-lg border-default focus:outline-none focus:ring-2 ring-accent" style="background-color: var(--bg-color); color: var(--text-color);" required>
+                <button type="submit" class="w-full mt-6 bg-accent text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition">開始學習</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Leaderboard Modal -->
+    <div id="leaderboard-modal" class="modal fixed inset-0 z-40 items-center justify-center hidden">
+        <div class="card w-full max-w-md p-8 rounded-2xl shadow-2xl relative">
+            <button id="close-leaderboard-btn" class="absolute top-4 right-4 text-muted hover:text-red-500">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h2 class="text-2xl font-bold text-center mb-6 text-accent">學習排行榜</h2>
+            <div id="leaderboard-content" class="space-y-3 max-h-96 overflow-y-auto">
+                <!-- Leaderboard entries go here -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="w-full max-w-2xl mx-auto p-4 md:p-6 flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="flex items-center justify-between mb-4">
+             <div>
+                <h1 class="text-3xl font-bold">英語單字練習</h1>
+                <h2 id="unit-title" class="text-xl font-semibold text-muted">Unit 1</h2>
+            </div>
+             <div class="flex items-center gap-2">
+                <button id="leaderboard-btn" class="p-2 rounded-full text-muted hover:bg-gray-200 dark:hover:bg-gray-700 transition" title="排行榜">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm3.3 14.71L12 16l-3.3 1.71c-.4.2-1.03-.18-.94-.65l.63-3.68-2.67-2.61c-.33-.32-.15-.89.3-.95l3.69-.54L12 6.34c.19-.38.78-.38.97 0l1.65 3.35 3.69.54c.45.07.63.63.3.95l-2.67 2.61.63 3.68c.09.47-.54.85-.94.65z"/></svg>
+                </button>
+                <button id="theme-toggle" class="p-2 rounded-full text-muted hover:bg-gray-200 dark:hover:bg-gray-700 transition" title="切換日夜模式">
+                    <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                    <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Unit Tabs -->
+        <nav id="unit-tabs" class="flex flex-wrap gap-2 mb-6">
+            <!-- Tabs will be generated by JS -->
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow flex flex-col justify-center">
+            <!-- Flashcard View -->
+            <div id="flashcard-view">
+                <div id="slideshow-container" class="card rounded-2xl shadow-lg overflow-hidden relative" style="min-height: 520px;">
+                    <div id="slide-content" class="p-6 md:p-10 flex flex-col justify-between h-full">
+                        <!-- Dynamic content goes here -->
+                    </div>
+                </div>
+                 <!-- Flashcard Navigation -->
+                <nav class="flex items-center justify-between mt-6">
+                    <button id="prev-btn" class="card font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                    </button>
+                    <div id="slide-counter" class="text-lg font-medium text-muted"></div>
+                    <button id="next-btn" class="card font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Puzzle View -->
+            <div id="puzzle-view" class="hidden">
+                 <div class="card rounded-2xl shadow-lg p-6 md:p-10" style="min-height: 520px;">
+                    <h3 class="text-2xl font-bold text-accent mb-4 text-center">單字拼圖練習</h3>
+                    <div id="puzzle-question-counter" class="text-center text-muted mb-6"></div>
+                    <div id="puzzle-question" class="text-center text-2xl font-bold mb-8"></div>
+                    <div id="puzzle-slots" class="flex justify-center items-center gap-2 flex-wrap mb-8 bg-gray-200 dark:bg-gray-800 p-4 rounded-lg"></div>
+                    <div id="puzzle-pieces" class="flex justify-center items-center gap-2 flex-wrap"></div>
+                    <div id="puzzle-feedback" class="text-center font-bold mt-6 h-6"></div>
+                 </div>
+                 <div class="flex justify-center mt-6">
+                     <button id="back-to-flashcards-btn" class="bg-gray-500 text-white font-bold py-3 px-8 rounded-full shadow-md transition hover:opacity-90 mr-4">返回單字卡</button>
+                    <button id="next-puzzle-btn" class="bg-accent text-white font-bold py-3 px-8 rounded-full shadow-md transition hover:opacity-90 hidden">下一題</button>
+                 </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center mt-8 py-4 border-t border-default">
+            <div id="usage-stats" class="text-muted text-sm mb-2"></div>
+            <p class="text-muted text-sm">作者: 新生國中特教組</p>
+        </footer>
+    </div>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, query, getDocs, serverTimestamp, increment, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let app, auth, db;
+        if (Object.keys(firebaseConfig).length > 0) {
+             try {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+            } catch (e) {
+                console.error("Firebase initialization failed:", e);
+            }
+        } else {
+            console.warn("Firebase config is missing. Leaderboard and scoring will be disabled.");
+        }
+
+        const allUnitsData = {
+            'unit1': [
+                { word: 'handsome', wordParts: ['hand', 'some'], syllables: ['ˋhæn', 'səm'], partOfSpeech: 'adj.', definition: '英俊的', examples: [{en: 'Your father is handsome.', zh: '你爸爸很英俊。'}, {en: 'The handsome actor smiled for the cameras.', zh: '那位英俊的演員對著鏡頭微笑。'}, {en: 'He is tall, dark, and handsome.', zh: '他又高又黑又帥。'}, {en: 'She married a very handsome man.', zh: '她嫁給一個非常英俊的男人。'}, {en: 'What a handsome-looking dog!', zh: '多麼英俊的狗啊！'}] },
+                { word: 'new', wordParts: ['new'], syllables: ['nju'], partOfSpeech: 'adj.', definition: '新的', examples: [{en: 'Is this your new school bag?', zh: '這是你的新書包嗎？'}, {en: 'I bought a new car yesterday.', zh: '我昨天買了一輛新車。'}, {en: 'She is the new student in our class.', zh: '她是我們班的新學生。'}, {en: "Let's try the new restaurant downtown.", zh: '我們去市區那家新餐廳試試吧。'}, {en: 'Happy New Year!', zh: '新年快樂！'}] },
+                { word: 'classmate', wordParts: ['class', 'mate'], syllables: ['ˋklæs', '͵met'], partOfSpeech: 'n.', definition: '同學', examples: [{en: "That's Zoe. She's my classmate.", zh: '那是柔伊。她是我的同學。'}, {en: 'My classmate helped me with my homework.', zh: '我的同學幫我做功課。'}, {en: 'I have been good friends with my classmates for years.', zh: '多年來我一直和我的同學是好朋友。'}, {en: 'He is a former classmate of mine from junior high.', zh: '他是我國中的老同學。'}, {en: 'She is talking to a classmate.', zh: '她正在和一位同學說話。'}] },
+                { word: 'young', wordParts: ['young'], syllables: ['jʌŋ'], partOfSpeech: 'adj.', definition: '年輕的', examples: [{en: "He's young.", zh: '他真年輕。'}, {en: 'The young girl is playing in the park.', zh: '那個年輕的女孩正在公園裡玩。'}, {en: 'My teacher looks very young for her age.', zh: '我的老師看起來比她的年齡年輕。'}, {en: 'She is too young to watch this movie.', zh: '她太年輕了，不能看這部電影。'}, {en: 'He started his own business when he was young.', zh: '他年輕時就開始了自己的事業。'}] },
+                { word: 'woman', wordParts: ['wo', 'man'], syllables: ['ˋwʊ', 'mən'], partOfSpeech: 'n.', definition: '女人', examples: [{en: "Who's that beautiful tall woman?", zh: '那個又高又漂亮的女人是誰？'},{en:"She is a strong and independent woman.", zh:"她是一位堅強而獨立的女性。"},{en:"The woman in the red dress is my aunt.", zh:"穿紅裙子的那個女人是我的姑姑。"},{en:"Many women are leaders in their fields.", zh:"許多女性是她們領域的領導者。"},{en:"He bought a gift for the special woman in his life.", zh:"他為生命中那位特別的女人買了一份禮物。"}] },
+                { word: 'very', wordParts: ['ve', 'ry'], syllables: ['ˋvɛ', 'rɪ'], partOfSpeech: 'adv.', definition: '非常', examples: [{en: 'This tree is very tall.', zh: '這棵樹很高。'},{en:"I am very tired today.", zh:"我今天非常累。"},{en:"Thank you very much.", zh:"非常感謝你。"},{en:"The movie was very interesting.", zh:"這部電影非常有趣。"},{en:"She runs very fast.", zh:"她跑得非常快。"}] },
+                { word: 'beautiful', wordParts: ['beau', 'ti', 'ful'], syllables: ['ˋbju', 'tə', 'fəl'], partOfSpeech: 'adj.', definition: '美麗的', examples: [{en: 'Your school is big and beautiful.', zh: '你的學校又大又漂亮。'}, {en:"What a beautiful day!", zh:"多麼美好的一天！"}, {en:"The sunset over the ocean was beautiful.", zh:"海上的日落很美。"}, {en:"She has a beautiful singing voice.", zh:"她有著優美的歌聲。"}, {en:"He painted a beautiful picture.", zh:"他畫了一幅美麗的圖畫。"}] },
+                { word: 'too', wordParts: ['too'], syllables: ['tu'], partOfSpeech: 'adv.', definition: '也', examples: [{en: 'My dad is a teacher, too.', zh: '我爸爸也是老師。'}, {en:"I like pizza, too.", zh:"我也喜歡披薩。"}, {en:"She can speak French, and I can too.", zh:"她會說法語，我也會。"}, {en:"It's too cold to go outside.", zh:"外面太冷了，不能出去。"}, {en:"This box is too heavy to lift.", zh:"這個箱子太重了，舉不起來。"}] },
+                { word: 'Nice to meet you.', wordParts: ['Nice to meet you.'], syllables: ['͵naɪs', ' tə', ' `mit', ' ͵ju'], partOfSpeech: '', definition: '很高興認識你', examples: [{en: 'Nice to meet you, Mr. Brown.', zh: '很高興認識你，布朗先生。'}, {en:"A: I'm Tom. B: Nice to meet you, Tom.", zh:"A: 我是湯姆。 B: 很高興認識你，湯姆。"}, {en:"It was nice to meet your family.", zh:"很高興認識你的家人。"}, {en:"She said, 'Nice to meet you,' and shook my hand.", zh:"她說「很高興認識你」，然後和我握手。"}, {en:"Nice to meet you, too.", zh:"我也很高興認識你。"}] },
+                { word: 'cousin', wordParts: ['cou', 'sin'], syllables: ['ˋkʌ', 'zn'], partOfSpeech: 'n.', definition: '堂表兄弟姐妹', examples: [{en: 'Sharon is my cousin, not my sister.', zh: '雪倫是我的表姊，不是親姊姊。'}, {en:"My cousin is coming to visit next week.", zh:"我的表弟下週要來拜訪。"}, {en:"I'm going to the movies with my cousin.", zh:"我要和我的表妹去看電影。"}, {en:"He is my cousin on my mother's side.", zh:"他是我媽媽那邊的表哥。"}, {en:"We are cousins, so we look alike.", zh:"我們是表兄弟，所以我們長得很像。"}] },
+                { word: 'really', wordParts: ['rea', 'lly'], syllables: ['ˋrɪə', 'lɪ'], partOfSpeech: 'adv.', definition: '真地', examples: [{en: 'Oh, really? I am, too.', zh: '喔，真的嗎？我也是。'},{en:"I really like this song.", zh:"我真的很喜歡這首歌。"},{en:"Are you really going to move to another country?", zh:"你真的要搬到另一個國家嗎？"},{en:"It's really cold today.", zh:"今天真的很冷。"},{en:"He's a really good friend.", zh:"他是一個真正的好朋友。"}] },
+                { word: 'years old', wordParts: ['years', 'old'], syllables: ['͵jɪrz', ' ˋold'], partOfSpeech: '', definition: '…歲', examples: [{en: 'Her son is 17 years old.', zh: '她的兒子十七歲。'},{en:"I am 13 years old.", zh:"我13歲。"},{en:"How old are you?", zh:"你幾歲？"},{en:"My dog is 5 years old.", zh:"我的狗5歲了。"},{en:"This building is over 100 years old.", zh:"這座建築已經有100多年的歷史了。"}] },
+                { word: 'I see.', wordParts: ['I see.'], syllables: ['͵aɪ', ' ˋsi'], partOfSpeech: '', definition: '我知道了。', examples: [{en: 'I see.', zh: '我知道了。'},{en:"A: The store is closed. B: I see. Thanks.", zh:"A: 店關門了。 B: 我知道了，謝謝。"},{en:"'So you can't come to the party.' 'I see.'", zh:"「所以你不能來參加派對了。」「我明白了。」"},{en:"Now I see what you mean.", zh:"現在我明白你的意思了。"},{en:"I see, so that's the reason why.", zh:"我明白了，所以這就是原因。"}] },
+                { word: 'singer', wordParts: ['sing', 'er'], syllables: ['ˋsɪŋ', 'ɚ'], partOfSpeech: 'n.', definition: '歌手', examples: [{en: "He’s a singer.", zh: '他是一名歌手。'},{en:"She is a famous pop singer.", zh:"她是一位著名的流行歌手。"},{en:"The singer has a beautiful voice.", zh:"這位歌手的嗓音很美。"},{en:"He wants to be a professional singer.", zh:"他想成為一名專業歌手。"},{en:"We went to a concert to see our favorite singer.", zh:"我們去聽音樂會看我們最喜歡的歌手。"}] },
+                { word: 'office worker', wordParts: ['office', 'worker'], syllables: ['ˋɔ', 'fɪs', ' ͵wɝ', 'kɚ'], partOfSpeech: 'n.', definition: '上班族', examples: [{en: 'I am an office worker, and my wife is, too.', zh: '我是上班族，我的妻子也是。'},{en:"My father is an office worker.", zh:"我父親是上班族。"},{en:"Many office workers commute to the city every day.", zh:"許多上班族每天通勤到城市。"},{en:"She has been an office worker for ten years.", zh:"她當了十年的上班族。"},{en:"An office worker usually works from 9 to 5.", zh:"上班族通常從早上9點工作到下午5點。"}] },
+                { word: 'baby', wordParts: ['ba', 'by'], syllables: ['ˋbe', 'bɪ'], partOfSpeech: 'n.; adj.', definition: '嬰兒；年幼的', examples: [{en: "The baby's father is Mr. Martin.", zh: '這個嬰兒的父親是馬丁先生。'}, {en: "My sister just had a baby.", zh: "我姐姐剛生了一個嬰兒。"}, {en: "The baby is sleeping peacefully.", zh: "嬰兒正在安詳地睡覺。"}, {en: "Don't wake the baby!", zh: "不要吵醒寶寶！"}, {en: "She has a baby face.", zh: "她有一張娃娃臉。"}] },
+            ],
+            'unit2': [
+                 { word: 'house', wordParts: ['house'], syllables: ['haʊs'], partOfSpeech: 'n.', definition: '房子', examples: [{en: 'Jimmy is not in the house.', zh: '吉米不在這棟房子裡。'}, {en: 'They live in a big house.', zh: '他們住在一棟大房子裡。'}, {en: 'Our house has a beautiful garden.', zh: '我們的房子有一個美麗的花園。'}, {en: 'Welcome to my house!', zh: '歡迎來到我家！'}, {en: 'The white house on the corner is for sale.', zh: '轉角那棟白色的房子要出售。'}] },
+            ],
+            'unit3': [
+                 { word: 'guy', wordParts: ['guy'], syllables: ['gaɪ'], partOfSpeech: 'n.', definition: '人；傢伙', examples: [{en: 'Guys, don’t run in the classroom.', zh: '大家，不要在教室裡奔跑。'}, {en: 'Who is that guy talking to your sister?', zh: '那個跟你姐姐說話的傢伙是誰？'}, {en: 'He is a really nice guy.', zh: '他真是個好人。'}, {en: 'Hey guys, what are you doing?', zh: '嘿，夥計們，你們在做什麼？'}, {en: 'The guys on the basketball team are all very tall.', zh: '籃球隊的隊員都很高。'}] },
+            ],
+            'unit4': [
+                { word: 'music video', wordParts: ['music','video'], syllables: ['͵mju','zɪk',' ˋvɪd','ɪo'], partOfSpeech: 'n.', definition: '音樂影片', examples: [{en: 'I am watching Mayday’s new music video.', zh: '我在看五月天新出的音樂影片。'}, {en: 'They spent a lot of money making this music video.', zh: '他們花了很多錢製作這支音樂影片。'}, {en: 'The music video was shot in New York.', zh: '這支音樂影片是在紐約拍攝的。'}, {en: 'She won an award for best music video.', zh: '她因最佳音樂影片獲獎。'}, {en: 'This song has a very creative music video.', zh: '這首歌的音樂影片非常有創意。'}] },
+            ],
+            'unit5': [
+                 { word: 'date', wordParts: ['date'], syllables: ['det'], partOfSpeech: 'n.', definition: '日期', examples: [{en: 'The date of the concert is September twenty-first.', zh: '那場演唱會的日期是九月二十一日。'}, {en: "What's the date today?", zh: '今天幾號？'}, {en: 'Please write your name and the date at the top of the paper.', zh: '請在紙的頂部寫下你的姓名和日期。'}, {en: 'I have a doctor’s appointment on that date.', zh: '我在那個日期有醫生的預約。'}, {en: 'The expiration date on the milk is tomorrow.', zh: '牛奶的到期日是明天。'}] },
+            ],
+            'unit6': [
+                 { word: 'lion', wordParts: ['li','on'], syllables: ['ˋlaɪ','ən'], partOfSpeech: 'n.', definition: '獅子', examples: [{en: 'Is there a lion under the tree?', zh: '那棵樹下有隻獅子嗎？'}, {en: 'The lion is known as the king of the jungle.', zh: '獅子被稱為叢林之王。'}, {en: 'We saw a lion at the zoo.', zh: '我們在動物園看到了一隻獅子。'}, {en: 'A lion has a loud roar.', zh: '獅子有響亮的吼聲。'}, {en: 'The lion is a large cat.', zh: '獅子是一種大型貓科動物。'}] },
+            ]
+        };
+
+        let currentUnit = 'unit1';
+        let currentSlide = 0;
+        let userData = { id: null, name: null };
+        let userAuth = null;
+        let isSpeaking = false;
+        let slidesData = allUnitsData[currentUnit];
+        let currentPuzzle = [];
+        let currentPuzzleIndex = 0;
+        let currentView = 'flashcard'; 
+        
+        const { loginModal, leaderboardModal, loginForm, userIdInput, leaderboardBtn, closeLeaderboardBtn, leaderboardContent, flashcardView, puzzleView, slideContentEl, slideCounterEl, prevBtn, nextBtn, slideshowContainer, themeToggle, themeIconDark, themeIconLight, usageStatsEl, unitTabsEl, unitTitleEl, puzzleQuestionCounter, puzzleQuestion, puzzleSlots, puzzlePieces, puzzleFeedback, nextPuzzleBtn, backToFlashcardsBtn } = {
+            loginModal: document.getElementById('login-modal'),
+            leaderboardModal: document.getElementById('leaderboard-modal'),
+            loginForm: document.getElementById('login-form'),
+            userIdInput: document.getElementById('user-id'),
+            leaderboardBtn: document.getElementById('leaderboard-btn'),
+            closeLeaderboardBtn: document.getElementById('close-leaderboard-btn'),
+            leaderboardContent: document.getElementById('leaderboard-content'),
+            flashcardView: document.getElementById('flashcard-view'),
+            puzzleView: document.getElementById('puzzle-view'),
+            slideContentEl: document.getElementById('slide-content'),
+            slideCounterEl: document.getElementById('slide-counter'),
+            prevBtn: document.getElementById('prev-btn'),
+            nextBtn: document.getElementById('next-btn'),
+            slideshowContainer: document.getElementById('slideshow-container'),
+            themeToggle: document.getElementById('theme-toggle'),
+            themeIconDark: document.getElementById('theme-icon-dark'),
+            themeIconLight: document.getElementById('theme-icon-light'),
+            usageStatsEl: document.getElementById('usage-stats'),
+            unitTabsEl: document.getElementById('unit-tabs'),
+            unitTitleEl: document.getElementById('unit-title'),
+            puzzleQuestionCounter: document.getElementById('puzzle-question-counter'),
+            puzzleQuestion: document.getElementById('puzzle-question'),
+            puzzleSlots: document.getElementById('puzzle-slots'),
+            puzzlePieces: document.getElementById('puzzle-pieces'),
+            puzzleFeedback: document.getElementById('puzzle-feedback'),
+            nextPuzzleBtn: document.getElementById('next-puzzle-btn'),
+            backToFlashcardsBtn: document.getElementById('back-to-flashcards-btn'),
+        };
+
+        function createTabs() {
+            unitTabsEl.innerHTML = '';
+            Object.keys(allUnitsData).forEach((unitId, index) => {
+                const unitNum = index + 1;
+                const tab = document.createElement('button');
+                tab.textContent = `Unit ${unitNum}`;
+                tab.dataset.unit = unitId;
+                tab.className = 'unit-tab px-4 py-2 rounded-lg text-sm font-medium transition';
+                tab.addEventListener('click', () => switchUnit(unitId));
+                unitTabsEl.appendChild(tab);
+            });
+        }
+        
+        function switchUnit(unitId) {
+            if (unitId === currentUnit && currentView === 'flashcard') return;
+            currentUnit = unitId;
+            document.body.dataset.unit = currentUnit;
+            
+            if (userData && userData.progress && !userData.progress[currentUnit]) {
+                userData.progress[currentUnit] = { lastWordIndex: 0, usageCount: 0 };
+            }
+
+            if(userData && userData.progress && userData.progress[currentUnit]) {
+                userData.progress[currentUnit].usageCount++;
+            }
+
+            currentSlide = (userData && userData.progress && userData.progress[currentUnit]) ? userData.progress[currentUnit].lastWordIndex : 0;
+            
+            slidesData = allUnitsData[currentUnit];
+            switchView('flashcard');
+            renderSlide();
+            updateActiveTab();
+        }
+
+        function updateActiveTab() {
+            const tabs = document.querySelectorAll('.unit-tab');
+            tabs.forEach(tab => {
+                if (tab.dataset.unit === currentUnit) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+        }
+        
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeIconLight.classList.remove('hidden');
+                themeIconDark.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIconDark.classList.remove('hidden');
+                themeIconLight.classList.add('hidden');
+            }
+        }
+
+        function toggleTheme() {
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        function saveProgress() {
+            if (userData && userData.id) { 
+                localStorage.setItem(`progress_${currentUnit}_${userData.id}`, currentSlide);
+                localStorage.setItem(`lastUnit_${userData.id}`, currentUnit);
+                updateUsageStats();
+            }
+        }
+        
+        function loadProgress() {
+            if (userData && userData.id) {
+                currentUnit = localStorage.getItem(`lastUnit_${userData.id}`) || 'unit1';
+                currentSlide = parseInt(localStorage.getItem(`progress_${currentUnit}_${userData.id}`) || '0');
+            }
+        }
+
+        function updateUsageStats() {
+            // This can be expanded later if needed
+        }
+
+        function renderSlide() {
+            slidesData = allUnitsData[currentUnit];
+            const slide = slidesData[currentSlide];
+            let examplesHtml = slide.examples.map(ex => `
+                <li class="mt-2">
+                    <p class="text-lg speakable" data-lang="en">${ex.en}</p>
+                    <p class="text-md text-muted speakable" data-lang="zh-TW">${ex.zh}</p>
+                </li>
+            `).join('');
+
+            slideContentEl.innerHTML = `
+                <div>
+                    <div class="flex items-center mb-1">
+                        <h3 class="text-4xl md:text-5xl font-bold text-accent mr-4 capitalize speakable" data-lang="en">
+                            ${(slide.word.includes(" ") ? slide.word : slide.wordParts.join(""))}
+                        </h3>
+                        <button id="speak-btn" class="text-muted hover:text-accent transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd" /></svg>
+                        </button>
+                    </div>
+                     <input type="text" id="practice-input" placeholder="請在此輸入單字練習..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                           class="w-full text-4xl md:text-5xl font-bold p-0 m-0 border-b-2 bg-transparent focus:outline-none capitalize" style="height: 60px; border-radius: 0;">
+                    <div id="pronunciation-container" class="text-lg text-muted mt-4 mb-6 speakable" data-lang="en">
+                        [${slide.syllables.map(syl => `<span class="syllable">${syl}</span>`).join('')}]
+                    </div>
+                     <p class="text-xl"><span class="font-semibold speakable" data-lang="en">${slide.partOfSpeech}</span> <span class="speakable" data-lang="zh-TW">${slide.definition}</span></p>
+                </div>
+                <div class="mt-6 border-t border-default pt-4">
+                    <p class="text-md font-semibold text-muted mb-2">例句：</p>
+                    <ul class="list-disc list-inside space-y-2">${examplesHtml}</ul>
+                </div>
+            `;
+            document.getElementById('speak-btn').addEventListener('click', () => speakText(document.querySelector('h3.speakable')));
+            document.getElementById('practice-input').addEventListener('input', handleTyping);
+            slideContentEl.querySelectorAll('.speakable').forEach(el => el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                speakText(el);
+            }));
+            updateNav();
+            saveProgress();
+        }
+        
+        function updateNav() {
+            slidesData = allUnitsData[currentUnit];
+            slideCounterEl.textContent = `${currentSlide + 1} / ${slidesData.length}`;
+            prevBtn.disabled = currentSlide === 0;
+            if (currentSlide === slidesData.length - 1) {
+                nextBtn.innerHTML = `<span>開始拼圖挑戰</span>`;
+                nextBtn.classList.add('px-4', 'text-sm');
+                nextBtn.querySelector('svg')?.classList.add('hidden');
+                nextBtn.disabled = false;
+            } else {
+                 nextBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>`;
+                 nextBtn.classList.remove('px-4', 'text-sm');
+                 nextBtn.disabled = false;
+            }
+            unitTitleEl.textContent = `Unit ${currentUnit.replace('unit', '')}`;
+        }
+
+        function showNextSlide() {
+            slidesData = allUnitsData[currentUnit];
+            if (currentSlide === slidesData.length - 1) {
+                initPuzzleMode();
+                return;
+            }
+            nextBtn.classList.remove('button-highlight');
+            if (currentSlide < slidesData.length - 1) {
+                currentSlide++;
+                renderSlide();
+            }
+        }
+
+        function showPrevSlide() {
+            nextBtn.classList.remove('button-highlight');
+            if (currentSlide > 0) {
+                currentSlide--;
+                renderSlide();
+            }
+        }
+        
+        function switchView(view) {
+            currentView = view;
+            if (view === 'flashcard') {
+                flashcardView.classList.remove('hidden');
+                puzzleView.classList.add('hidden');
+            } else {
+                flashcardView.classList.add('hidden');
+                puzzleView.classList.remove('hidden');
+            }
+        }
+
+        function speakText(element) {
+            if (!element || isSpeaking) return;
+            const text = element.textContent;
+            const lang = element.dataset.lang || 'en-US';
+
+            if ('speechSynthesis' in window) {
+                isSpeaking = true;
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang;
+                utterance.onend = () => { isSpeaking = false; };
+                utterance.onerror = (e) => { 
+                    console.error('SpeechSynthesis Error:', e);
+                    isSpeaking = false; 
+                };
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        async function handleTyping(e) {
+            const input = e.target;
+            slidesData = allUnitsData[currentUnit];
+            const correctWord = slidesData[currentSlide].word.replace(/[\.\s]/g, '').toLowerCase();
+            const typedWord = input.value.replace(/[\.\s]/g, '').toLowerCase();
+
+            if (typedWord === correctWord) {
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+                input.disabled = true;
+                await updateUserScore();
+                if (!nextBtn.disabled || currentSlide === slidesData.length -1) {
+                    nextBtn.classList.add('button-highlight');
+                }
+            } else if (correctWord.startsWith(typedWord)) {
+                 input.classList.remove('incorrect');
+                 input.classList.remove('correct');
+            } else {
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+            }
+        }
+        
+        async function updateUserScore(pointsToAdd = 1) {
+            if (!db || !userAuth) return;
+            const userRef = doc(db, `artifacts/${appId}/public/data/users`, userAuth.uid);
+            try {
+                await setDoc(userRef, { 
+                    score: increment(pointsToAdd),
+                    lastUpdated: serverTimestamp()
+                }, { merge: true });
+            } catch (error) {
+                console.error("Error updating score: ", error);
+            }
+        }
+
+        function initPuzzleMode() {
+            switchView('puzzle');
+            generatePuzzlesForUnit();
+            currentPuzzleIndex = 0;
+            renderPuzzle();
+        }
+
+        function generatePuzzlesForUnit() {
+            const unitWords = [...allUnitsData[currentUnit]];
+            currentPuzzle = unitWords.filter(w => !w.word.includes(" ")).sort(() => 0.5 - Math.random()).slice(0, 10);
+        }
+
+        function renderPuzzle() {
+            if (currentPuzzleIndex >= currentPuzzle.length) {
+                puzzleQuestion.textContent = "恭喜完成本單元所有拼圖！";
+                puzzleSlots.innerHTML = '';
+                puzzlePieces.innerHTML = '';
+                puzzleFeedback.innerHTML = '';
+                nextPuzzleBtn.classList.add('hidden');
+                backToFlashcardsBtn.textContent = "返回主選單";
+                return;
+            }
+
+            const puzzle = currentPuzzle[currentPuzzleIndex];
+            puzzleQuestionCounter.textContent = `第 ${currentPuzzleIndex + 1} / ${currentPuzzle.length} 題`;
+            puzzleQuestion.textContent = puzzle.definition;
+            puzzleSlots.innerHTML = puzzle.wordParts.map(() => `<div class="puzzle-slot border-2 border-dashed border-gray-400 rounded-lg"></div>`).join('');
+            puzzlePieces.innerHTML = [...puzzle.wordParts].sort(() => 0.5 - Math.random()).map(part => `
+                <div class="puzzle-piece card p-3 rounded-lg shadow-md" draggable="true">${part}</div>
+            `).join('');
+
+            puzzleFeedback.textContent = '';
+            nextPuzzleBtn.classList.add('hidden');
+            setupDragAndDrop();
+        }
+
+        function setupDragAndDrop() {
+            const pieces = puzzlePieces.querySelectorAll('.puzzle-piece');
+            const slots = puzzleSlots.querySelectorAll('.puzzle-slot');
+            let draggedPiece = null;
+
+            pieces.forEach(piece => {
+                piece.addEventListener('dragstart', (e) => {
+                    draggedPiece = e.target;
+                    e.dataTransfer.setData('text/plain', e.target.textContent);
+                    setTimeout(() => e.target.classList.add('invisible'), 0);
+                });
+                piece.addEventListener('dragend', (e) => {
+                    e.target.classList.remove('invisible');
+                });
+            });
+
+            slots.forEach(slot => {
+                slot.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    slot.classList.add('bg-accent', 'opacity-50');
+                });
+                slot.addEventListener('dragleave', (e) => {
+                    slot.classList.remove('bg-accent', 'opacity-50');
+                });
+                slot.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    slot.classList.remove('bg-accent', 'opacity-50');
+                    if (slot.childElementCount > 0) {
+                        puzzlePieces.appendChild(slot.firstChild);
+                    };
+                    if(draggedPiece) {
+                        slot.appendChild(draggedPiece);
+                        checkPuzzleAnswer();
+                    }
+                });
+            });
+
+            puzzlePieces.addEventListener('dragover', e => e.preventDefault());
+            puzzlePieces.addEventListener('drop', e => {
+                 if (draggedPiece) puzzlePieces.appendChild(draggedPiece);
+            });
+        }
+
+        async function checkPuzzleAnswer() {
+            const slots = puzzleSlots.querySelectorAll('.puzzle-slot');
+            const filledSlots = Array.from(slots).filter(s => s.hasChildNodes());
+            
+            if (filledSlots.length === currentPuzzle[currentPuzzleIndex].wordParts.length) {
+                const answer = Array.from(slots).map(s => s.textContent).join('');
+                const correctAnswer = currentPuzzle[currentPuzzleIndex].word.replace(/\s/g, '');
+                
+                if (answer === correctAnswer) {
+                    puzzleFeedback.textContent = '答對了！';
+                    puzzleFeedback.style.color = 'var(--correct-color)';
+                    await updateUserScore(5);
+                    nextPuzzleBtn.classList.remove('hidden');
+                } else {
+                    puzzleFeedback.textContent = '不對喔，再試一次！';
+                    puzzleFeedback.style.color = 'var(--incorrect-color)';
+                }
+            }
+        }
+
+        async function initUser() {
+            if(!db || !auth) {
+                 loginModal.classList.add('hidden');
+                 mainInit();
+                 return;
+            }
+
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    userAuth = user;
+                    const userRef = doc(db, `artifacts/${appId}/public/data/users`, user.uid);
+                    let userDoc = await getDoc(userRef);
+
+                    if (!userDoc.exists()) {
+                        const newName = localStorage.getItem('engAppUserName') || 'Anonymous-' + user.uid.slice(0, 5);
+                        await setDoc(userRef, {
+                            name: newName,
+                            score: 0,
+                            createdAt: serverTimestamp()
+                        });
+                        userDoc = await getDoc(userRef);
+                    }
+                    userData = { id: user.uid, ...userDoc.data() };
+                    loginModal.classList.add('hidden');
+                    mainInit();
+                } else {
+                    loginModal.classList.remove('hidden');
+                    try {
+                        if (initialAuthToken) {
+                            await signInWithCustomToken(auth, initialAuthToken);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    } catch (error) {
+                        console.error("Anonymous sign-in failed", error);
+                        mainInit();
+                    }
+                }
+            });
+        }
+
+        async function showLeaderboard() {
+            if (!db) {
+                leaderboardContent.innerHTML = '<p>排行榜功能目前無法使用。</p>';
+                leaderboardModal.classList.remove('hidden');
+                leaderboardModal.classList.add('flex');
+                return;
+            }
+            const usersRef = collection(db, `artifacts/${appId}/public/data/users`);
+            const q = query(usersRef, orderBy("score", "desc"), limit(10));
+
+            try {
+                const querySnapshot = await getDocs(q);
+                let html = '<ol class="space-y-2">';
+                let rank = 1;
+                querySnapshot.forEach((doc) => {
+                    const user = doc.data();
+                    const isCurrentUser = userAuth && doc.id === userAuth.uid;
+                    html += `
+                        <li class="flex justify-between items-center p-2 rounded ${isCurrentUser ? 'bg-accent text-white' : ''}">
+                            <span>${rank}. ${user.name}</span>
+                            <span>${user.score} 分</span>
+                        </li>
+                    `;
+                    rank++;
+                });
+                html += '</ol>';
+                leaderboardContent.innerHTML = html;
+            } catch (error) {
+                console.error("Error getting leaderboard: ", error);
+                leaderboardContent.innerHTML = '<p>無法載入排行榜。</p>';
+            }
+            leaderboardModal.classList.remove('hidden');
+            leaderboardModal.classList.add('flex');
+        }
+        
+        function mainInit() {
+            createTabs();
+            applyTheme(localStorage.getItem('theme') || 'light');
+            loadProgress();
+            document.body.dataset.unit = currentUnit;
+            slidesData = allUnitsData[currentUnit];
+            renderSlide();
+            updateActiveTab();
+            setupEventListeners();
+        }
+
+        function setupEventListeners() {
+            prevBtn.addEventListener('click', showPrevSlide);
+            nextBtn.addEventListener('click', showNextSlide);
+            themeToggle.addEventListener('click', toggleTheme);
+            leaderboardBtn.addEventListener('click', showLeaderboard);
+            closeLeaderboardBtn.addEventListener('click', () => {
+                leaderboardModal.classList.add('hidden');
+                leaderboardModal.classList.remove('flex');
+            });
+            nextPuzzleBtn.addEventListener('click', () => {
+                currentPuzzleIndex++;
+                renderPuzzle();
+            });
+            backToFlashcardsBtn.addEventListener('click', () => {
+                switchView('flashcard');
+            });
+            
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const userId = userIdInput.value.trim();
+                if (userId && userAuth) {
+                    const userRef = doc(db, `artifacts/${appId}/public/data/users`, userAuth.uid);
+                    setDoc(userRef, { name: userId }, { merge: true });
+                    localStorage.setItem('engAppUserName', userId);
+                    loginModal.classList.add('hidden');
+                    if(userData) userData.name = userId;
+                }
+            });
+
+             document.addEventListener('keydown', (e) => {
+                if(currentView !== 'flashcard') return;
+                const practiceInput = document.getElementById('practice-input');
+                if (document.activeElement === practiceInput || !loginModal.classList.contains('hidden')) return;
+                if (e.key === 'ArrowRight') showNextSlide();
+                else if (e.key === 'ArrowLeft') showPrevSlide();
+            });
+
+            let touchstartX = 0;
+            slideshowContainer.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; });
+            slideshowContainer.addEventListener('touchend', e => {
+                if (currentView !== 'flashcard') return;
+                const touchendX = e.changedTouches[0].screenX;
+                if (touchendX < touchstartX - 50) showNextSlide();
+                if (touchendX > touchstartX + 50) showPrevSlide();
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', initUser);
+    </script>
+</body>
+</html>
+
