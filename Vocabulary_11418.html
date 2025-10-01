@@ -109,13 +109,11 @@
             transition: opacity 0.3s;
         }
 
-        .syllable, .word-part {
+        .word-part {
             transition: color 0.2s ease-in-out;
         }
-        .syllable-highlight, .word-part-highlight {
-            color: var(--highlight-color);
-        }
         .word-part-highlight {
+            color: var(--highlight-color);
             font-weight: 700;
         }
 
@@ -242,8 +240,10 @@
                     <div id="puzzle-feedback" class="text-center font-bold mt-6 h-6"></div>
                  </div>
                  <div class="flex justify-center mt-6">
-                     <button id="back-to-flashcards-btn" class="bg-gray-500 text-white font-bold py-3 px-8 rounded-full shadow-md transition hover:opacity-90 mr-4">返回單字卡</button>
-                    <button id="next-puzzle-btn" class="bg-accent text-white font-bold py-3 px-8 rounded-full shadow-md transition hover:opacity-90 hidden">下一題</button>
+                    <button id="prev-puzzle-btn" class="bg-gray-400 text-white font-bold py-3 px-6 rounded-full shadow-md transition hover:opacity-90 mr-2 hidden">上一題</button>
+                    <button id="retry-puzzle-btn" class="bg-yellow-500 text-white font-bold py-3 px-6 rounded-full shadow-md transition hover:opacity-90 mr-2">重新回答</button>
+                    <button id="back-to-flashcards-btn" class="bg-gray-500 text-white font-bold py-3 px-6 rounded-full shadow-md transition hover:opacity-90 mr-2">返回單字卡</button>
+                    <button id="next-puzzle-btn" class="bg-accent text-white font-bold py-3 px-6 rounded-full shadow-md transition hover:opacity-90 hidden">下一題</button>
                  </div>
             </div>
         </main>
@@ -558,7 +558,7 @@
         let currentPuzzleIndex = 0;
         let currentView = 'flashcard'; 
         
-        const { loginModal, leaderboardModal, loginForm, userIdInput, leaderboardBtn, closeLeaderboardBtn, leaderboardContent, flashcardView, puzzleView, slideContentEl, slideCounterEl, prevBtn, nextBtn, slideshowContainer, themeToggle, themeIconDark, themeIconLight, usageStatsEl, unitTabsEl, unitTitleEl, puzzleQuestionCounter, puzzleQuestion, puzzleSlots, puzzlePieces, puzzleFeedback, nextPuzzleBtn, backToFlashcardsBtn } = {
+        const { loginModal, leaderboardModal, loginForm, userIdInput, leaderboardBtn, closeLeaderboardBtn, leaderboardContent, flashcardView, puzzleView, slideContentEl, slideCounterEl, prevBtn, nextBtn, slideshowContainer, themeToggle, themeIconDark, themeIconLight, usageStatsEl, unitTabsEl, unitTitleEl, puzzleQuestionCounter, puzzleQuestion, puzzleSlots, puzzlePieces, puzzleFeedback, nextPuzzleBtn, backToFlashcardsBtn, prevPuzzleBtn, retryPuzzleBtn } = {
             loginModal: document.getElementById('login-modal'),
             leaderboardModal: document.getElementById('leaderboard-modal'),
             loginForm: document.getElementById('login-form'),
@@ -586,6 +586,8 @@
             puzzleFeedback: document.getElementById('puzzle-feedback'),
             nextPuzzleBtn: document.getElementById('next-puzzle-btn'),
             backToFlashcardsBtn: document.getElementById('back-to-flashcards-btn'),
+            prevPuzzleBtn: document.getElementById('prev-puzzle-btn'),
+            retryPuzzleBtn: document.getElementById('retry-puzzle-btn'),
         };
 
         function createTabs() {
@@ -684,7 +686,6 @@
                 nextBtn.disabled = true;
                 return;
             }
-            // Ensure currentSlide is within bounds
             if (currentSlide >= slidesData.length) {
                 currentSlide = slidesData.length - 1;
             }
@@ -700,11 +701,15 @@
                 </li>
             `).join('');
 
+            const wordHtml = (slide.syllables && slide.syllables.length > 0 && !slide.word.includes(" "))
+                ? slide.syllables.map(syl => `<span class="word-part">${syl}</span>`).join('')
+                : slide.word;
+
             slideContentEl.innerHTML = `
                 <div>
                     <div class="flex items-center mb-1">
                         <h3 class="text-4xl md:text-5xl font-bold text-accent mr-4 capitalize speakable" data-lang="en">
-                            ${slide.word}
+                            ${wordHtml}
                         </h3>
                         <button id="speak-btn" class="text-muted hover:text-accent transition">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd" /></svg>
@@ -712,7 +717,7 @@
                     </div>
                      <input type="text" id="practice-input" placeholder="請在此輸入單字練習..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
                            class="w-full text-4xl md:text-5xl font-bold p-0 m-0 border-b-2 bg-transparent focus:outline-none capitalize" style="height: 60px; border-radius: 0;">
-                    <div id="pronunciation-container" class="text-lg text-muted mt-4 mb-6 speakable" data-lang="en">
+                    <div id="pronunciation-container" class="text-lg text-muted mt-4 mb-6">
                         [${slide.phonetics || ''}]
                     </div>
                      <p class="text-xl"><span class="font-semibold speakable" data-lang="en">${slide.partOfSpeech}</span> <span class="speakable" data-lang="zh-TW">${slide.definition}</span></p>
@@ -722,9 +727,15 @@
                     <ul class="list-disc list-inside space-y-2">${examplesHtml}</ul>
                 </div>
             `;
-            document.getElementById('speak-btn').addEventListener('click', () => speakText(document.querySelector('h3.speakable')));
+            const mainWordEl = document.querySelector('h3.speakable');
+            document.getElementById('speak-btn').addEventListener('click', () => speakText(mainWordEl, true));
+            mainWordEl.addEventListener('click', (e) => {
+                 e.stopPropagation();
+                 speakText(e.currentTarget, true);
+            });
+
             document.getElementById('practice-input').addEventListener('input', handleTyping);
-            slideContentEl.querySelectorAll('.speakable').forEach(el => el.addEventListener('click', (e) => {
+            slideContentEl.querySelectorAll('.speakable:not(h3)').forEach(el => el.addEventListener('click', (e) => {
                 e.stopPropagation();
                 speakText(el);
             }));
@@ -785,23 +796,57 @@
             }
         }
 
-        function speakText(element) {
+        function speakText(element, isMainWord = false) {
             if (!element || isSpeaking) return;
-            const text = element.textContent;
-            const lang = element.dataset.lang || 'en-US';
+            window.speechSynthesis.cancel();
+            isSpeaking = true;
 
-            if ('speechSynthesis' in window) {
-                isSpeaking = true;
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = lang;
-                utterance.onend = () => { isSpeaking = false; };
-                utterance.onerror = (e) => { 
-                    console.error('SpeechSynthesis Error:', e);
-                    isSpeaking = false; 
+            const lang = element.dataset.lang || 'en-US';
+            const slide = slidesData[currentSlide];
+            const textToSpeak = isMainWord ? slide.word.replace(/'/g, '') : element.textContent.trim();
+            
+            const wordParts = Array.from(element.querySelectorAll('.word-part'));
+            document.querySelectorAll('.word-part-highlight').forEach(el => el.classList.remove('word-part-highlight'));
+
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = lang;
+            utterance.rate = 0.8;
+
+            if (isMainWord && wordParts.length > 0 && slide.syllables) {
+                let charIndex = 0;
+                const syllableBoundaries = slide.syllables.map(syllable => {
+                    const start = textToSpeak.toLowerCase().indexOf(syllable.toLowerCase().replace(/'/g, ''), charIndex);
+                    if (start !== -1) {
+                        charIndex = start + syllable.length;
+                    }
+                    return start;
+                });
+
+                let boundaryIndex = 0;
+                utterance.onboundary = (event) => {
+                    if (event.name === 'word') {
+                        if(boundaryIndex < wordParts.length) {
+                             wordParts.forEach((part, index) => {
+                                part.classList.toggle('word-part-highlight', index === boundaryIndex);
+                            });
+                            boundaryIndex++;
+                        }
+                    }
                 };
-                window.speechSynthesis.speak(utterance);
             }
+            
+            utterance.onend = () => {
+                wordParts.forEach(part => part.classList.remove('word-part-highlight'));
+                isSpeaking = false;
+            };
+
+            utterance.onerror = (e) => {
+                console.error('SpeechSynthesis Error:', e);
+                wordParts.forEach(part => part.classList.remove('word-part-highlight'));
+                isSpeaking = false;
+            };
+            
+            window.speechSynthesis.speak(utterance);
         }
 
         async function handleTyping(e) {
@@ -849,20 +894,41 @@
 
         function generatePuzzlesForUnit() {
             const unitWords = [...allUnitsData[currentUnit]];
-            currentPuzzle = unitWords.filter(w => !w.word.includes(" ")).sort(() => 0.5 - Math.random()).slice(0, 10);
+            currentPuzzle = unitWords.filter(w => w.syllables && w.syllables.length > 0 && !w.word.includes(" ")).sort(() => 0.5 - Math.random()).slice(0, 10);
+        }
+        
+        function showPrevPuzzle() {
+            if (currentPuzzleIndex > 0) {
+                currentPuzzleIndex--;
+                renderPuzzle();
+            }
         }
 
         function renderPuzzle() {
+            if (currentPuzzle.length === 0) {
+                puzzleQuestion.textContent = "本單元沒有可用的拼圖單字。";
+                puzzleSlots.innerHTML = '';
+                puzzlePieces.innerHTML = '';
+                puzzleFeedback.innerHTML = '';
+                nextPuzzleBtn.classList.add('hidden');
+                prevPuzzleBtn.classList.add('hidden');
+                retryPuzzleBtn.classList.add('hidden');
+                return;
+            }
+
             if (currentPuzzleIndex >= currentPuzzle.length) {
                 puzzleQuestion.textContent = "恭喜完成本單元所有拼圖！";
                 puzzleSlots.innerHTML = '';
                 puzzlePieces.innerHTML = '';
                 puzzleFeedback.innerHTML = '';
                 nextPuzzleBtn.classList.add('hidden');
+                prevPuzzleBtn.classList.remove('hidden');
+                retryPuzzleBtn.classList.add('hidden');
                 backToFlashcardsBtn.textContent = "返回主選單";
                 return;
             }
 
+            backToFlashcardsBtn.textContent = "返回單字卡";
             const puzzle = currentPuzzle[currentPuzzleIndex];
             puzzleQuestionCounter.textContent = `第 ${currentPuzzleIndex + 1} / ${currentPuzzle.length} 題`;
             puzzleQuestion.textContent = puzzle.definition;
@@ -873,6 +939,14 @@
 
             puzzleFeedback.textContent = '';
             nextPuzzleBtn.classList.add('hidden');
+            retryPuzzleBtn.classList.remove('hidden');
+
+            if (currentPuzzleIndex > 0) {
+                prevPuzzleBtn.classList.remove('hidden');
+            } else {
+                prevPuzzleBtn.classList.add('hidden');
+            }
+            
             setupDragAndDrop();
         }
 
@@ -932,6 +1006,10 @@
                     puzzleFeedback.style.color = 'var(--correct-color)';
                     await updateUserScore(5);
                     nextPuzzleBtn.classList.remove('hidden');
+                    const utterance = new SpeechSynthesisUtterance(correctAnswer);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.8;
+                    window.speechSynthesis.speak(utterance);
                 } else {
                     puzzleFeedback.textContent = '不對喔，再試一次！';
                     puzzleFeedback.style.color = 'var(--incorrect-color)';
@@ -1039,6 +1117,8 @@
                 currentPuzzleIndex++;
                 renderPuzzle();
             });
+            prevPuzzleBtn.addEventListener('click', showPrevPuzzle);
+            retryPuzzleBtn.addEventListener('click', renderPuzzle);
             backToFlashcardsBtn.addEventListener('click', () => {
                 switchUnit(currentUnit);
             });
