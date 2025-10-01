@@ -241,8 +241,10 @@
                     <div id="puzzle-feedback" class="text-center font-bold mt-6 h-6"></div>
                  </div>
                  <div class="flex justify-center mt-6">
-                     <button id="back-to-flashcards-btn" class="bg-gray-500 text-white font-bold py-3 px-8 rounded-full shadow-md transition hover:opacity-90 mr-4">返回單字卡</button>
-                    <button id="next-puzzle-btn" class="bg-accent text-white font-bold py-3 px-8 rounded-full shadow-md transition hover:opacity-90 hidden">下一題</button>
+                     <button id="back-to-flashcards-btn" class="bg-gray-500 text-white font-bold py-3 px-6 rounded-full shadow-md transition hover:opacity-90">返回單字卡</button>
+                     <button id="prev-puzzle-btn" class="bg-gray-400 text-white font-bold py-3 px-6 rounded-full shadow-md transition hover:opacity-90 ml-2">上一題</button>
+                     <button id="retry-puzzle-btn" class="bg-yellow-500 text-white font-bold py-3 px-6 rounded-full shadow-md transition hover:opacity-90 ml-2">重新回答</button>
+                    <button id="next-puzzle-btn" class="bg-accent text-white font-bold py-3 px-6 rounded-full shadow-md transition hover:opacity-90 ml-2 hidden">下一題</button>
                  </div>
             </div>
         </main>
@@ -279,86 +281,86 @@
         const allUnitsData = {
             'unit1': [
                 { word: 'yet', wordParts: ['yet'], syllables: ['jɛt'], partOfSpeech: 'adv.', definition: '還（沒）', examples: [{en: 'Have you finished your work yet?', zh: '你已經完成你的工作了嗎？'}, {en: "I haven't started preparing for the test yet.", zh: '我還沒開始準備考試。'}, {en: 'Have you talked to your group members about the problem yet?', zh: '你已經和你的組員討論過這問題了嗎？'}] },
-                { word: 'already', wordParts: ['already'], syllables: ['ɔl', 'ˋrɛdɪ'], partOfSpeech: 'adv.', definition: '已經', examples: [{en: 'When I got to the office, Harry was there already.', zh: '我到辦公室時，哈利已經在那裡了。'}, {en: 'You already told me that.', zh: '你已經告訴過我了。'}, {en: 'I have already seen the new movie.', zh: '我已經看過這部新電影了。'}] },
-                { word: 'diet', wordParts: ['diet'], syllables: ['ˋdaɪət'], partOfSpeech: 'n.', definition: '節食；飲食', examples: [{en: "Don't give me too much rice. I'm on a diet.", zh: '不要給我太多飯。我正在節食。'}, {en: 'To make her healthier, the doctor asked her to go on a diet.', zh: '為了讓她更健康，醫生要求她進行節食。'}, {en: 'You should eat at least five kinds of vegetables to keep a healthy diet.', zh: '要維持健康飲食，你應該要吃至少五種蔬菜。'}] },
+                { word: 'already', wordParts: ['al', 'ready'], syllables: ['ɔl', 'ˋrɛdɪ'], partOfSpeech: 'adv.', definition: '已經', examples: [{en: 'When I got to the office, Harry was there already.', zh: '我到辦公室時，哈利已經在那裡了。'}, {en: 'You already told me that.', zh: '你已經告訴過我了。'}, {en: 'I have already seen the new movie.', zh: '我已經看過這部新電影了。'}] },
+                { word: 'diet', wordParts: ['di', 'et'], syllables: ['ˋdaɪ', 'ət'], partOfSpeech: 'n.', definition: '節食；飲食', examples: [{en: "Don't give me too much rice. I'm on a diet.", zh: '不要給我太多飯。我正在節食。'}, {en: 'To make her healthier, the doctor asked her to go on a diet.', zh: '為了讓她更健康，醫生要求她進行節食。'}, {en: 'You should eat at least five kinds of vegetables to keep a healthy diet.', zh: '要維持健康飲食，你應該要吃至少五種蔬菜。'}] },
                 { word: 'since', wordParts: ['since'], syllables: ['sɪns'], partOfSpeech: 'conj.; prep.', definition: '自從', examples: [{en: "Emily hasn't seen Oliver since he moved abroad.", zh: '自從奧利佛搬到國外後，艾蜜莉就沒見過他了。'}, {en: 'Jim has worked in that company since he was twenty.', zh: '吉姆從他二十歲開始就在那間公司工作了。'}, {en: 'I have been a teacher since 1995.', zh: '我從 1995 年開始當老師。'}] },
-                { word: 'photo', wordParts: ['photo'], syllables: ['ˋfoto'], partOfSpeech: 'n.', definition: '照片', examples: [{en: 'Judy showed me some of her family photos.', zh: '茱蒂給我看了一些她的家庭照片。'}, {en: 'Thomas took some photos with those pretty girls.', zh: '湯瑪士跟那些漂亮的女孩們一起拍了些照片。'}, {en: 'Can you take a photo of me and the building?', zh: '你可以幫我跟這棟建築拍張照嗎？'}] },
-                { word: 'crazy', wordParts: ['crazy'], syllables: ['ˋkrezɪ'], partOfSpeech: 'adj.', definition: '荒唐的；瘋狂的', examples: [{en: 'It was crazy of her to drive a car like that.', zh: '她那樣開車實在很荒唐。'}, {en: "Daisy just won't stop talking. I'm going crazy.", zh: '黛西不停講話。我要抓狂了。'}, {en: 'My dad and I are crazy about basketball.', zh: '我跟我爸爸都很瘋籃球。'}] },
+                { word: 'photo', wordParts: ['pho', 'to'], syllables: ['ˋfo', 'to'], partOfSpeech: 'n.', definition: '照片', examples: [{en: 'Judy showed me some of her family photos.', zh: '茱蒂給我看了一些她的家庭照片。'}, {en: 'Thomas took some photos with those pretty girls.', zh: '湯瑪士跟那些漂亮的女孩們一起拍了些照片。'}, {en: 'Can you take a photo of me and the building?', zh: '你可以幫我跟這棟建築拍張照嗎？'}] },
+                { word: 'crazy', wordParts: ['cra', 'zy'], syllables: ['ˋkre', 'zɪ'], partOfSpeech: 'adj.', definition: '荒唐的；瘋狂的', examples: [{en: 'It was crazy of her to drive a car like that.', zh: '她那樣開車實在很荒唐。'}, {en: "Daisy just won't stop talking. I'm going crazy.", zh: '黛西不停講話。我要抓狂了。'}, {en: 'My dad and I are crazy about basketball.', zh: '我跟我爸爸都很瘋籃球。'}] },
                 { word: 'as…as possible', wordParts: ['as…as possible'], syllables: ['æz æz ˋpɑsəb!'], partOfSpeech: '', definition: '盡可能的…', examples: [{en: 'Please call me back as soon as as possible.', zh: '請盡快回我電話。'}, {en: 'Please be as quiet as possible.', zh: '請盡可能地保持安靜。'}, {en: "Let's drink as much juice as possible. It's free today.", zh: '我們盡可能喝多點果汁。今天免費。'}] },
                 { word: 'slim', wordParts: ['slim'], syllables: ['slɪm'], partOfSpeech: 'adj.', definition: '苗條的；微小的', examples: [{en: 'Staying slim becomes more difficult when we get older.', zh: '當我們年紀漸長，要保持苗條就更難了。'}, {en: 'The slim girl over there is my cousin.', zh: '那邊那個苗條的女孩是我表妹。'}, {en: 'There is a slim chance that we will go to Australia next month.', zh: '我們下個月去澳洲的機會渺茫。'}] },
                 { word: 'tip', wordParts: ['tip'], syllables: ['tɪp'], partOfSpeech: 'n.', definition: '訣竅', examples: [{en: 'My grandma knows some tips for making chocolate cake.', zh: '我奶奶知道一些做巧克力蛋糕的訣竅。'}, {en: 'What are your tips for growing these beautiful flowers?', zh: '你種植這些美麗花朵的訣竅為何？'}, {en: 'He gave the waiter a tip before he left the restaurant.', zh: '他離開餐廳前，給了服務生小費。'}] },
                 { word: 'type', wordParts: ['type'], syllables: ['taɪp'], partOfSpeech: 'n.', definition: '類型', examples: [{en: 'What type of clothes do you like to wear?', zh: '你喜歡穿哪一類型的衣服？'}, {en: 'There are many types of cakes in the cake shop.', zh: '那間蛋糕店裡有很多種類的蛋糕。'}] },
-                { word: 'ever', wordParts: ['ever'], syllables: ['ˋɛvɚ'], partOfSpeech: 'adv.', definition: '曾經', examples: [{en: 'Have you ever visited an art museum?', zh: '你曾經造訪過美術館嗎？'}, {en: "I don't think I've ever tried those.", zh: '我不覺得我有吃過。'}, {en: "He has been unhappy ever since his father died.", zh: '自從他爸爸過世後，他一直不開心。'}] },
-                { word: 'habit', wordParts: ['habit'], syllables: ['ˋhæbɪt'], partOfSpeech: 'n.', definition: '習慣', examples: [{en: 'Luna has a habit of biting her nails when she is nervous.', zh: '露娜有緊張時咬指甲的習慣。'}, {en: 'You should make a habit of exercising.', zh: '你應該要養成運動的習慣。'}, {en: 'Staying up late is bad for you. You should kick the habit.', zh: '熬夜對你不好。你應該改掉這習慣。'}] },
+                { word: 'ever', wordParts: ['ev', 'er'], syllables: ['ˋɛv', 'ɚ'], partOfSpeech: 'adv.', definition: '曾經', examples: [{en: 'Have you ever visited an art museum?', zh: '你曾經造訪過美術館嗎？'}, {en: "I don't think I've ever tried those.", zh: '我不覺得我有吃過。'}, {en: "He has been unhappy ever since his father died.", zh: '自從他爸爸過世後，他一直不開心。'}] },
+                { word: 'habit', wordParts: ['hab', 'it'], syllables: ['ˋhæb', 'ɪt'], partOfSpeech: 'n.', definition: '習慣', examples: [{en: 'Luna has a habit of biting her nails when she is nervous.', zh: '露娜有緊張時咬指甲的習慣。'}, {en: 'You should make a habit of exercising.', zh: '你應該要養成運動的習慣。'}, {en: 'Staying up late is bad for you. You should kick the habit.', zh: '熬夜對你不好。你應該改掉這習慣。'}] },
                 { word: 'take action', wordParts: ['take','action'], syllables: ['͵tek ˋækʃən'], partOfSpeech: '', definition: '採取行動', examples: [{en: 'The police need to take action as soon as possible, or the bad guy may hurt the kid.', zh: '警察需要盡快採取行動，否則那個壞人可能會傷害那個小孩。'}, {en: 'We need to take action to help our friend.', zh: '我們必須採取行動來幫助我們的朋友。'}] },
                 { word: 'be all ears', wordParts: ['be all ears'], syllables: ['bi ɔl ˋɪrz'], partOfSpeech: '', definition: '洗耳恭聽', examples: [{en: 'The students were all ears in the class.', zh: '學生們在課堂上全神貫注地聽講。'}, {en: "If you need someone to talk to, I'm all ears.", zh: '如果你需要找人談，我洗耳恭聽。'}] },
                 { word: 'at least', wordParts: ['at least'], syllables: ['ət ˋlist'], partOfSpeech: '', definition: '至少', examples: [{en: 'Eva goes to the movies at least twice a week. She loves movies a lot.', zh: '艾娃一個禮拜至少看兩次電影。她很喜愛電影。'}, {en: 'The car costs at least one million dollars.', zh: '這輛車至少要一百萬元。'}, {en: "My daughter failed the test again, but at least she did her best.", zh: '我女兒又考不及格了，但至少她盡力了。'}] },
                 { word: 'You got it.', wordParts: ['You got it.'], syllables: ['ju ˋgɑt ɪt'], partOfSpeech: '', definition: '沒錯。', examples: [{en: "A: Is two the answer to this math question? B: You got it.", zh: 'A：這題數學題的答案是二嗎？ B：沒錯。'}, {en: "A: Could you give me a hand? B: You got it!", zh: 'A：你可以來幫我一下嗎？ B：沒問題！'}] },
                 { word: 'choice', wordParts: ['choice'], syllables: ['tʃɔɪs'], partOfSpeech: 'n.', definition: '選擇', examples: [{en: "All these dresses look pretty. It's hard for me to make a choice.", zh: '這些洋裝看起來都很美。我好難選擇。'}, {en: "He needed money, so he had no choice but to take that terrible job.", zh: '他需要錢，所以他沒有選擇的餘地，只能接下那份糟糕的工作。'}] },
                 { word: 'gym', wordParts: ['gym'], syllables: ['dʒɪm'], partOfSpeech: 'n.', definition: '健身房；體育館', examples: [{en: 'There will be a basketball game at the gym this afternoon.', zh: '今天下午在體育館會有一場籃球比賽。'}, {en: 'Rob goes to the gym four times a week.', zh: '羅伯一個禮拜去健身房四次。'}, {en: "We have gym today, but I forgot to bring my gym clothes.", zh: '我們今天有體育課，但我忘記帶我的體育服了。'}] },
-                { word: 'abroad', wordParts: ['abroad'], syllables: ['əˋbrɔd'], partOfSpeech: 'adv.', definition: '到國外', examples: [{en: 'Vincent has been abroad for work for six months already.', zh: '文森已經在海外工作六個月了。'}, {en: 'Amanda has lived abroad before.', zh: '亞曼達曾經在國外生活過。'}] },
+                { word: 'abroad', wordParts: ['a', 'broad'], syllables: ['ə', 'ˋbrɔd'], partOfSpeech: 'adv.', definition: '到國外', examples: [{en: 'Vincent has been abroad for work for six months already.', zh: '文森已經在海外工作六個月了。'}, {en: 'Amanda has lived abroad before.', zh: '亞曼達曾經在國外生活過。'}] },
                 { word: 'cheat', wordParts: ['cheat'], syllables: ['tʃit'], partOfSpeech: 'v.', definition: '作弊；欺騙', examples: [{en: 'Cheating on a test is not the right thing to do.', zh: '考試作弊不是一件對的事情。'}, {en: 'Ethan has cheated at cards.', zh: '伊森玩牌時曾經作弊過。'}, {en: 'The famous singer cheated on his wife.', zh: '那位知名歌手對他的老婆不忠。'}] },
-                { word: 'copy', wordParts: ['copy'], syllables: ['ˋkɑpɪ'], partOfSpeech: 'v.', definition: '抄襲；複製', examples: [{en: 'Karen copied down the answers from the book.', zh: '凱倫從書本上抄下答案。'}, {en: "It's clear that you copied the answers from Jack's homework.", zh: '很顯然你抄了傑克作業裡的答案。'}, {en: 'Children often learn by copying their parents.', zh: '小孩常透過模仿父母來學習。'}] },
+                { word: 'copy', wordParts: ['cop', 'y'], syllables: ['ˋkɑp', 'ɪ'], partOfSpeech: 'v.', definition: '抄襲；複製', examples: [{en: 'Karen copied down the answers from the book.', zh: '凱倫從書本上抄下答案。'}, {en: "It's clear that you copied the answers from Jack's homework.", zh: '很顯然你抄了傑克作業裡的答案。'}, {en: 'Children often learn by copying their parents.', zh: '小孩常透過模仿父母來學習。'}] },
                 { word: 'race', wordParts: ['race'], syllables: ['res'], partOfSpeech: 'n.', definition: '速度競賽', examples: [{en: "Joe hasn't decided to join the swimming race yet.", zh: '喬還沒有決定要參加游泳比賽。'}, {en: 'Our class lost the relay race to Class 902.', zh: '我們班接力賽輸給了九年二班。'}] },
                 { word: 'stay in shape', wordParts: ['stay in shape'], syllables: ['͵ste ɪn ˋʃep'], partOfSpeech: '', definition: '保持健康', examples: [{en: 'What are some tips for staying in shape?', zh: '保持健康的祕訣有哪些呢？'}, {en: 'Claire goes jogging every day to stay in shape.', zh: '克萊兒每天慢跑來保持健康。'}] },
-                { word: 'letter', wordParts: ['letter'], syllables: ['ˋlɛtɚ'], partOfSpeech: 'n.', definition: '信', examples: [{en: 'Jerry wrote a letter to his cousin in Australia.', zh: '傑瑞寫了一封信給他在澳洲的表哥。'}, {en: "Let's practice writing the letter G.", zh: '讓我們來練習書寫字母 G。'}] },
-                { word: 'teenager', wordParts: ['teenager'], syllables: ['ˋtin', 'ˌedʒɚ'], partOfSpeech: 'n.', definition: '青少年', examples: [{en: 'It is difficult for the young teacher to teach a group of teenagers.', zh: '要那位年輕的老師教一群青少年是困難的。'}, {en: 'Although I am a teenager, I can still help a lot of people.', zh: '雖然我是個青少年，但我還是可以幫助很多人。'}] },
+                { word: 'letter', wordParts: ['let', 'ter'], syllables: ['ˋlɛt', 'ɚ'], partOfSpeech: 'n.', definition: '信', examples: [{en: 'Jerry wrote a letter to his cousin in Australia.', zh: '傑瑞寫了一封信給他在澳洲的表哥。'}, {en: "Let's practice writing the letter G.", zh: '讓我們來練習書寫字母 G。'}] },
+                { word: 'teenager', wordParts: ['teen', 'ag', 'er'], syllables: ['ˋtin', 'ˌedʒ', 'ɚ'], partOfSpeech: 'n.', definition: '青少年', examples: [{en: 'It is difficult for the young teacher to teach a group of teenagers.', zh: '要那位年輕的老師教一群青少年是困難的。'}, {en: 'Although I am a teenager, I can still help a lot of people.', zh: '雖然我是個青少年，但我還是可以幫助很多人。'}] },
                 { word: 'senior high school', wordParts: ['senior', 'high', 'school'], syllables: ['ˋsinjɚ ˋhaɪ ͵skul'], partOfSpeech: 'n.', definition: '高中', examples: [{en: 'They have known each other since senior high school.', zh: '他們從高中時就彼此認識了。'}, {en: 'My mom is a senior high school English teacher.', zh: '我的媽媽是一個高中英文老師。'}] },
-                { word: 'understand', wordParts: ['understand'], syllables: ['ˌʌndɚ', 'ˋstænd'], partOfSpeech: 'v.', definition: '瞭解', examples: [{en: "I don't think that I understand your question.", zh: '我不認為我理解你的問題。'}, {en: "If you don't understand something, you can ask me after class.", zh: '如果你有什麼地方不瞭解，下課的時候可以來問我。'}] },
+                { word: 'understand', wordParts: ['un', 'der', 'stand'], syllables: ['ˌʌn', 'dɚ', 'ˋstænd'], partOfSpeech: 'v.', definition: '瞭解', examples: [{en: "I don't think that I understand your question.", zh: '我不認為我理解你的問題。'}, {en: "If you don't understand something, you can ask me after class.", zh: '如果你有什麼地方不瞭解，下課的時候可以來問我。'}] },
                 { word: 'drum', wordParts: ['drum'], syllables: ['drʌm'], partOfSpeech: 'n.', definition: '鼓', examples: [{en: 'Lina has played the drums in a band for more than ten years.', zh: '麗娜在樂團裡打鼓已超過十年。'}, {en: "Phoebe's son is good at playing the drums.", zh: '菲比的兒子很擅長打鼓。'}] },
                 { word: 'joy', wordParts: ['joy'], syllables: ['dʒɔɪ'], partOfSpeech: 'n.', definition: '樂趣；喜悅', examples: [{en: "Mrs. Davis was full of joy when she learned that she's going to have a baby.", zh: '戴維斯太太在得知懷孕時充滿了喜悅。'}, {en: 'I find joy in reading storybooks.', zh: '我透過閱讀故事書找到樂趣。'}] },
                 { word: 'pop', wordParts: ['pop'], syllables: ['pɑp'], partOfSpeech: 'n.', definition: '流行音樂', examples: [{en: 'Who is your favorite pop singer in Taiwan?', zh: '誰是你最喜愛的臺灣流行歌手？'}, {en: 'Lady Gaga is a famous pop singer.', zh: '女神卡卡是位知名的流行歌手。'}] },
-                { word: 'lately', wordParts: ['lately'], syllables: ['ˋletlɪ'], partOfSpeech: 'adv.', definition: '最近', examples: [{en: 'I have been busy with my reports lately.', zh: '我最近一直在忙我的報告。'}, {en: "She hasn't been well lately.", zh: '最近她身體不是很好。'}] },
-                { word: 'angry', wordParts: ['angry'], syllables: ['ˋæŋgrɪ'], partOfSpeech: 'adj.', definition: '生氣的', examples: [{en: 'Mom was angry at me because I broke her favorite cup.', zh: '媽媽在生我的氣，因為我打破她最愛的杯子。'}, {en: "Don't be angry with Gary. He didn't know.", zh: '別生蓋瑞的氣。他並不知情。'}] },
-                { word: 'serious', wordParts: ['serious'], syllables: ['ˋsɪrɪəs'], partOfSpeech: 'adj.', definition: '嚴重的', examples: [{en: 'Logan has serious sleeping problems.', zh: '羅根有嚴重的睡眠問題。'}, {en: "I don't want to talk to the new girl. She looks serious all the time.", zh: '我不想跟那個新來的女生講話。她總是看起來很嚴肅。'}] },
-                { word: 'interest', wordParts: ['interest'], syllables: ['ˋɪntərɪst'], partOfSpeech: 'n.; v.', definition: '興趣；使感興趣', examples: [{en: 'Playing the guitar is one of my interests.', zh: '彈奏吉他是我的興趣之一。'}, {en: 'John has had an interest in taking photos since he was a child.', zh: '約翰從小就對攝影有興趣。'}, {en: "Going trick-or-treating doesn't really interest me.", zh: '「不給糖就搗蛋」並不真的令我感興趣。'}] },
-                { word: 'garbage', wordParts: ['garbage'], syllables: ['ˋgɑrbɪdʒ'], partOfSpeech: 'n.', definition: '垃圾', examples: [{en: "Don't forget to take the garbage out when you leave.", zh: '離開時別忘記把垃圾拿出去。'}, {en: "You can't throw your garbage here.", zh: '你不能把垃圾丟在這裡。'}] },
-                { word: 'unhappy', wordParts: ['unhappy'], syllables: ['ʌnˋhæpɪ'], partOfSpeech: 'adj.', definition: '不快樂的', examples: [{en: 'Owen was unhappy because he had a bad day today.', zh: '歐文不太開心，因為他今天過得不好。'}, {en: 'My mother is unhappy about my decision to work abroad.', zh: '我媽媽對我決定去國外工作感到不高興。'}] },
+                { word: 'lately', wordParts: ['late', 'ly'], syllables: ['ˋlet', 'lɪ'], partOfSpeech: 'adv.', definition: '最近', examples: [{en: 'I have been busy with my reports lately.', zh: '我最近一直在忙我的報告。'}, {en: "She hasn't been well lately.", zh: '最近她身體不是很好。'}] },
+                { word: 'angry', wordParts: ['an', 'gry'], syllables: ['ˋæŋ', 'grɪ'], partOfSpeech: 'adj.', definition: '生氣的', examples: [{en: 'Mom was angry at me because I broke her favorite cup.', zh: '媽媽在生我的氣，因為我打破她最愛的杯子。'}, {en: "Don't be angry with Gary. He didn't know.", zh: '別生蓋瑞的氣。他並不知情。'}] },
+                { word: 'serious', wordParts: ['se', 'ri', 'ous'], syllables: ['ˋsɪr', 'ɪ', 'əs'], partOfSpeech: 'adj.', definition: '嚴重的', examples: [{en: 'Logan has serious sleeping problems.', zh: '羅根有嚴重的睡眠問題。'}, {en: "I don't want to talk to the new girl. She looks serious all the time.", zh: '我不想跟那個新來的女生講話。她總是看起來很嚴肅。'}] },
+                { word: 'interest', wordParts: ['in', 'ter', 'est'], syllables: ['ˋɪn', 'tər', 'ɪst'], partOfSpeech: 'n.; v.', definition: '興趣；使感興趣', examples: [{en: 'Playing the guitar is one of my interests.', zh: '彈奏吉他是我的興趣之一。'}, {en: 'John has had an interest in taking photos since he was a child.', zh: '約翰從小就對攝影有興趣。'}, {en: "Going trick-or-treating doesn't really interest me.", zh: '「不給糖就搗蛋」並不真的令我感興趣。'}] },
+                { word: 'garbage', wordParts: ['gar', 'bage'], syllables: ['ˋgɑr', 'bɪdʒ'], partOfSpeech: 'n.', definition: '垃圾', examples: [{en: "Don't forget to take the garbage out when you leave.", zh: '離開時別忘記把垃圾拿出去。'}, {en: "You can't throw your garbage here.", zh: '你不能把垃圾丟在這裡。'}] },
+                { word: 'unhappy', wordParts: ['un', 'hap', 'py'], syllables: ['ʌn', 'ˋhæp', 'ɪ'], partOfSpeech: 'adj.', definition: '不快樂的', examples: [{en: 'Owen was unhappy because he had a bad day today.', zh: '歐文不太開心，因為他今天過得不好。'}, {en: 'My mother is unhappy about my decision to work abroad.', zh: '我媽媽對我決定去國外工作感到不高興。'}] },
                 { word: 'wish', wordParts: ['wish'], syllables: ['wɪʃ'], partOfSpeech: 'n.; v.', definition: '祝福', examples: [{en: 'May all your wishes come true.', zh: '希望你所有的願望都能實現。'}, {en: "A: Happy birthday, Bentley! Don't forget to make a wish.", zh: 'A：班特利，生日快樂！別忘了許願喔。'}] },
-                { word: 'envelope', wordParts: ['envelope'], syllables: ['ˋɛnvə͵lop'], partOfSpeech: 'n.', definition: '信封', examples: [{en: "In Chinese culture, children get red envelopes on Chinese New Year's Eve.", zh: '在中華文化裡，孩子們在除夕夜會拿到紅包。'}, {en: "You forgot to write the recipient's name on the envelope.", zh: '你忘了在信封上寫收件人的名字了。'}] },
+                { word: 'envelope', wordParts: ['en', 've', 'lope'], syllables: ['ˋɛn', 'və', '͵lop'], partOfSpeech: 'n.', definition: '信封', examples: [{en: "In Chinese culture, children get red envelopes on Chinese New Year's Eve.", zh: '在中華文化裡，孩子們在除夕夜會拿到紅包。'}, {en: "You forgot to write the recipient's name on the envelope.", zh: '你忘了在信封上寫收件人的名字了。'}] },
                 { word: 'stamp', wordParts: ['stamp'], syllables: ['stæmp'], partOfSpeech: 'n.', definition: '郵票', examples: [{en: 'Remember to put a stamp on the envelope before you mail the letter.', zh: '寄出信前，記得在信封上貼上郵票。'}, {en: 'I need a stamp for the letter.', zh: '我的信需要一張郵票。'}] },
                 { word: 'star', wordParts: ['star'], syllables: ['stɑr'], partOfSpeech: 'n.', definition: '明星', examples: [{en: "I've never heard of that movie star. Do you know any of her works?", zh: '我從沒聽說過這位電影明星。你知道她的任何作品嗎？'}, {en: 'Sally is a big fan of that movie star.', zh: '莎莉是那位電影明星的大粉絲。'}, {en: 'We lay on the grass and counted stars.', zh: '我們躺在草地上數星星。'}] },
                 { word: 'call', wordParts: ['call'], syllables: ['kɔl'], partOfSpeech: 'v.', definition: '稱呼', examples: [{en: 'His real name is Thomas, but most of his friends call him Tom.', zh: '他真正的名字叫湯姆士，但他大部分的朋友都叫他湯姆。'}, {en: "James called me a cheater after I won the game. He was a sore loser.", zh: '我贏了比賽後，詹姆士說我作弊。他輸不起。'}] },
                 { word: 'talk... into', wordParts: ['talk... into'], syllables: ['tɔk ˋɪntə'], partOfSpeech: '', definition: '說服（某人）做…', examples: [{en: 'The salesperson is trying to talk Joey into buying that motorcycle.', zh: '銷售員正試著說服喬伊買下那輛摩托車。'}, {en: "I'm trying to talk my mom into buying me a new watch.", zh: '我正試著說服我媽買一個新的手錶給我。'}] }
             ],
             'unit2': [
-                { word: 'actor', wordParts: ['actor'], syllables: ['ˋæktɚ'], partOfSpeech: 'n.', definition: '演員', examples: [{en: 'Everyone enjoyed the play tonight because all the actors did a great job.', zh: '每個人都很享受今晚的戲劇，因為所有的演員都表現得很棒。'}, {en: "Being an actor is Aaron's dream.", zh: '當一名演員是亞倫的夢想。'}] },
+                { word: 'actor', wordParts: ['ac', 'tor'], syllables: ['ˋæk', 'tɚ'], partOfSpeech: 'n.', definition: '演員', examples: [{en: 'Everyone enjoyed the play tonight because all the actors did a great job.', zh: '每個人都很享受今晚的戲劇，因為所有的演員都表現得很棒。'}, {en: "Being an actor is Aaron's dream.", zh: '當一名演員是亞倫的夢想。'}] },
                 { word: 'act', wordParts: ['act'], syllables: ['ækt'], partOfSpeech: 'v.', definition: '表演', examples: [{en: "Bruce is excellent at acting and has already won three acting awards so far.", zh: '布魯斯很會演戲，且迄今已贏得了三座演技獎。'}, {en: "Don't act like a child. You're an adult.", zh: '不要表現得像個小孩。你是個大人了。'}] },
                 { word: 'touch', wordParts: ['touch'], syllables: ['tʌtʃ'], partOfSpeech: 'v.', definition: '觸動；碰觸', examples: [{en: 'Please wash your hands before you touch the baby.', zh: '在你碰觸嬰兒之前，請洗手。'}, {en: "Jennifer Carter's new movie has touched the hearts of millions of people.", zh: '珍妮佛．卡特的新電影觸動了數百萬人的心。'}] },
                 { word: 'heart', wordParts: ['heart'], syllables: ['hɑrt'], partOfSpeech: 'n.', definition: '心；心臟', examples: [{en: 'There is something wrong with his heart.', zh: '他的心臟有點問題。'}, {en: 'He broke his mother’s heart by shouting at her.', zh: '他對他母親大吼，傷透了她的心。'}, {en: 'Sue learned her lines by heart for the play.', zh: '為了那齣戲，蘇將臺詞熟記在心。'}] },
-                { word: 'surprise', wordParts: ['surprise'], syllables: ['sɚˋpraɪz'], partOfSpeech: 'v.; n.', definition: '（使）驚訝', examples: [{en: 'The students surprised their teacher by making a big cake for her birthday.', zh: '學生們為老師的生日做了一個大蛋糕，令她很驚喜。'}, {en: "To my surprise, Mia decided to move to the fishing village.", zh: '令我訝異的是，米雅決定搬去漁村。'}] },
+                { word: 'surprise', wordParts: ['sur', 'prise'], syllables: ['sɚ', 'ˋpraɪz'], partOfSpeech: 'v.; n.', definition: '（使）驚訝', examples: [{en: 'The students surprised their teacher by making a big cake for her birthday.', zh: '學生們為老師的生日做了一個大蛋糕，令她很驚喜。'}, {en: "To my surprise, Mia decided to move to the fishing village.", zh: '令我訝異的是，米雅決定搬去漁村。'}] },
                 { word: 'bored', wordParts: ['bored'], syllables: ['bɔrd'], partOfSpeech: 'adj.', definition: '感到無聊的', examples: [{en: 'Paul got bored after watching the TV news for an hour.', zh: '保羅看了一小時的電視新聞後感到無聊。'}, {en: "Lisa left her job because she was bored with it.", zh: '麗莎辭職了，因為她對工作感到無趣。'}] },
-                { word: 'hard-working', wordParts: ['hard-working'], syllables: ['͵hɑrdˋwɝkɪŋ'], partOfSpeech: 'adj.', definition: '勤奮的', examples: [{en: 'Claire is the most hard-working worker in our office.', zh: '克萊兒是我們辦公室裡最認真的職員。'}, {en: 'Tony is more hard-working than his brother.', zh: '東尼比他的哥哥更勤奮。'}] },
+                { word: 'hard-working', wordParts: ['hard-', 'working'], syllables: ['͵hɑrd', 'ˋwɝkɪŋ'], partOfSpeech: 'adj.', definition: '勤奮的', examples: [{en: 'Claire is the most hard-working worker in our office.', zh: '克萊兒是我們辦公室裡最認真的職員。'}, {en: 'Tony is more hard-working than his brother.', zh: '東尼比他的哥哥更勤奮。'}] },
                 { word: 'guess', wordParts: ['guess'], syllables: ['gɛs'], partOfSpeech: 'v.; n.', definition: '猜測', examples: [{en: 'Larry was very happy because he guessed the answer right.', zh: '賴瑞很開心，因為他猜對了答案。'}, {en: 'Take a guess. What did my husband give me for my birthday?', zh: '猜猜看。我丈夫送我什麼當生日禮物？'}] },
-                { word: 'several', wordParts: ['several'], syllables: ['ˋsɛvərəl'], partOfSpeech: 'adj.', definition: '幾個的', examples: [{en: 'Grace has visited several countries since last January.', zh: '葛瑞絲去年一月到現在已經去過好幾個國家了。'}, {en: 'Several of the students in our class come from Kenya.', zh: '我們班上好幾個學生都來自肯亞。'}] },
-                { word: 'surprised', wordParts: ['surprised'], syllables: ['səˋpraɪzd'], partOfSpeech: 'adj.', definition: '感到驚訝的', examples: [{en: 'We were surprised at the size of the lemon.', zh: '我們對這顆檸檬的大小感到訝異。'}, {en: 'Linda was surprised at her grade on the math test.', zh: '琳達對她數學考試的成績感到驚訝。'}] },
-                { word: 'exciting', wordParts: ['exciting'], syllables: ['ɪkˋsaɪtɪŋ'], partOfSpeech: 'adj.', definition: '令人興奮的；刺激的', examples: [{en: 'Playing video games is exciting to many of my classmates.', zh: '打電動對我的許多同學來說很刺激。'}, {en: "The news about Lina Wright's new movie is really exciting.", zh: '麗娜．萊特新電影的消息真令人興奮。'}] },
+                { word: 'several', wordParts: ['sev', 'er', 'al'], syllables: ['ˋsɛv', 'ər', 'əl'], partOfSpeech: 'adj.', definition: '幾個的', examples: [{en: 'Grace has visited several countries since last January.', zh: '葛瑞絲去年一月到現在已經去過好幾個國家了。'}, {en: 'Several of the students in our class come from Kenya.', zh: '我們班上好幾個學生都來自肯亞。'}] },
+                { word: 'surprised', wordParts: ['sur', 'prised'], syllables: ['sə', 'ˋpraɪzd'], partOfSpeech: 'adj.', definition: '感到驚訝的', examples: [{en: 'We were surprised at the size of the lemon.', zh: '我們對這顆檸檬的大小感到訝異。'}, {en: 'Linda was surprised at her grade on the math test.', zh: '琳達對她數學考試的成績感到驚訝。'}] },
+                { word: 'exciting', wordParts: ['ex', 'cit', 'ing'], syllables: ['ɪk', 'ˋsaɪt', 'ɪŋ'], partOfSpeech: 'adj.', definition: '令人興奮的；刺激的', examples: [{en: 'Playing video games is exciting to many of my classmates.', zh: '打電動對我的許多同學來說很刺激。'}, {en: "The news about Lina Wright's new movie is really exciting.", zh: '麗娜．萊特新電影的消息真令人興奮。'}] },
                 { word: 'ghost', wordParts: ['ghost'], syllables: ['gost'], partOfSpeech: 'n.', definition: '鬼', examples: [{en: 'Some people hope to see ghosts, so they visit that haunted house late at night.', zh: '一些人希望能看到鬼，所以他們三更半夜去拜訪那間鬼屋。'}] },
-                { word: 'castle', wordParts: ['castle'], syllables: ['ˋkæs!'], partOfSpeech: 'n.', definition: '城堡', examples: [{en: 'The castle on the hill has stood there for over 800 years.', zh: '山丘上的那座城堡已矗立在那裡超過八百年了。'}, {en: 'The new owner of the castle plans to turn it into a hotel.', zh: '城堡的新主人打算把它改成一間旅館。'}] },
-                { word: 'surprising', wordParts: ['surprising'], syllables: ['sɚˋpraɪzɪŋ'], partOfSpeech: 'adj.', definition: '令人驚訝的', examples: [{en: "It was surprising to Alex that his kids made breakfast for him on Father's Day.", zh: '令艾力克斯驚喜的是，他的小孩在父親節那天為他做了早餐。'}] },
-                { word: 'interested', wordParts: ['interested'], syllables: ['ˋɪntərɪstɪd'], partOfSpeech: 'adj.', definition: '感興趣的', examples: [{en: 'Are you interested in pop music?', zh: '你對流行音樂感興趣嗎？'}, {en: 'Sam is interested in playing baseball.', zh: '山姆對打棒球有興趣。'}] },
-                { word: 'boring', wordParts: ['boring'], syllables: ['ˋborɪŋ'], partOfSpeech: 'adj.', definition: '無聊的', examples: [{en: 'The music video is too boring to watch again.', zh: '這音樂影片太無聊，不值得再看一次。'}, {en: "I'm a boring person. Don't expect me to say something funny.", zh: '我是個無趣的人。別期待我會說什麼好笑的事情。'}] },
-                { word: 'download', wordParts: ['download'], syllables: ['ˋdaʊn', '͵lod'], partOfSpeech: 'v.', definition: '下載', examples: [{en: 'It is easy to download music or videos from the Internet.', zh: '從網路上下載音樂或影片很容易。'}] },
-                { word: 'Internet', wordParts: ['Internet'], syllables: ['ˋɪntɚ', '͵nɛt'], partOfSpeech: 'n.', definition: '網路', examples: [{en: 'Heidi seldom surfs the Internet at work.', zh: '海蒂很少在工作時上網。'}] },
+                { word: 'castle', wordParts: ['cas', 'tle'], syllables: ['ˋkæs', '!'], partOfSpeech: 'n.', definition: '城堡', examples: [{en: 'The castle on the hill has stood there for over 800 years.', zh: '山丘上的那座城堡已矗立在那裡超過八百年了。'}, {en: 'The new owner of the castle plans to turn it into a hotel.', zh: '城堡的新主人打算把它改成一間旅館。'}] },
+                { word: 'surprising', wordParts: ['sur', 'pris', 'ing'], syllables: ['sɚ', 'ˋpraɪz', 'ɪŋ'], partOfSpeech: 'adj.', definition: '令人驚訝的', examples: [{en: "It was surprising to Alex that his kids made breakfast for him on Father's Day.", zh: '令艾力克斯驚喜的是，他的小孩在父親節那天為他做了早餐。'}] },
+                { word: 'interested', wordParts: ['in', 'ter', 'est', 'ed'], syllables: ['ˋɪn', 'tər', 'ɪst', 'ɪd'], partOfSpeech: 'adj.', definition: '感興趣的', examples: [{en: 'Are you interested in pop music?', zh: '你對流行音樂感興趣嗎？'}, {en: 'Sam is interested in playing baseball.', zh: '山姆對打棒球有興趣。'}] },
+                { word: 'boring', wordParts: ['bor', 'ing'], syllables: ['ˋbor', 'ɪŋ'], partOfSpeech: 'adj.', definition: '無聊的', examples: [{en: 'The music video is too boring to watch again.', zh: '這音樂影片太無聊，不值得再看一次。'}, {en: "I'm a boring person. Don't expect me to say something funny.", zh: '我是個無趣的人。別期待我會說什麼好笑的事情。'}] },
+                { word: 'download', wordParts: ['down', 'load'], syllables: ['ˋdaʊn', '͵lod'], partOfSpeech: 'v.', definition: '下載', examples: [{en: 'It is easy to download music or videos from the Internet.', zh: '從網路上下載音樂或影片很容易。'}] },
+                { word: 'Internet', wordParts: ['In', 'ter', 'net'], syllables: ['ˋɪn', 'tɚ', '͵nɛt'], partOfSpeech: 'n.', definition: '網路', examples: [{en: 'Heidi seldom surfs the Internet at work.', zh: '海蒂很少在工作時上網。'}] },
                 { word: 'set', wordParts: ['set'], syllables: ['sɛt'], partOfSpeech: 'v.', definition: '建立；樹立', examples: [{en: 'Mr. Parker is never late for class; he sets a good example for his students.', zh: '帕克老師上課從不遲到；他為他的學生樹立了一個好榜樣。'}] },
-                { word: 'excited', wordParts: ['excited'], syllables: ['ɪkˋsaɪtɪd'], partOfSpeech: 'adj.', definition: '感到興奮的', examples: [{en: "My favorite singer is coming to Taiwan, and I'm so excited about it.", zh: '我最愛的歌手要來臺灣了，我好興奮。'}] },
-                { word: 'ticket', wordParts: ['ticket'], syllables: ['ˋtɪkɪt'], partOfSpeech: 'n.', definition: '票', examples: [{en: 'Mr. Lin is going to buy a train ticket to Taichung.', zh: '林先生正要去買到臺中的火車票。'}, {en: 'Karen drove too fast, so she got a ticket from the police.', zh: '凱倫開車開太快，所以她從警方那裡得到一張罰單。'}] },
-                { word: 'online', wordParts: ['online'], syllables: ['ˋɑn', '͵laɪn'], partOfSpeech: 'adv.; adj.', definition: '在網上；線上的', examples: [{en: 'I have never shopped for fresh fruit or vegetables online.', zh: '我不曾網購新鮮蔬果。'}, {en: 'They have an online meeting once a week.', zh: '他們一週開一次線上會議。'}] },
+                { word: 'excited', wordParts: ['ex', 'cit', 'ed'], syllables: ['ɪk', 'ˋsaɪt', 'ɪd'], partOfSpeech: 'adj.', definition: '感到興奮的', examples: [{en: "My favorite singer is coming to Taiwan, and I'm so excited about it.", zh: '我最愛的歌手要來臺灣了，我好興奮。'}] },
+                { word: 'ticket', wordParts: ['tick', 'et'], syllables: ['ˋtɪk', 'ɪt'], partOfSpeech: 'n.', definition: '票', examples: [{en: 'Mr. Lin is going to buy a train ticket to Taichung.', zh: '林先生正要去買到臺中的火車票。'}, {en: 'Karen drove too fast, so she got a ticket from the police.', zh: '凱倫開車開太快，所以她從警方那裡得到一張罰單。'}] },
+                { word: 'online', wordParts: ['on', 'line'], syllables: ['ˋɑn', '͵laɪn'], partOfSpeech: 'adv.; adj.', definition: '在網上；線上的', examples: [{en: 'I have never shopped for fresh fruit or vegetables online.', zh: '我不曾網購新鮮蔬果。'}, {en: 'They have an online meeting once a week.', zh: '他們一週開一次線上會議。'}] },
                 { word: 'proud', wordParts: ['proud'], syllables: ['praʊd'], partOfSpeech: 'adj.', definition: '自豪的；驕傲的', examples: [{en: "You did your best, and we are all proud of you.", zh: '你盡力了，我們全都以你為榮。'}, {en: 'Amelia knew she was wrong, but she was just too proud to say sorry.', zh: '艾美莉亞知道自己是錯的，但她太驕傲而不願意道歉。'}] },
                 { word: 'I’ll pass.', wordParts: ["I'll pass."], syllables: ['aɪl ˋpæs'], partOfSpeech: '', definition: '不用了。', examples: [{en: "A: Would you like to eat out with us? B: I'll pass. I have to work.", zh: 'A：你要跟我們一起出去吃飯嗎？ B：不了。我必須工作。'}] },
                 { word: 'book', wordParts: ['book'], syllables: ['bʊk'], partOfSpeech: 'v.', definition: '預訂；預約', examples: [{en: "To celebrate Grandma's birthday, I booked the best restaurant in the city.", zh: '為了慶祝外婆的生日，我預訂了城裡最好的餐廳。'}] },
-                { word: 'actress', wordParts: ['actress'], syllables: ['ˋæktrɪs'], partOfSpeech: 'n.', definition: '女演員', examples: [{en: "Almost everyone in the country knows the actress. She's very famous.", zh: '幾乎國內的每一個人都知道這位女演員。她非常有名。'}] },
-                { word: 'towel', wordParts: ['towel'], syllables: ['ˋtaʊəl'], partOfSpeech: 'n.', definition: '毛巾', examples: [{en: 'After the shower, Jacob dried his body with a big towel.', zh: '淋浴過後，雅各用一條大毛巾擦乾身體。'}] },
+                { word: 'actress', wordParts: ['ac', 'tress'], syllables: ['ˋæk', 'trɪs'], partOfSpeech: 'n.', definition: '女演員', examples: [{en: "Almost everyone in the country knows the actress. She's very famous.", zh: '幾乎國內的每一個人都知道這位女演員。她非常有名。'}] },
+                { word: 'towel', wordParts: ['tow', 'el'], syllables: ['ˋtaʊ', 'əl'], partOfSpeech: 'n.', definition: '毛巾', examples: [{en: 'After the shower, Jacob dried his body with a big towel.', zh: '淋浴過後，雅各用一條大毛巾擦乾身體。'}] },
                 { word: 'comb', wordParts: ['comb'], syllables: ['kom'], partOfSpeech: 'n.; v.', definition: '梳子；梳理', examples: [{en: "Chris combs his daughter's hair every day before she goes to school.", zh: '克里斯每天在女兒上學前幫她梳頭髮。'}] },
                 { word: 'bat', wordParts: ['bat'], syllables: ['bæt'], partOfSpeech: 'n.', definition: '蝙蝠', examples: [{en: 'Dr. Price and her team have studied bats since 2011.', zh: '普萊斯博士和她的團隊從 2011 年開始研究蝙蝠。'}, {en: 'Mr. Hawkins bought some baseball gloves and bats for our school team.', zh: '霍金斯先生為我們校隊買了一些棒球手套和球棒。'}] },
                 { word: 'lie', wordParts: ['lie'], syllables: ['laɪ'], partOfSpeech: 'n.; v.', definition: '謊言；說謊', examples: [{en: 'Noah was angry with his sister because she lied to him again.', zh: '諾亞氣他的妹妹，因為她又對他說謊。'}, {en: "Nicole told me a lie, so I don't want to talk to her.", zh: '妮可對我撒謊，所以我不想跟她說話。'}] },
                 { word: 'fake', wordParts: ['fake'], syllables: ['fek'], partOfSpeech: 'adj.', definition: '假的；偽造的', examples: [{en: 'Any news can be fake, so check the facts before you decide to believe anything.', zh: '任何新聞都可能是假的，所以在你決定相信任何事情之前，查證一下事實吧。'}] },
-                { word: 'newspaper', wordParts: ['newspaper'], syllables: ['ˋnjuz', '͵pepɚ'], partOfSpeech: 'n.', definition: '報紙', examples: [{en: "In today's world, fewer and fewer people read newspapers.", zh: '在今日世界，越來越少人看報紙。'}] },
-                { word: 'nobody', wordParts: ['nobody'], syllables: ['ˋnobɑdɪ'], partOfSpeech: 'pron.', definition: '無人', examples: [{en: 'The police left the building after they found nobody inside.', zh: '發現大樓裡無人之後，警方便離開了。'}] },
-                { word: 'anybody', wordParts: ['anybody'], syllables: ['ˋɛnɪ', '͵bɑdɪ'], partOfSpeech: 'pron.', definition: '任何人', examples: [{en: 'This question is so easy that anyone can answer it quickly.', zh: '這問題如此簡單，任何人都可迅速回答。'}] },
+                { word: 'newspaper', wordParts: ['news', 'pa', 'per'], syllables: ['ˋnjuz', '͵pe', 'pɚ'], partOfSpeech: 'n.', definition: '報紙', examples: [{en: "In today's world, fewer and fewer people read newspapers.", zh: '在今日世界，越來越少人看報紙。'}] },
+                { word: 'nobody', wordParts: ['no', 'bod', 'y'], syllables: ['ˋno', '͵bɑd', 'ɪ'], partOfSpeech: 'pron.', definition: '無人', examples: [{en: 'The police left the building after they found nobody inside.', zh: '發現大樓裡無人之後，警方便離開了。'}] },
+                { word: 'anybody', wordParts: ['an', 'y', 'bod', 'y'], syllables: ['ˋɛn', 'ɪ', '͵bɑd', 'ɪ'], partOfSpeech: 'pron.', definition: '任何人', examples: [{en: 'This question is so easy that anyone can answer it quickly.', zh: '這問題如此簡單，任何人都可迅速回答。'}] },
                 { word: 'piece', wordParts: ['piece'], syllables: ['pis'], partOfSpeech: 'n.', definition: '（一）則；片；張', examples: [{en: 'I was hungry, so I ate at least three pieces of cake.', zh: '我很餓，所以我吃了至少三片蛋糕。'}, {en: 'Math is a piece of cake to Casey.', zh: '數學對凱西來說非常簡單。'}] },
                 { word: 'dig', wordParts: ['dig'], syllables: ['dɪg'], partOfSpeech: 'v.', definition: '挖掘；尋找', examples: [{en: 'The hungry bear is digging for food.', zh: '那頭飢餓的熊正在挖食物吃。'}] },
-                { word: 'sentence', wordParts: ['sentence'], syllables: ['ˋsɛntəns'], partOfSpeech: 'n.', definition: '句子', examples: [{en: 'This sentence is difficult for me. Can you explain it to me?', zh: '這個句子對我而言太難了。你可以解釋給我聽嗎？'}] },
+                { word: 'sentence', wordParts: ['sen', 'tence'], syllables: ['ˋsɛn', 'təns'], partOfSpeech: 'n.', definition: '句子', examples: [{en: 'This sentence is difficult for me. Can you explain it to me?', zh: '這個句子對我而言太難了。你可以解釋給我聽嗎？'}] },
                 { word: 'spell', wordParts: ['spell'], syllables: ['spɛl'], partOfSpeech: 'v.', definition: '拼字', examples: [{en: "A: Could you spell your last name again, sir? B: No problem. It's B-E-Z-O-S, Bezos.", zh: 'A：先生，你可以再拼一次你的姓氏嗎？ B：沒問題。是 B-E-Z-O-S，Bezos。'}] },
                 { word: 'trick', wordParts: ['trick'], syllables: ['trɪk'], partOfSpeech: 'n.; v.', definition: '騙；詭計', examples: [{en: 'Dora tricked her uncle into giving her one thousand dollars.', zh: '朵拉騙她的舅舅給她一千塊。'}, {en: 'I learned some magic tricks in the club.', zh: '我在社團裡學了一些魔術把戲。'}] },
                 { word: 'post', wordParts: ['post'], syllables: ['post'], partOfSpeech: 'n.; v.', definition: '貼文；張貼', examples: [{en: 'If you want to post my photos online, you have to ask me first.', zh: '如果你想要把我的照片張貼到網路上，你要先問過我。'}, {en: "Ms. Hill wrote several posts about her pet cat.", zh: '希爾小姐寫了數篇關於她寵物貓的貼文。'}] },
@@ -367,30 +369,30 @@
             ],
             'unit3': [
                 { word: 'senior center', wordParts: ['senior', 'center'], syllables: ['ˋsinjɚ ͵sɛntɚ'], partOfSpeech: 'n.', definition: '樂齡中心', examples: [{en: 'My grandma met her best friend at a senior center.', zh: '我奶奶在樂齡中心遇到她最好的朋友。'}, {en: 'People over 65 years old can buy the senior tickets.', zh: '六十五歲以上的人可以買敬老票。'}] },
-                { word: 'pleasure', wordParts: ['pleasure'], syllables: ['ˋplɛʒɚ'], partOfSpeech: 'n.', definition: '愉快；榮幸', examples: [{en: "It's a pleasure to work with him.", zh: '和他工作很愉快。'}, {en: 'A: Could you look after my son this afternoon? B: With pleasure.', zh: 'A：你今天下午能幫我顧一下兒子嗎？ B：樂意之至。'}] },
-                { word: 'attack', wordParts: ['attack'], syllables: ['əˋtæk'], partOfSpeech: 'n.; v.', definition: '攻擊', examples: [{en: 'Thousands of people were killed during the attack.', zh: '幾千人在那場攻擊中喪生。'}, {en: 'John was attacked with a knife and was seriously hurt.', zh: '約翰被人用刀子攻擊，受了重傷。'}] },
+                { word: 'pleasure', wordParts: ['pleas', 'ure'], syllables: ['ˋplɛʒ', 'ɚ'], partOfSpeech: 'n.', definition: '愉快；榮幸', examples: [{en: "It's a pleasure to work with him.", zh: '和他工作很愉快。'}, {en: 'A: Could you look after my son this afternoon? B: With pleasure.', zh: 'A：你今天下午能幫我顧一下兒子嗎？ B：樂意之至。'}] },
+                { word: 'attack', wordParts: ['at', 'tack'], syllables: ['ə', 'ˋtæk'], partOfSpeech: 'n.; v.', definition: '攻擊', examples: [{en: 'Thousands of people were killed during the attack.', zh: '幾千人在那場攻擊中喪生。'}, {en: 'John was attacked with a knife and was seriously hurt.', zh: '約翰被人用刀子攻擊，受了重傷。'}] },
                 { word: 'toe', wordParts: ['toe'], syllables: ['to'], partOfSpeech: 'n.', definition: '腳趾', examples: [{en: 'Victor was bitten on the toe by a snake this afternoon.', zh: '今天下午維克多的腳趾被蛇咬了。'}, {en: 'The teacher gives a test every class to keep the students on their toes.', zh: '那位老師每堂課都會考試，讓學生不懈怠。'}] },
                 { word: 'drop', wordParts: ['drop'], syllables: ['drap'], partOfSpeech: 'v.', definition: '（使）落下；丟下', examples: [{en: "Be careful with the eggs. Don't drop them.", zh: '小心這些蛋。別掉了。'}, {en: 'Mom dropped in on Grandma on her way to work.', zh: '媽媽在去公司的路上去探望了奶奶。'}] },
                 { word: 'land', wordParts: ['land'], syllables: ['lænd'], partOfSpeech: 'v.; n.', definition: '著陸；陸地', examples: [{en: 'Our plane will land in an hour.', zh: '我們的飛機將於一小時後著陸。'}, {en: 'Elephants are the biggest animals on land.', zh: '大象是陸地上最大的動物。'}] },
-                { word: 'puppy', wordParts: ['puppy'], syllables: ['ˋpʌpɪ'], partOfSpeech: 'n.', definition: '幼犬', examples: [{en: 'I found a box of puppies by the road last night.', zh: '昨晚我在路邊發現一箱小狗。'}] },
-                { word: 'traffic', wordParts: ['traffic'], syllables: ['ˋtræfɪk'], partOfSpeech: 'n.', definition: '車流（量）；交通', examples: [{en: 'There was a lot of traffic on the street this morning.', zh: '今天早上街上的車流量很大。'}] },
-                { word: 'middle', wordParts: ['middle'], syllables: ['ˋmɪd!'], partOfSpeech: 'n.', definition: '中間', examples: [{en: 'Who is the man in the middle of the photo?', zh: '在照片中間的男士是誰？'}, {en: 'I was in the middle of a meeting when you called.', zh: '你打電話過來時，我正忙著開會。'}] },
-                { word: 'carry', wordParts: ['carry'], syllables: ['ˋkærɪ'], partOfSpeech: 'v.', definition: '攜帶', examples: [{en: "I don't like to carry a lot of money with me.", zh: '我不喜歡帶很多錢在身上。'}, {en: 'Ann carries a guitar to school on Wednesdays and Fridays.', zh: '安星期三和五都會揹著吉他到學校。'}] },
+                { word: 'puppy', wordParts: ['pup', 'py'], syllables: ['ˋpʌp', 'ɪ'], partOfSpeech: 'n.', definition: '幼犬', examples: [{en: 'I found a box of puppies by the road last night.', zh: '昨晚我在路邊發現一箱小狗。'}] },
+                { word: 'traffic', wordParts: ['traf', 'fic'], syllables: ['ˋtræf', 'ɪk'], partOfSpeech: 'n.', definition: '車流（量）；交通', examples: [{en: 'There was a lot of traffic on the street this morning.', zh: '今天早上街上的車流量很大。'}] },
+                { word: 'middle', wordParts: ['mid', 'dle'], syllables: ['ˋmɪd', '!'], partOfSpeech: 'n.', definition: '中間', examples: [{en: 'Who is the man in the middle of the photo?', zh: '在照片中間的男士是誰？'}, {en: 'I was in the middle of a meeting when you called.', zh: '你打電話過來時，我正忙著開会。'}] },
+                { word: 'carry', wordParts: ['car', 'ry'], syllables: ['ˋkær', 'ɪ'], partOfSpeech: 'v.', definition: '攜帶', examples: [{en: "I don't like to carry a lot of money with me.", zh: '我不喜歡帶很多錢在身上。'}, {en: 'Ann carries a guitar to school on Wednesdays and Fridays.', zh: '安星期三和五都會揹著吉他到學校。'}] },
                 { word: 'note', wordParts: ['note'], syllables: ['not'], partOfSpeech: 'n.', definition: '紙條', examples: [{en: 'Cindy found a note on the door.', zh: '辛蒂在門上發現一張紙條。'}, {en: 'Emma is busy taking notes in class.', zh: '艾瑪在課堂上忙著記筆記。'}] },
-                { word: 'pocket', wordParts: ['pocket'], syllables: ['ˋpɑkɪt'], partOfSpeech: 'n.', definition: '口袋', examples: [{en: 'Please take everything out of your pockets.', zh: '請把口袋裡全部的東西都拿出來。'}, {en: 'How much pocket money do you get every month?', zh: '你每個月會拿到多少零用錢？'}] },
+                { word: 'pocket', wordParts: ['pock', 'et'], syllables: ['ˋpɑk', 'ɪt'], partOfSpeech: 'n.', definition: '口袋', examples: [{en: 'Please take everything out of your pockets.', zh: '請把口袋裡全部的東西都拿出來。'}, {en: 'How much pocket money do you get every month?', zh: '你每個月會拿到多少零用錢？'}] },
                 { word: 'pray', wordParts: ['pray'], syllables: ['pre'], partOfSpeech: 'v.', definition: '祈求；祈禱', examples: [{en: 'Let’s pray for good health for our family.', zh: '我們來為家人祈求健康。'}, {en: 'People go to the temple to pray for rain.', zh: '人們去那座寺廟祈雨。'}] },
                 { word: 'blow up', wordParts: ['blow', 'up'], syllables: ['͵blo ˋʌp'], partOfSpeech: '', definition: '爆炸', examples: [{en: 'The car blew up after it hit a tree.', zh: '那輛車撞上樹之後爆炸。'}, {en: 'The soldiers blew up the bridge.', zh: '士兵們炸毀了那座橋樑。'}] },
                 { word: 'in time', wordParts: ['in time'], syllables: ['͵ɪn ˋtaɪm'], partOfSpeech: '', definition: '及時', examples: [{en: "I thought I was going to be late, but I made it to the movie theater just in time.", zh: '我以為我要遲到了，但我剛好及時趕到電影院。'}, {en: 'The concert started right on time.', zh: '那場演唱會準時開始。'}] },
-                { word: 'area', wordParts: ['area'], syllables: ['ˋɛrɪə'], partOfSpeech: 'n.', definition: '區域', examples: [{en: 'This is the only department store in this area.', zh: '這是這區域唯一的百貨公司。'}] },
+                { word: 'area', wordParts: ['ar', 'e', 'a'], syllables: ['ˋɛr', 'ɪ', 'ə'], partOfSpeech: 'n.', definition: '區域', examples: [{en: 'This is the only department store in this area.', zh: '這是這區域唯一的百貨公司。'}] },
                 { word: 'glue', wordParts: ['glue'], syllables: ['glu'], partOfSpeech: 'n.', definition: '膠水', examples: [{en: 'I need glue to paste the photo in my notebook.', zh: '我需要用膠水來把照片黏到筆記本裡。'}, {en: 'I’m glued to it.', zh: '我目不轉睛地看。'}] },
                 { word: 'paste', wordParts: ['paste'], syllables: ['pest'], partOfSpeech: 'v.', definition: '黏貼', examples: [{en: 'Lucy likes to cut pictures from newspapers and paste them on her bedroom wall.', zh: '露西喜歡從報紙剪圖片下來，並將它們黏在臥室的牆上。'}] },
                 { word: 'yard', wordParts: ['yard'], syllables: ['jɑrd'], partOfSpeech: 'n.', definition: '庭院', examples: [{en: 'Gavin is looking for a house with a yard.', zh: '蓋文正在找有庭院的房子。'}] },
                 { word: 'pipe', wordParts: ['pipe'], syllables: ['paɪp'], partOfSpeech: 'n.', definition: '水管', examples: [{en: 'What’s wrong with the pipes?', zh: '這些水管怎麼了？'}] },
                 { word: 'bench', wordParts: ['bench'], syllables: ['bɛntʃ'], partOfSpeech: 'n.', definition: '長凳；長椅', examples: [{en: 'The old man is sitting on a bench and feeding birds.', zh: '老人坐在長椅上餵食小鳥。'}] },
-                { word: 'badminton', wordParts: ['badminton'], syllables: ['ˋbædmɪntən'], partOfSpeech: 'n.', definition: '羽毛球', examples: [{en: 'My brother is good at badminton.', zh: '我哥哥很擅長打羽毛球。'}] },
-                { word: 'tennis', wordParts: ['tennis'], syllables: ['ˋtɛnɪs'], partOfSpeech: 'n.', definition: '網球', examples: [{en: 'Lisa wants to become a tennis player.', zh: '麗莎想要成為一名網球選手。'}] },
+                { word: 'badminton', wordParts: ['bad', 'min', 'ton'], syllables: ['ˋbæd', 'mɪn', 'tən'], partOfSpeech: 'n.', definition: '羽毛球', examples: [{en: 'My brother is good at badminton.', zh: '我哥哥很擅長打羽毛球。'}] },
+                { word: 'tennis', wordParts: ['ten', 'nis'], syllables: ['ˋtɛn', 'ɪs'], partOfSpeech: 'n.', definition: '網球', examples: [{en: 'Lisa wants to become a tennis player.', zh: '麗莎想要成為一名網球選手。'}] },
                 { word: 'slide', wordParts: ['slide'], syllables: ['slaɪd'], partOfSpeech: 'n.', definition: '滑梯', examples: [{en: 'Some children are playing on the slide.', zh: '有些小孩正在溜滑梯。'}] },
-                { word: 'seesaw', wordParts: ['seesaw'], syllables: ['ˋsi', '͵sɔ'], partOfSpeech: 'n.', definition: '翹翹板', examples: [{en: 'This seesaw is big enough for six people.', zh: '這個翹翹板很大，足夠給六個人玩。'}] },
+                { word: 'seesaw', wordParts: ['see', 'saw'], syllables: ['ˋsi', '͵sɔ'], partOfSpeech: 'n.', definition: '翹翹板', examples: [{en: 'This seesaw is big enough for six people.', zh: '這個翹翹板很大，足夠給六個人玩。'}] },
                 { word: 'swing', wordParts: ['swing'], syllables: ['swɪŋ'], partOfSpeech: 'n.', definition: '鞦韆', examples: [{en: "Don't stand on the swing; it's dangerous.", zh: '不要站在鞦韆上；這樣很危險。'}] },
                 { word: 'tool', wordParts: ['tool'], syllables: ['tul'], partOfSpeech: 'n.', definition: '工具', examples: [{en: 'Can you get me the tool over there?', zh: '你可以幫我拿那邊的工具嗎？'}] },
                 { word: 'pot', wordParts: ['pot'], syllables: ['pɑt'], partOfSpeech: 'n.', definition: '盆；鍋', examples: [{en: 'I just made a pot of soup. Would you like some?', zh: '我剛才煮了一鍋湯。你要來一些嗎？'}] },
@@ -398,8 +400,8 @@
                 { word: 'bake', wordParts: ['bake'], syllables: ['bek'], partOfSpeech: 'v.', definition: '烘焙', examples: [{en: 'My sister likes to bake in her free time.', zh: '我妹妹喜歡在空閒時烘焙。'}] },
                 { word: 'fan', wordParts: ['fan'], syllables: ['fæn'], partOfSpeech: 'n.', definition: '風扇', examples: [{en: 'Could you please turn off the fan? It’s a little cold.', zh: '可以請你關掉風扇嗎？有點冷。'}] },
                 { word: 'fill', wordParts: ['fill'], syllables: ['fɪl'], partOfSpeech: 'v.', definition: '裝滿', examples: [{en: 'The bottle was filled with water.', zh: '水瓶裡面裝滿了水。'}, {en: 'Mary had to fill in for John because he was sick.', zh: '因為約翰生病了，所以瑪莉必須代理他的工作。'}] },
-                { word: 'basket', wordParts: ['basket'], syllables: ['ˋbæskɪt'], partOfSpeech: 'n.', definition: '籃子', examples: [{en: 'My friend sent me a fruit basket when I was in the hospital.', zh: '我住院時，我朋友送了我一籃水果。'}] },
-                { word: 'stranger', wordParts: ['stranger'], syllables: ['ˋstrenʤɚ'], partOfSpeech: 'n.', definition: '陌生人', examples: [{en: 'Mrs. Brown always tells her kids not to talk to strangers.', zh: '伯朗太太總是告訴她的孩子們不要和陌生人說話。'}] },
+                { word: 'basket', wordParts: ['bas', 'ket'], syllables: ['ˋbæs', 'kɪt'], partOfSpeech: 'n.', definition: '籃子', examples: [{en: 'My friend sent me a fruit basket when I was in the hospital.', zh: '我住院時，我朋友送了我一籃水果。'}] },
+                { word: 'stranger', wordParts: ['strang', 'er'], syllables: ['ˋstren', 'ʤɚ'], partOfSpeech: 'n.', definition: '陌生人', examples: [{en: 'Mrs. Brown always tells her kids not to talk to strangers.', zh: '伯朗太太總是告訴她的孩子們不要和陌生人說話。'}] },
                 { word: 'boil', wordParts: ['boil'], syllables: ['bɔɪl'], partOfSpeech: 'v.', definition: '煮沸', examples: [{en: 'Put the noodles in the water, and boil them for ten minutes.', zh: '將麵條放入水中，煮沸十分鐘。'}] },
                 { word: 'smile', wordParts: ['smile'], syllables: ['smaɪl'], partOfSpeech: 'v.; n.', definition: '微笑', examples: [{en: 'Sarah smiled when she saw her dog waiting for her by the door.', zh: '莎拉看到她的狗狗在門邊等她時，露出了笑容。'}, {en: 'The old man is always all smiles.', zh: '那位老先生總是笑容滿面。'}] },
                 { word: 'pack', wordParts: ['pack'], syllables: ['pæk'], partOfSpeech: 'n.', definition: '（一）包；副', examples: [{en: 'Tim bought a pack of cards at a store.', zh: '提姆在一家店裡買了一副卡牌。'}, {en: 'Eva quickly packed her clothes and went out.', zh: '伊娃快速打包她的衣服出門去。'}] },
@@ -411,127 +413,127 @@
                 { word: 'gate', wordParts: ['gate'], syllables: ['get'], partOfSpeech: 'n.', definition: '大門', examples: [{en: 'You can see many students waiting for their parents at the gate after school.', zh: '你可以看到很多學生放學後在大門前等待他們的家長。'}, {en: 'We’ll get on the plane through Gate A7.', zh: '我們要從 A7 門上飛機。'}] },
                 { word: 'file', wordParts: ['file'], syllables: ['faɪl'], partOfSpeech: 'n.', definition: '檔案', examples: [{en: 'Be careful when you download files from the Internet.', zh: '從網路下載檔案時要小心。'}, {en: 'The office worker filed away all the reports.', zh: '那名職員將報告都歸檔了。'}] },
                 { word: 'quiz', wordParts: ['quiz'], syllables: ['kwɪz'], partOfSpeech: 'n.', definition: '小考', examples: [{en: "I did well on today's English quiz.", zh: '我今天英文小考考得很好。'}] },
-                { word: 'blackboard', wordParts: ['blackboard'], syllables: ['ˋblæk', '͵bɔrd'], partOfSpeech: 'n.', definition: '黑板', examples: [{en: 'Mrs. Miller had Henry write the answer on the blackboard.', zh: '米勒老師要亨利在黑板上寫出答案。'}] },
+                { word: 'blackboard', wordParts: ['black', 'board'], syllables: ['ˋblæk', '͵bɔrd'], partOfSpeech: 'n.', definition: '黑板', examples: [{en: 'Mrs. Miller had Henry write the answer on the blackboard.', zh: '米勒老師要亨利在黑板上寫出答案。'}] },
                 { word: 'chalk', wordParts: ['chalk'], syllables: ['tʃɔk'], partOfSpeech: 'n.', definition: '粉筆', examples: [{en: 'Wendy wrote down the sentence with a piece of chalk.', zh: '溫蒂用一枝粉筆寫下句子。'}] },
                 { word: 'screen', wordParts: ['screen'], syllables: ['skrin'], partOfSpeech: 'n.', definition: '螢幕', examples: [{en: "Don't look at the screen for too long. It's bad for your eyes.", zh: '不要注視螢幕太久。對你的眼睛不好。'}] },
-                { word: 'error', wordParts: ['error'], syllables: ['ˋɛrɚ'], partOfSpeech: 'n.', definition: '錯誤', examples: [{en: 'The boss was angry at Leo because he made too many errors in his work.', zh: '老闆生李奧的氣，因為他工作上犯了太多錯誤。'}] },
-                { word: 'button', wordParts: ['button'], syllables: ['ˋbʌtn'], partOfSpeech: 'n.', definition: '按鈕；鈕扣', examples: [{en: 'The little girl is not tall enough to push the button on the wall.', zh: '小女孩不夠高，按不到牆上的按鈕。'}, {en: 'You forgot to button up the last button on your shirt.', zh: '你忘記扣你襯衫上最後一顆鈕扣了。'}] },
-                { word: 'enter', wordParts: ['enter'], syllables: ['ˋɛntɚ'], partOfSpeech: 'v.', definition: '輸入；進入', examples: [{en: "You can't enter this building if you're not a worker here.", zh: '如果你不是此處的員工，就不能進入這棟建築物。'}, {en: 'What made you decide to enter the restaurant business?', zh: '是什麼讓你決定進入餐飲業？'}] },
+                { word: 'error', wordParts: ['er', 'ror'], syllables: ['ˋɛr', 'ɚ'], partOfSpeech: 'n.', definition: '錯誤', examples: [{en: 'The boss was angry at Leo because he made too many errors in his work.', zh: '老闆生李奧的氣，因為他工作上犯了太多錯誤。'}] },
+                { word: 'button', wordParts: ['but', 'ton'], syllables: ['ˋbʌt', 'n'], partOfSpeech: 'n.', definition: '按鈕；鈕扣', examples: [{en: 'The little girl is not tall enough to push the button on the wall.', zh: '小女孩不夠高，按不到牆上的按鈕。'}, {en: 'You forgot to button up the last button on your shirt.', zh: '你忘記扣你襯衫上最後一顆鈕扣了。'}] },
+                { word: 'enter', wordParts: ['en', 'ter'], syllables: ['ˋɛn', 'tɚ'], partOfSpeech: 'v.', definition: '輸入；進入', examples: [{en: "You can't enter this building if you're not a worker here.", zh: '如果你不是此處的員工，就不能進入這棟建築物。'}, {en: 'What made you decide to enter the restaurant business?', zh: '是什麼讓你決定進入餐飲業？'}] },
                 { word: 'wake word', wordParts: ['wake', 'word'], syllables: ['ˋwek ͵wɝd'], partOfSpeech: 'n.', definition: '喚醒字詞', examples: [{en: 'Tell me what the wake word is to wake up your phone.', zh: '告訴我喚醒你手機的喚醒字詞為何。'}] },
-                { word: 'whether', wordParts: ['whether'], syllables: ['ˋ(h)wɛðɚ'], partOfSpeech: 'conj.', definition: '是否', examples: [{en: "I'm not sure whether Sophie will like my gift or not.", zh: '我不確定蘇菲是否會喜歡我的禮物。'}, {en: "I'm not sure whether to stay or leave.", zh: '我不確定要留下還是離開。'}] },
+                { word: 'whether', wordParts: ['wheth', 'er'], syllables: ['ˋ(h)wɛð', 'ɚ'], partOfSpeech: 'conj.', definition: '是否', examples: [{en: "I'm not sure whether Sophie will like my gift or not.", zh: '我不確定蘇菲是否會喜歡我的禮物。'}, {en: "I'm not sure whether to stay or leave.", zh: '我不確定要留下還是離開。'}] },
                 { word: 'list', wordParts: ['list'], syllables: ['lɪst'], partOfSpeech: 'n.; v.', definition: '清單；列出', examples: [{en: 'Sorry, sir. Your name is not on the guest list.', zh: '先生，抱歉。你的名字不在來賓名單上。'}, {en: 'She listed several places for us to go this summer vacation.', zh: '她列了一張我們暑假可以去的地點清單。'}] },
-                { word: 'honey', wordParts: ['honey'], syllables: ['ˋhʌnɪ'], partOfSpeech: 'n.', definition: '親愛的（用於稱呼）', examples: [{en: "Mom always called me honey when I was little.", zh: '我年紀還小時，媽媽總是叫我親愛的。'}] },
+                { word: 'honey', wordParts: ['hon', 'ey'], syllables: ['ˋhʌn', 'ɪ'], partOfSpeech: 'n.', definition: '親愛的（用於稱呼）', examples: [{en: "Mom always called me honey when I was little.", zh: '我年紀還小時，媽媽總是叫我親愛的。'}] },
                 { word: 'save', wordParts: ['save'], syllables: ['sev'], partOfSpeech: 'v.', definition: '儲存', examples: [{en: 'Adam saves five thousand dollars every month.', zh: '亞當每個月存五千元。'}, {en: 'Sam and Susan are saving up for a house.', zh: '山姆和蘇珊正在存錢要買房子。'}, {en: 'The fisherman saved Cody from drowning.', zh: '那位漁夫救了溺水的寇弟。'}] },
                 { word: 'through', wordParts: ['through'], syllables: ['θru'], partOfSpeech: 'prep.', definition: '透過；憑藉', examples: [{en: 'Molly gets slimmer through exercising every day.', zh: '茉莉藉由每天運動變得更苗條。'}, {en: "We just took a walk through the forest. It was nice.", zh: '我們剛散步穿過那片森林。真不錯。'}] },
                 { word: 'if', wordParts: ['if'], syllables: ['ɪf'], partOfSpeech: 'conj.', definition: '是否', examples: [{en: 'I called John to ask if he wanted to go to the movies with me.', zh: '我打電話給約翰，問他想不想和我一起去看電影。'}, {en: "If he's late today, he'll be in big trouble.", zh: '如果他今天遲到的話，他會有大麻煩。'}] },
                 { word: 'not… anymore', wordParts: ['not… anymore'], syllables: ['nɑt ˋɛnɪmɔr'], partOfSpeech: '', definition: '不再…', examples: [{en: "Lily and I are not friends anymore after a serious fight.", zh: '在一次激烈的爭吵之後，莉莉和我不再是朋友了。'}] },
                 { word: 'voice assistant', wordParts: ['voice', 'assistant'], syllables: ['͵vɔɪs əˋsɪstənt'], partOfSpeech: 'n.', definition: '語音助理', examples: [{en: 'With the help of the voice assistant, people can live more easily and comfortably.', zh: '藉由語音助理的協助，人們可以過得更輕鬆舒適。'}] },
-                { word: 'machine', wordParts: ['machine'], syllables: ['məˋʃin'], partOfSpeech: 'n.', definition: '機器', examples: [{en: 'Remember to put your dirty clothes in the washing machine.', zh: '記得將你的髒衣服放到洗衣機裡。'}] },
-                { word: 'dozen', wordParts: ['dozen'], syllables: ['ˋdʌzn'], partOfSpeech: 'n.', definition: '一（打）', examples: [{en: 'Sue paid a dollar and fifty cents for a dozen eggs.', zh: '蘇付了一元五十分買了一打蛋。'}, {en: 'They prepared dozens of cookies for the party.', zh: '他們為派對準備了許多餅乾。'}] },
-                { word: 'refrigerator', wordParts: ['refrigerator'], syllables: ['rɪˋfrɪdʒə͵retɚ'], partOfSpeech: 'n.', definition: '冰箱', examples: [{en: 'Ian put the milk in the refrigerator after he got home.', zh: '伊恩回家後把牛奶放進了冰箱。'}] },
-                { word: 'upload', wordParts: ['upload'], syllables: ['ʌpˋlod'], partOfSpeech: 'v.', definition: '上傳', examples: [{en: 'Erica likes to upload photos to Facebook to share her life with friends.', zh: '艾莉卡喜歡將照片上傳到臉書上來和朋友分享她的生活點滴。'}] },
+                { word: 'machine', wordParts: ['ma', 'chine'], syllables: ['mə', 'ˋʃin'], partOfSpeech: 'n.', definition: '機器', examples: [{en: 'Remember to put your dirty clothes in the washing machine.', zh: '記得將你的髒衣服放到洗衣機裡。'}] },
+                { word: 'dozen', wordParts: ['doz', 'en'], syllables: ['ˋdʌz', 'n'], partOfSpeech: 'n.', definition: '一（打）', examples: [{en: 'Sue paid a dollar and fifty cents for a dozen eggs.', zh: '蘇付了一元五十分買了一打蛋。'}, {en: 'They prepared dozens of cookies for the party.', zh: '他們為派對準備了許多餅乾。'}] },
+                { word: 'refrigerator', wordParts: ['re', 'frig', 'er', 'a', 'tor'], syllables: ['rɪ', 'ˋfrɪdʒ', 'ə', '͵re', 'tɚ'], partOfSpeech: 'n.', definition: '冰箱', examples: [{en: 'Ian put the milk in the refrigerator after he got home.', zh: '伊恩回家後把牛奶放進了冰箱。'}] },
+                { word: 'upload', wordParts: ['up', 'load'], syllables: ['ʌp', 'ˋlod'], partOfSpeech: 'v.', definition: '上傳', examples: [{en: 'Erica likes to upload photos to Facebook to share her life with friends.', zh: '艾莉卡喜歡將照片上傳到臉書上來和朋友分享她的生活點滴。'}] },
                 { word: 'e-mail', wordParts: ['e-mail'], syllables: ['ˋi', '͵mel'], partOfSpeech: 'n.', definition: '電子郵件', examples: [{en: 'Mr. Taylor had his secretary check if he got any e-mails.', zh: '泰勒先生要他的祕書查看他是否有收到任何電子郵件。'}] },
                 { word: 'key', wordParts: ['key'], syllables: ['ki'], partOfSpeech: 'n.', definition: '鑰匙', examples: [{en: 'Dennis is worried because he lost his house keys.', zh: '丹尼斯很擔心，因為他遺失了他家的鑰匙。'}, {en: 'Is Owen the key person to decide everything in the office?', zh: '在辦公室裡，歐文是決定每件事的關鍵人物嗎？'}] },
                 { word: 'the cloud', wordParts: ['the cloud'], syllables: ['ðə ˋklaʊd'], partOfSpeech: 'n.', definition: '雲端', examples: [{en: 'Upload your files to the cloud, so you don’t lose them.', zh: '將你的檔案上傳到雲端，這樣你就不會遺失它們了。'}] },
                 { word: 'type', wordParts: ['type'], syllables: ['taɪp'], partOfSpeech: 'v.', definition: '打字', examples: [{en: 'Mandy can type seventy words a minute.', zh: '曼蒂一分鐘可以打七十個字。'}] },
-                { word: 'shopkeeper', wordParts: ['shopkeeper'], syllables: ['ˋʃɑp', '͵kipɚ'], partOfSpeech: 'n.', definition: '店主', examples: [{en: 'My aunt is the shopkeeper of a coffee shop.', zh: '我的姑姑是間咖啡廳的店長。'}] },
-                { word: 'cellphone', wordParts: ['cellphone'], syllables: ['ˋsɛl', '͵fon'], partOfSpeech: 'n.', definition: '手機', examples: [{en: 'Chloe didn’t know where or when she lost her cellphone.', zh: '克蘿伊不知她在何處、何時弄丟了她的手機。'}] },
-                { word: 'collect', wordParts: ['collect'], syllables: ['kəˋlɛkt'], partOfSpeech: 'v.', definition: '收集', examples: [{en: 'Dad’s interest is collecting stamps.', zh: '爸爸的興趣是收集郵票。'}, {en: 'Pete and I collected a lot of trash from the beach.', zh: '皮特和我從海邊撿了大量的垃圾。'}] },
-                { word: 'outside', wordParts: ['outside'], syllables: ['͵aʊtˋsaɪd'], partOfSpeech: 'adv.; n.; adj.; prep.', definition: '在外面；外面（的）', examples: [{en: 'The music was so loud that I could even hear it outside the room.', zh: '音樂大聲到我甚至在房間外面就可以聽到了。'}] },
-                { word: 'wallet', wordParts: ['wallet'], syllables: ['ˋwɑlɪt'], partOfSpeech: 'n.', definition: '錢包', examples: [{en: 'Daniel took out his wallet to pay for the meal.', zh: '丹尼爾拿出他的皮夾付餐費。'}] },
+                { word: 'shopkeeper', wordParts: ['shop', 'keep', 'er'], syllables: ['ˋʃɑp', '͵kip', 'ɚ'], partOfSpeech: 'n.', definition: '店主', examples: [{en: 'My aunt is the shopkeeper of a coffee shop.', zh: '我的姑姑是間咖啡廳的店長。'}] },
+                { word: 'cellphone', wordParts: ['cell', 'phone'], syllables: ['ˋsɛl', '͵fon'], partOfSpeech: 'n.', definition: '手機', examples: [{en: 'Chloe didn’t know where or when she lost her cellphone.', zh: '克蘿伊不知她在何處、何時弄丟了她的手機。'}] },
+                { word: 'collect', wordParts: ['col', 'lect'], syllables: ['kə', 'ˋlɛkt'], partOfSpeech: 'v.', definition: '收集', examples: [{en: 'Dad’s interest is collecting stamps.', zh: '爸爸的興趣是收集郵票。'}, {en: 'Pete and I collected a lot of trash from the beach.', zh: '皮特和我從海邊撿了大量的垃圾。'}] },
+                { word: 'outside', wordParts: ['out', 'side'], syllables: ['͵aʊt', 'ˋsaɪd'], partOfSpeech: 'adv.; n.; adj.; prep.', definition: '在外面；外面（的）', examples: [{en: 'The music was so loud that I could even hear it outside the room.', zh: '音樂大聲到我甚至在房間外面就可以聽到了。'}] },
+                { word: 'wallet', wordParts: ['wal', 'let'], syllables: ['ˋwɑl', 'ɪt'], partOfSpeech: 'n.', definition: '錢包', examples: [{en: 'Daniel took out his wallet to pay for the meal.', zh: '丹尼爾拿出他的皮夾付餐費。'}] },
                 { word: 'couch', wordParts: ['couch'], syllables: ['kaʊtʃ'], partOfSpeech: 'n.', definition: '沙發', examples: [{en: 'This couch was designed by a famous designer.', zh: '這張沙發是由一位知名設計師所設計的。'}] },
                 { word: 'lamp', wordParts: ['lamp'], syllables: ['læmp'], partOfSpeech: 'n.', definition: '檯燈', examples: [{en: 'You should turn on the lamp when you read.', zh: '你應該在你閱讀時打開檯燈。'}] },
-                { word: 'program', wordParts: ['program'], syllables: ['ˋprogræm'], partOfSpeech: 'n.', definition: '節目', examples: [{en: 'Dad’s favorite TV program is on at 8 p.m.', zh: '爸爸最喜愛的電視節目八點開播。'}] },
-                { word: 'modern', wordParts: ['modern'], syllables: ['ˋmɑdɚn'], partOfSpeech: 'adj.', definition: '現代的', examples: [{en: 'Taipei is a modern city in Taiwan.', zh: '臺北是臺灣的一座現代城市。'}] },
+                { word: 'program', wordParts: ['pro', 'gram'], syllables: ['ˋpro', 'græm'], partOfSpeech: 'n.', definition: '節目', examples: [{en: 'Dad’s favorite TV program is on at 8 p.m.', zh: '爸爸最喜愛的電視節目八點開播。'}] },
+                { word: 'modern', wordParts: ['mod', 'ern'], syllables: ['ˋmɑd', 'ɚn'], partOfSpeech: 'adj.', definition: '現代的', examples: [{en: 'Taipei is a modern city in Taiwan.', zh: '臺北是臺灣的一座現代城市。'}] },
                 { word: 'cross that bridge when one comes to it', wordParts: ['cross that bridge when one comes to it'], syllables: ['͵krɔs ðæt ˋbrɪdʒ (h)wɛn wʌn ˋkʌmz tə ɪt'], partOfSpeech: '', definition: '船到橋頭自然直；到時候再說', examples: [{en: "A: What am I going to do if I can't pass that test? B: Cross that bridge when you come to it.", zh: 'A：如果我考試不過怎麼辦？ B：考不過時再說。'}] },
                 { word: 'stand for', wordParts: ['stand', 'for'], syllables: ['ˋstænd fɚ'], partOfSpeech: '', definition: '代表', examples: [{en: 'A: What does "TTYL" stand for? B: It stands for "talk to you later."', zh: 'A：「TTYL」代表什麼？ B：它代表「待會聊」。'}] },
                 { word: 'set', wordParts: ['set'], syllables: ['sɛt'], partOfSpeech: 'v.', definition: '設定', examples: [{en: 'Could you tell me how to set this coffee machine?', zh: '你可以告訴我要如何設定這臺咖啡機嗎？'}, {en: 'Kuo Hsing-chun just set a new world record in lifting weights.', zh: '郭婞淳剛創下了舉重的新世界紀錄。'}] },
                 { word: 'shape', wordParts: ['shape'], syllables: ['ʃep'], partOfSpeech: 'v.', definition: '塑造', examples: [{en: 'These cookies are shaped like hearts.', zh: '這些餅乾被塑造成像愛心的形狀。'}, {en: 'Parents and teachers can usually shape children to be better people.', zh: '父母與師長通常能將孩童塑造成更好的人。'}] }
             ],
             'unit5': [
-                { word: 'arrive', wordParts: ['arrive'], syllables: ['əˋraɪv'], partOfSpeech: 'v.', definition: '抵達', examples: [{en: 'We arrived at the concert at five.', zh: '我們五點抵達演唱會。'}, {en: 'The train will arrive in Taipei at nine.', zh: '火車會在九點抵達臺北。'}] },
-                { word: 'planet', wordParts: ['planet'], syllables: ['ˋplænɪt'], partOfSpeech: 'n.', definition: '行星', examples: [{en: 'The Earth is a planet.', zh: '地球是顆行星。'}, {en: 'Do you think there is life on other planets?', zh: '你認為其他星球上有生命嗎？'}] },
+                { word: 'arrive', wordParts: ['ar', 'rive'], syllables: ['ə', 'ˋraɪv'], partOfSpeech: 'v.', definition: '抵達', examples: [{en: 'We arrived at the concert at five.', zh: '我們五點抵達演唱會。'}, {en: 'The train will arrive in Taipei at nine.', zh: '火車會在九點抵達臺北。'}] },
+                { word: 'planet', wordParts: ['plan', 'et'], syllables: ['ˋplæn', 'ɪt'], partOfSpeech: 'n.', definition: '行星', examples: [{en: 'The Earth is a planet.', zh: '地球是顆行星。'}, {en: 'Do you think there is life on other planets?', zh: '你認為其他星球上有生命嗎？'}] },
                 { word: 'line', wordParts: ['line'], syllables: ['laɪn'], partOfSpeech: 'n.', definition: '隊伍；直線', examples: [{en: 'It is not your turn. Please wait in line.', zh: '還沒有輪到你。請排隊。'}, {en: 'People are standing in line for the concert.', zh: '人們為了演唱會在排隊。'}] },
-                { word: 'appear', wordParts: ['appear'], syllables: ['əˋpɪr'], partOfSpeech: 'v.', definition: '出現', examples: [{en: 'After the rain, a rainbow may appear in the sky.', zh: '下過雨後，天空中可能會出現彩虹。'}, {en: 'Brian appeared to be mad about the news.', zh: '布萊恩好像對這消息感到生氣。'}] },
-                { word: 'restroom', wordParts: ['restroom'], syllables: ['ˋrɛst', '͵rum'], partOfSpeech: 'n.', definition: '洗手間', examples: [{en: 'Excuse me. Do you know where the restroom is?', zh: '不好意思。請問你知道洗手間在哪嗎？'}] },
+                { word: 'appear', wordParts: ['ap', 'pear'], syllables: ['ə', 'ˋpɪr'], partOfSpeech: 'v.', definition: '出現', examples: [{en: 'After the rain, a rainbow may appear in the sky.', zh: '下過雨後，天空中可能會出現彩虹。'}, {en: 'Brian appeared to be mad about the news.', zh: '布萊恩好像對這消息感到生氣。'}] },
+                { word: 'restroom', wordParts: ['rest', 'room'], syllables: ['ˋrɛst', '͵rum'], partOfSpeech: 'n.', definition: '洗手間', examples: [{en: 'Excuse me. Do you know where the restroom is?', zh: '不好意思。請問你知道洗手間在哪嗎？'}] },
                 { word: 'bath', wordParts: ['bath'], syllables: ['bæθ'], partOfSpeech: 'n.', definition: '沐浴', examples: [{en: 'People sometimes take a warm bath for a cold.', zh: '人們有時會泡熱水澡治療感冒。'}, {en: 'Linda took a long bath last night.', zh: '琳達昨晚泡了很久的澡。'}] },
-                { word: 'uniform', wordParts: ['uniform'], syllables: ['ˋjunə', '͵fɔrm'], partOfSpeech: 'n.', definition: '制服', examples: [{en: 'Students wear uniforms to school.', zh: '學生穿制服到學校。'}] },
+                { word: 'uniform', wordParts: ['u', 'ni', 'form'], syllables: ['ˋju', 'nə', '͵fɔrm'], partOfSpeech: 'n.', definition: '制服', examples: [{en: 'Students wear uniforms to school.', zh: '學生穿制服到學校。'}] },
                 { word: 'tail', wordParts: ['tail'], syllables: ['tel'], partOfSpeech: 'n.', definition: '尾巴', examples: [{en: 'The puppy with a short tail is cute.', zh: '那隻短尾巴的小狗真可愛。'}] },
-                { word: 'bottom', wordParts: ['bottom'], syllables: ['ˋbɑtəm'], partOfSpeech: 'n.', definition: '臀部；底部', examples: [{en: 'Jill fell on her bottom. Luckily, she didn’t get hurt.', zh: '吉兒一屁股跌坐在地上。所幸她沒有受傷。'}, {en: 'You can find more information at the bottom of the page.', zh: '你可以在頁面下方找到更多資訊。'}] },
+                { word: 'bottom', wordParts: ['bot', 'tom'], syllables: ['ˋbɑ', 'təm'], partOfSpeech: 'n.', definition: '臀部；底部', examples: [{en: 'Jill fell on her bottom. Luckily, she didn’t get hurt.', zh: '吉兒一屁股跌坐在地上。所幸她沒有受傷。'}, {en: 'You can find more information at the bottom of the page.', zh: '你可以在頁面下方找到更多資訊。'}] },
                 { word: 'main', wordParts: ['main'], syllables: ['men'], partOfSpeech: 'adj.', definition: '主要的', examples: [{en: 'The main character in this action movie is Jason Brown.', zh: '這部動作片的主角是傑森．布朗。'}] },
-                { word: 'notice', wordParts: ['notice'], syllables: ['ˋnotɪs'], partOfSpeech: 'v.; n.', definition: '注意到；告示', examples: [{en: 'I didn’t notice that my neighbor was calling me.', zh: '我沒注意到我的鄰居在叫我。'}, {en: 'I noticed a little girl crying alone.', zh: '我注意到一個小女孩獨自一人在哭。'}, {en: 'We should follow the rules on the notice.', zh: '我們應該要遵守告示上面的規定。'}] },
-                { word: 'belong', wordParts: ['belong'], syllables: ['bɪˋlɔŋ'], partOfSpeech: 'v.', definition: '屬於', examples: [{en: 'The house that has a blue door belongs to Mr. Green.', zh: '有藍色門的那棟房子屬於格林先生。'}] },
-                { word: 'go on', wordParts: ['go', 'on'], syllables: ['go ˋɑn'], partOfSpeech: '', definition: '發生', examples: [{en: 'What’s going on? Are you feeling all right?', zh: '發生什麼事了？你還好嗎？'}, {en: 'You can’t go on living like this.', zh: '你不能繼續這樣過活。'}] },
+                { word: 'notice', wordParts: ['no', 'tice'], syllables: ['ˋno', 'tɪs'], partOfSpeech: 'v.; n.', definition: '注意到；告示', examples: [{en: 'I didn’t notice that my neighbor was calling me.', zh: '我沒注意到我的鄰居在叫我。'}, {en: 'I noticed a little girl crying alone.', zh: '我注意到一個小女孩獨自一人在哭。'}, {en: 'We should follow the rules on the notice.', zh: '我們應該要遵守告示上面的規定。'}] },
+                { word: 'belong', wordParts: ['be', 'long'], syllables: ['bɪ', 'ˋlɔŋ'], partOfSpeech: 'v.', definition: '屬於', examples: [{en: 'The house that has a blue door belongs to Mr. Green.', zh: '有藍色門的那棟房子屬於格林先生。'}] },
+                { word: 'go on', wordParts: ['go on'], syllables: ['go ˋɑn'], partOfSpeech: '', definition: '發生', examples: [{en: 'What’s going on? Are you feeling all right?', zh: '發生什麼事了？你還好嗎？'}, {en: 'You can’t go on living like this.', zh: '你不能繼續這樣過活。'}] },
                 { word: 'lead', wordParts: ['lead'], syllables: ['lid'], partOfSpeech: 'v.', definition: '通往', examples: [{en: 'The kids know that this way will lead to the playground.', zh: '孩子們知道這條路會通往遊樂場。'}, {en: 'The coach led the team to join the contest.', zh: '教練領導團隊參加比賽。'}] },
                 { word: 'play', wordParts: ['play'], syllables: ['ple'], partOfSpeech: 'v.', definition: '扮演', examples: [{en: 'The actor plays a poor guy in the movie.', zh: '那名演員在電影裡飾演一個窮人。'}] },
                 { word: 'square', wordParts: ['square'], syllables: ['skwɛr'], partOfSpeech: 'adj. ; n.', definition: '正方形的；正方形', examples: [{en: 'The man with a square face is Ken’s father.', zh: '那個方形臉的男人是肯的爸爸。'}, {en: 'I cut the cake into squares.', zh: '我把蛋糕切成正方形。'}] },
                 { word: 'string', wordParts: ['string'], syllables: ['strɪŋ'], partOfSpeech: 'n.', definition: '串；線', examples: [{en: 'We plan to buy a string of pearls for Mom as her birthday gift.', zh: '我們打算買一串珍珠項鍊給媽媽當她的生日禮物。'}] },
                 { word: 'round', wordParts: ['round'], syllables: ['raʊnd'], partOfSpeech: 'adj.', definition: '圓形的', examples: [{en: 'Which do you like better, the round table or the square table?', zh: '你比較喜歡哪個，那個圓桌還是方桌？'}] },
                 { word: 'dot', wordParts: ['dot'], syllables: ['dɑt'], partOfSpeech: 'n.', definition: '圓點', examples: [{en: 'The man asked the shopkeeper if she sold ties with dots.', zh: '那男人問店員有沒有賣有圓點的領帶。'}] },
-                { word: 'bow', wordParts: ['bo'], syllables: ['bo'], partOfSpeech: 'n.', definition: '蝴蝶結', examples: [{en: 'My daughter likes to wear a pretty bow in her hair.', zh: '我女兒喜歡在頭髮上戴漂亮的蝴蝶結。'}, {en: 'The singer took a bow and waved to the fans.', zh: '歌手鞠躬並向粉絲們揮手。'}] },
+                { word: 'bow', wordParts: ['bow'], syllables: ['bo'], partOfSpeech: 'n.', definition: '蝴蝶結', examples: [{en: 'My daughter likes to wear a pretty bow in her hair.', zh: '我女兒喜歡在頭髮上戴漂亮的蝴蝶結。'}, {en: 'The singer took a bow and waved to the fans.', zh: '歌手鞠躬並向粉絲們揮手。'}] },
                 { word: 'pin', wordParts: ['pin'], syllables: ['pɪn'], partOfSpeech: 'n.', definition: '飾針；胸針', examples: [{en: 'Karen bought a golden pin from the clothes store.', zh: '凱倫從那服飾店買了一個金色的飾針。'}] },
-                { word: 'neighbor', wordParts: ['neighbor'], syllables: ['ˋnebɚ'], partOfSpeech: 'n.', definition: '鄰居', examples: [{en: 'Mr. Wang is the neighbor who lives on the third floor.', zh: '王先生是住在三樓的鄰居。'}] },
-                { word: 'foreigner', wordParts: ['foreigner'], syllables: ['ˋfɔrɪnɚ'], partOfSpeech: 'n.', definition: '外國人', examples: [{en: 'Many people in Taiwan are afraid to speak English with foreigners.', zh: '臺灣很多人害怕跟外國人說英文。'}] },
-                { word: 'hobby', wordParts: ['hobby'], syllables: ['ˋhɑbɪ'], partOfSpeech: 'n.', definition: '嗜好', examples: [{en: 'My hobby is collecting beautiful key rings.', zh: '我的嗜好是收集漂亮的鑰匙圈。'}] },
-                { word: 'businessman', wordParts: ['businessman'], syllables: ['ˋbɪznɪsmən'], partOfSpeech: 'n.', definition: '商人', examples: [{en: 'The reporter is interviewing a businessman.', zh: '記者在訪問一名商人。'}] },
-                { word: 'business', wordParts: ['business'], syllables: ['ˋbɪznɪs'], partOfSpeech: 'n.', definition: '生意；事業', examples: [{en: 'Mr. Smith does business with people from different countries.', zh: '史密斯先生和不同國家的人做生意。'}, {en: 'Many shops on this street are out of business.', zh: '這條街上很多商店都倒閉了。'}] },
-                { word: 'dictionary', wordParts: ['dictionary'], syllables: ['ˋdɪkʃən', '͵ɛrɪ'], partOfSpeech: 'n.', definition: '字典', examples: [{en: 'A dictionary is a useful tool when we don’t know the meaning of a word.', zh: '當我們不知道一個字的意思時，字典是個有用的工具。'}] },
-                { word: 'workbook', wordParts: ['workbook'], syllables: ['ˋwɝk', '͵bʊk'], partOfSpeech: 'n.', definition: '作業本', examples: [{en: 'I have no idea who this workbook belongs to. There’s no name on it.', zh: '我不知道這個作業本是誰的。上面沒有名字。'}] },
+                { word: 'neighbor', wordParts: ['neigh', 'bor'], syllables: ['ˋne', 'bɚ'], partOfSpeech: 'n.', definition: '鄰居', examples: [{en: 'Mr. Wang is the neighbor who lives on the third floor.', zh: '王先生是住在三樓的鄰居。'}] },
+                { word: 'foreigner', wordParts: ['for', 'eign', 'er'], syllables: ['ˋfɔr', 'ɪn', 'ɚ'], partOfSpeech: 'n.', definition: '外國人', examples: [{en: 'Many people in Taiwan are afraid to speak English with foreigners.', zh: '臺灣很多人害怕跟外國人說英文。'}] },
+                { word: 'hobby', wordParts: ['hob', 'by'], syllables: ['ˋhɑb', 'ɪ'], partOfSpeech: 'n.', definition: '嗜好', examples: [{en: 'My hobby is collecting beautiful key rings.', zh: '我的嗜好是收集漂亮的鑰匙圈。'}] },
+                { word: 'businessman', wordParts: ['busi', 'ness', 'man'], syllables: ['ˋbɪz', 'nɪs', 'mən'], partOfSpeech: 'n.', definition: '商人', examples: [{en: 'The reporter is interviewing a businessman.', zh: '記者在訪問一名商人。'}] },
+                { word: 'business', wordParts: ['busi', 'ness'], syllables: ['ˋbɪz', 'nɪs'], partOfSpeech: 'n.', definition: '生意；事業', examples: [{en: 'Mr. Smith does business with people from different countries.', zh: '史密斯先生和不同國家的人做生意。'}, {en: 'Many shops on this street are out of business.', zh: '這條街上很多商店都倒閉了。'}] },
+                { word: 'dictionary', wordParts: ['dic', 'tion', 'ar', 'y'], syllables: ['ˋdɪk', 'ʃən', '͵ɛr', 'ɪ'], partOfSpeech: 'n.', definition: '字典', examples: [{en: 'A dictionary is a useful tool when we don’t know the meaning of a word.', zh: '當我們不知道一個字的意思時，字典是個有用的工具。'}] },
+                { word: 'workbook', wordParts: ['work', 'book'], syllables: ['ˋwɝk', '͵bʊk'], partOfSpeech: 'n.', definition: '作業本', examples: [{en: 'I have no idea who this workbook belongs to. There’s no name on it.', zh: '我不知道這個作業本是誰的。上面沒有名字。'}] },
                 { word: 'light', wordParts: ['light'], syllables: ['laɪt'], partOfSpeech: 'adj.', definition: '輕的', examples: [{en: 'My book bag is light.', zh: '我的書包很輕。'}, {en: 'Turn on the light when you study.', zh: '讀書的時候要開燈。'}] },
-                { word: 'exercise', wordParts: ['exercise'], syllables: ['ˋɛksɚ', '͵saɪz'], partOfSpeech: 'n.', definition: '習題；練習', examples: [{en: 'These math exercises are not easy.', zh: '這些數學習題不容易。'}, {en: 'We exercise three times a week for a healthy life.', zh: '為了健康的生活，我們一週運動三次。'}] },
+                { word: 'exercise', wordParts: ['ex', 'er', 'cise'], syllables: ['ˋɛk', 'sɚ', '͵saɪz'], partOfSpeech: 'n.', definition: '習題；練習', examples: [{en: 'These math exercises are not easy.', zh: '這些數學習題不容易。'}, {en: 'We exercise three times a week for a healthy life.', zh: '為了健康的生活，我們一週運動三次。'}] },
                 { word: 'born', wordParts: ['born'], syllables: ['bɔrn'], partOfSpeech: 'adj.', definition: '出生的', examples: [{en: 'My father was born in Keelung in 1975.', zh: '我爸爸1975年出生於基隆。'}, {en: 'LeBron James is a born basketball player.', zh: '勒布朗．詹姆斯是個天生的籃球員。'}] },
                 { word: 'prize', wordParts: ['prize'], syllables: ['praɪz'], partOfSpeech: 'n.', definition: '獎', examples: [{en: 'Our band won first prize in the music contest.', zh: '我們的樂團在音樂比賽中奪得冠軍。'}] },
-                { word: 'topic', wordParts: ['topic'], syllables: ['ˋtɑpɪk'], partOfSpeech: 'n.', definition: '主題', examples: [{en: 'I’m not interested in the topic of the article.', zh: '我對這篇文章的主題不感興趣。'}] },
-                { word: 'knowledge', wordParts: ['knowledge'], syllables: ['ˋnɑlɪdʒ'], partOfSpeech: 'n.', definition: '知識', examples: [{en: 'The information is not new. It’s common knowledge.', zh: '這資訊不是新的。它是常識。'}, {en: 'I have a poor knowledge of English.', zh: '我對英文知識不足。'}] },
-                { word: 'public', wordParts: ['public'], syllables: ['ˋpʌblɪk'], partOfSpeech: 'adj.', definition: '公眾（的）', examples: [{en: 'The boy gets butterflies when he speaks in public.', zh: '那個男孩在公開場合講話會緊張。'}, {en: 'This castle will open to the public next month.', zh: '這座城堡下個月會開放給民眾。'}] },
+                { word: 'topic', wordParts: ['top', 'ic'], syllables: ['ˋtɑp', 'ɪk'], partOfSpeech: 'n.', definition: '主題', examples: [{en: 'I’m not interested in the topic of the article.', zh: '我對這篇文章的主題不感興趣。'}] },
+                { word: 'knowledge', wordParts: ['knowl', 'edge'], syllables: ['ˋnɑl', 'ɪdʒ'], partOfSpeech: 'n.', definition: '知識', examples: [{en: 'The information is not new. It’s common knowledge.', zh: '這資訊不是新的。它是常識。'}, {en: 'I have a poor knowledge of English.', zh: '我對英文知識不足。'}] },
+                { word: 'public', wordParts: ['pub', 'lic'], syllables: ['ˋpʌb', 'lɪk'], partOfSpeech: 'adj.', definition: '公眾（的）', examples: [{en: 'The boy gets butterflies when he speaks in public.', zh: '那個男孩在公開場合講話會緊張。'}, {en: 'This castle will open to the public next month.', zh: '這座城堡下個月會開放給民眾。'}] },
                 { word: 'be no stranger to', wordParts: ['be no stranger to'], syllables: ['bɪ no ˋstrendʒɚ tə'], partOfSpeech: '', definition: '對…不陌生', examples: [{en: 'Most people are no stranger to Vincent van Gogh’s paintings.', zh: '多數人對文森．梵谷的畫作不陌生。'}] },
                 { word: 'key', wordParts: ['key'], syllables: ['ki'], partOfSpeech: 'n. ; adj.', definition: '關鍵（的）', examples: [{en: 'Hard work is the key to success.', zh: '努力是成功的關鍵。'}, {en: 'I don’t think you know what the key point is.', zh: '我不認為你知道關鍵點是什麼。'}] }
             ],
             'unit6': [
-                { word: 'apartment', wordParts: ['apartment'], syllables: ['əˋpɑrtmənt'], partOfSpeech: 'n.', definition: '公寓', examples: [{en: 'The lady who you just talked to lives in an old apartment nearby.', zh: '剛才跟你講話的女士住在附近的一間老公寓。'}] },
+                { word: 'apartment', wordParts: ['a', 'part', 'ment'], syllables: ['ə', 'ˋpɑrt', 'mənt'], partOfSpeech: 'n.', definition: '公寓', examples: [{en: 'The lady who you just talked to lives in an old apartment nearby.', zh: '剛才跟你講話的女士住在附近的一間老公寓。'}] },
                 { word: 'glad', wordParts: ['glad'], syllables: ['glæd'], partOfSpeech: 'adj.', definition: '高興的', examples: [{en: 'I’m glad that my favorite actress won the award for acting.', zh: '我很高興我最喜歡的女演員得到了演技獎。'}] },
                 { word: 'town', wordParts: ['town'], syllables: ['taʊn'], partOfSpeech: 'n.', definition: '城鎮', examples: [{en: 'Martin visited a really small town during his trip to the USA.', zh: '馬汀美國之旅中參觀了一座很小的城鎮。'}] },
-                { word: 'polite', wordParts: ['polite'], syllables: ['pəˋlaɪt'], partOfSpeech: 'adj.', definition: '有禮貌的', examples: [{en: 'The waiters and waitresses in this restaurant are polite and helpful.', zh: '這間餐廳的男女服務生都很有禮貌且願意幫忙。'}, {en: 'The businessmen politely greeted each other.', zh: '那些商人有禮貌地互相問候。'}] },
+                { word: 'polite', wordParts: ['po', 'lite'], syllables: ['pə', 'ˋlaɪt'], partOfSpeech: 'adj.', definition: '有禮貌的', examples: [{en: 'The waiters and waitresses in this restaurant are polite and helpful.', zh: '這間餐廳的男女服務生都很有禮貌且願意幫忙。'}, {en: 'The businessmen politely greeted each other.', zh: '那些商人有禮貌地互相問候。'}] },
                 { word: 'seat', wordParts: ['seat'], syllables: ['sit'], partOfSpeech: 'n.', definition: '座位', examples: [{en: 'A: Please have a seat. B: Thank you.', zh: 'A：請就座。 B：謝謝。'}, {en: 'The waitress seated us by the window and handed us some menus.', zh: '那名女服務生安排我們靠窗邊入坐，並遞給我們一些菜單。'}] },
-                { word: 'beside', wordParts: ['beside'], syllables: ['bɪˋsaɪd'], partOfSpeech: 'prep.', definition: '在…旁邊', examples: [{en: 'The young man who sat beside me kept taking photos of himself.', zh: '坐在我旁邊的年輕男子一直在自拍。'}] },
-                { word: 'except', wordParts: ['except'], syllables: ['ɪkˋsɛpt'], partOfSpeech: 'prep.', definition: '除了', examples: [{en: 'Everyone except Luke understood the joke.', zh: '除了盧克，大家都明白那笑話。'}, {en: 'Everyone, except Kevin, is going to the concert.', zh: '除了凱文，所有人都要去那演唱會。'}] },
+                { word: 'beside', wordParts: ['be', 'side'], syllables: ['bɪ', 'ˋsaɪd'], partOfSpeech: 'prep.', definition: '在…旁邊', examples: [{en: 'The young man who sat beside me kept taking photos of himself.', zh: '坐在我旁邊的年輕男子一直在自拍。'}] },
+                { word: 'except', wordParts: ['ex', 'cept'], syllables: ['ɪk', 'ˋsɛpt'], partOfSpeech: 'prep.', definition: '除了', examples: [{en: 'Everyone except Luke understood the joke.', zh: '除了盧克，大家都明白那笑話。'}, {en: 'Everyone, except Kevin, is going to the concert.', zh: '除了凱文，所有人都要去那演唱會。'}] },
                 { word: 'blank', wordParts: ['blank'], syllables: ['blæŋk'], partOfSpeech: 'adj. ; n.', definition: '空白（的）', examples: [{en: 'When I started typing, the screen went blank.', zh: '當我開始打字，螢幕就變得一片空白。'}, {en: 'Please fill in the blanks.', zh: '請填完空白處。'}] },
-                { word: 'present', wordParts: ['present'], syllables: ['ˋprɛznt'], partOfSpeech: 'n.', definition: '禮物', examples: [{en: 'The pin in the box is a present from Bella.', zh: '那盒子裡的別針是貝拉送的禮物。'}] },
-                { word: 'invite', wordParts: ['invite'], syllables: ['ɪnˋvaɪt'], partOfSpeech: 'v.', definition: '邀請', examples: [{en: 'We were invited to Mr. Johnson’s birthday party.', zh: '我們受邀去強森先生的生日派對。'}] },
-                { word: 'perhaps', wordParts: ['perhaps'], syllables: ['pɚˋhæps'], partOfSpeech: 'adv.', definition: '或許', examples: [{en: 'A: We haven’t heard from James for weeks. B: Perhaps he is busy.', zh: 'A：我們好幾週沒聽到詹姆士的消息。 B：或許他在忙。'}] },
+                { word: 'present', wordParts: ['pres', 'ent'], syllables: ['ˋprɛz', 'nt'], partOfSpeech: 'n.', definition: '禮物', examples: [{en: 'The pin in the box is a present from Bella.', zh: '那盒子裡的別針是貝拉送的禮物。'}] },
+                { word: 'invite', wordParts: ['in', 'vite'], syllables: ['ɪn', 'ˋvaɪt'], partOfSpeech: 'v.', definition: '邀請', examples: [{en: 'We were invited to Mr. Johnson’s birthday party.', zh: '我們受邀去強森先生的生日派對。'}] },
+                { word: 'perhaps', wordParts: ['per', 'haps'], syllables: ['pɚ', 'ˋhæps'], partOfSpeech: 'adv.', definition: '或許', examples: [{en: 'A: We haven’t heard from James for weeks. B: Perhaps he is busy.', zh: 'A：我們好幾週沒聽到詹姆士的消息。 B：或許他在忙。'}] },
                 { word: 'kiss', wordParts: ['kiss'], syllables: ['kɪs'], partOfSpeech: 'v. ; n.', definition: '吻', examples: [{en: 'The mother kisses her kids good night every day.', zh: '那位母親每天都給她的孩子們晚安吻。'}] },
                 { word: 'side', wordParts: ['side'], syllables: ['saɪd'], partOfSpeech: 'n.', definition: '側面；邊', examples: [{en: 'In Japan, the driver’s seat is on the right side.', zh: '在日本，駕駛座是在右邊。'}, {en: 'Let’s go in through the side door.', zh: '我們從側門進去吧。'}] },
-                { word: 'sidewalk', wordParts: ['sidewalk'], syllables: ['ˋsaɪd', '͵wɔk'], partOfSpeech: 'n.', definition: '人行道', examples: [{en: 'Two kids are playing badminton on the sidewalk in front of their house.', zh: '兩個小孩在他們家前的人行道打羽毛球。'}] },
+                { word: 'sidewalk', wordParts: ['side', 'walk'], syllables: ['ˋsaɪd', '͵wɔk'], partOfSpeech: 'n.', definition: '人行道', examples: [{en: 'Two kids are playing badminton on the sidewalk in front of their house.', zh: '兩個小孩在他們家前的人行道打羽毛球。'}] },
                 { word: 'used to', wordParts: ['used to'], syllables: ['ˋjust tə'], partOfSpeech: '', definition: '過去時常…', examples: [{en: 'I used to visit my grandparents on weekends, but now I seldom do it.', zh: '我以前週末常會拜訪我祖父母，但現在我很少這麼做。'}] },
-                { word: 'appear', wordParts: ['appear'], syllables: ['əˋpɪr'], partOfSpeech: 'v.', definition: '似乎', examples: [{en: 'Ruby appeared to be very surprised by the news.', zh: '茹比似乎對這則新聞感到很驚訝。'}] },
-                { word: 'serious', wordParts: ['serious'], syllables: ['ˋsɪriəs'], partOfSpeech: 'adj.', definition: '認真的', examples: [{en: 'Are you serious about buying that handbag?', zh: '你真的要買那個手提包嗎？'}, {en: 'Jack made a serious typing mistake.', zh: '傑克犯了個嚴重的打字錯誤。'}] },
+                { word: 'appear', wordParts: ['ap', 'pear'], syllables: ['ə', 'ˋpɪr'], partOfSpeech: 'v.', definition: '似乎', examples: [{en: 'Ruby appeared to be very surprised by the news.', zh: '茹比似乎對這則新聞感到很驚訝。'}] },
+                { word: 'serious', wordParts: ['se', 'ri', 'ous'], syllables: ['ˋsɪr', 'i', 'əs'], partOfSpeech: 'adj.', definition: '認真的', examples: [{en: 'Are you serious about buying that handbag?', zh: '你真的要買那個手提包嗎？'}, {en: 'Jack made a serious typing mistake.', zh: '傑克犯了個嚴重的打字錯誤。'}] },
                 { word: 'blind', wordParts: ['blind'], syllables: ['blaɪnd'], partOfSpeech: 'adj.', definition: '盲的', examples: [{en: 'Charlie has been blind since he was born.', zh: '查理一出生就看不見。'}, {en: 'The boy turned a blind eye to his classmate who was cheating.', zh: '那名男孩對正在作弊的同學視而不見。'}] },
                 { word: 'April Fools’ Day', wordParts: ['April Fools’ Day'], syllables: ['͵eprəl ˋfulz ͵de'], partOfSpeech: 'n.', definition: '愚人節', examples: [{en: 'On April Fools’ Day, people play tricks on others.', zh: '愚人節當天，人們會捉弄他人。'}] },
                 { word: 'tape', wordParts: ['tape'], syllables: ['tep'], partOfSpeech: 'v. ; n.', definition: '用膠帶黏貼；膠帶', examples: [{en: 'Tiffany taped a note to the door and left home.', zh: '蒂芬妮將一張紙條貼在門上，然後離開家。'}] },
-                { word: 'paper', wordParts: ['paper'], syllables: ['ˋpepɚ'], partOfSpeech: 'n.', definition: '紙', examples: [{en: 'The paper was cut out in circles.', zh: '紙被裁剪成圓形。'}, {en: 'Can you buy a paper on your way home?', zh: '你回家的路上可以買份報紙嗎？'}] },
+                { word: 'paper', wordParts: ['pa', 'per'], syllables: ['ˋpe', 'pɚ'], partOfSpeech: 'n.', definition: '紙', examples: [{en: 'The paper was cut out in circles.', zh: '紙被裁剪成圓形。'}, {en: 'Can you buy a paper on your way home?', zh: '你回家的路上可以買份報紙嗎？'}] },
                 { word: 'joke', wordParts: ['joke'], syllables: ['dʒok'], partOfSpeech: 'n.', definition: '玩笑；笑話', examples: [{en: 'Jack just told me a joke, but it’s not funny at all actually.', zh: '傑克剛跟我說了一個笑話，但老實說一點都不好笑。'}, {en: 'I don’t get the joke. What’s so funny about it?', zh: '我不明白這個笑話。這有什麼好笑的？'}] },
-                { word: 'visitor', wordParts: ['visitor'], syllables: ['ˋvɪzɪtɚ'], partOfSpeech: 'n.', definition: '遊客；參觀者', examples: [{en: 'Visitors from around the world come to France for the Louvre.', zh: '全世界的遊客為羅浮宮而來到法國。'}] },
-                { word: 'somewhere', wordParts: ['somewhere'], syllables: ['ˋsʌm', '͵(h)wɛr'], partOfSpeech: 'adv.', definition: '在某處', examples: [{en: 'My ring must be somewhere in my room, but I just can’t find it.', zh: '我的戒指一定就在我房間的某處，但我就是找不到。'}] },
+                { word: 'visitor', wordParts: ['vis', 'i', 'tor'], syllables: ['ˋvɪz', 'ɪ', 'tɚ'], partOfSpeech: 'n.', definition: '遊客；參觀者', examples: [{en: 'Visitors from around the world come to France for the Louvre.', zh: '全世界的遊客為羅浮宮而來到法國。'}] },
+                { word: 'somewhere', wordParts: ['some', 'where'], syllables: ['ˋsʌm', '͵(h)wɛr'], partOfSpeech: 'adv.', definition: '在某處', examples: [{en: 'My ring must be somewhere in my room, but I just can’t find it.', zh: '我的戒指一定就在我房間的某處，但我就是找不到。'}] },
                 { word: 'mud', wordParts: ['mud'], syllables: ['mʌd'], partOfSpeech: 'n.', definition: '泥土', examples: [{en: 'The children’s clothes were covered in mud.', zh: '孩童們的衣服上沾滿了泥巴。'}] },
-                { word: 'ahead', wordParts: ['ahead'], syllables: ['əˋhɛd'], partOfSpeech: 'adv.', definition: '在前方', examples: [{en: 'I got out of the taxi and saw my husband standing right ahead.', zh: '我下了計程車，然後看到我丈夫就站在前方。'}, {en: 'I like your plan. Let’s go ahead with it.', zh: '我喜歡你的計劃。我們就著手進行吧。'}] },
+                { word: 'ahead', wordParts: ['a', 'head'], syllables: ['ə', 'ˋhɛd'], partOfSpeech: 'adv.', definition: '在前方', examples: [{en: 'I got out of the taxi and saw my husband standing right ahead.', zh: '我下了計程車，然後看到我丈夫就站在前方。'}, {en: 'I like your plan. Let’s go ahead with it.', zh: '我喜歡你的計劃。我們就著手進行吧。'}] },
                 { word: 'heat', wordParts: ['heat'], syllables: ['hit'], partOfSpeech: 'n.; v.', definition: '高溫；加熱', examples: [{en: 'The farmers are still working very hard on the farm in the heat of the summer.', zh: '農夫們在夏日的高溫下仍舊在農場上辛勤地工作。'}, {en: 'Are you hungry? I can heat up some soup for you.', zh: '你餓嗎？我可以幫你加熱一些湯。'}] },
                 { word: 'rise', wordParts: ['rise'], syllables: ['raɪz'], partOfSpeech: 'v.', definition: '升起；起身', examples: [{en: 'Lydia rose from her seat when she felt the house shaking.', zh: '當莉蒂亞感到房子在搖動，她便從座位上站了起來。'}] },
                 { word: 'rich', wordParts: ['rich'], syllables: ['rɪʧ'], partOfSpeech: 'adj.', definition: '富有的', examples: [{en: 'Who’s the richest man in the world?', zh: '世界首富是誰？'}, {en: 'The soup has a rich taste.', zh: '這湯味道很濃厚。'}] },
-                { word: 'lazy', wordParts: ['lazy'], syllables: ['ˋlezɪ'], partOfSpeech: 'adj.', definition: '懶惰的；慵懶的', examples: [{en: 'Andy was too lazy to take out the garbage from his room.', zh: '安迪太懶惰了，以致於沒有將垃圾從他的房間拿出來。'}] },
+                { word: 'lazy', wordParts: ['la', 'zy'], syllables: ['ˋle', 'zɪ'], partOfSpeech: 'adj.', definition: '懶惰的；慵懶的', examples: [{en: 'Andy was too lazy to take out the garbage from his room.', zh: '安迪太懶惰了，以致於沒有將垃圾從他的房間拿出來。'}] },
                 { word: 'have bigger fish to fry', wordParts: ['have bigger fish to fry'], syllables: ['hæv ˋbɪgɚ ˌfɪʃ tə ˋfraɪ'], partOfSpeech: '', definition: '有更重要的事要做', examples: [{en: 'Sorry, I don’t have time. I have bigger fish to fry.', zh: '抱歉，我沒時間。我有更重要的事要做。'}] },
                 { word: 'smoke', wordParts: ['smoke'], syllables: ['smok'], partOfSpeech: 'n.；v.', definition: '煙霧；抽菸', examples: [{en: 'There are clouds of black smoke coming from the forests.', zh: '有一團團的黑煙從森林中飄出。'}, {en: 'Excuse me. You can’t smoke here.', zh: '不好意思。你不能在這裡抽菸。'}] },
-                { word: 'cover', wordParts: ['cover'], syllables: ['ˋkʌvɚ'], partOfSpeech: 'v. ; n.', definition: '覆蓋；遮蓋（物）', examples: [{en: 'The snow covered both sides of the street.', zh: '雪覆蓋了街道的兩側。'}, {en: 'I bought the book because the cover was designed by my favorite painter.', zh: '我買這本書是因為它的封面是我最喜歡的畫家設計的。'}] },
+                { word: 'cover', wordParts: ['cov', 'er'], syllables: ['ˋkʌv', 'ɚ'], partOfSpeech: 'v. ; n.', definition: '覆蓋；遮蓋（物）', examples: [{en: 'The snow covered both sides of the street.', zh: '雪覆蓋了街道的兩側。'}, {en: 'I bought the book because the cover was designed by my favorite painter.', zh: '我買這本書是因為它的封面是我最喜歡的畫家設計的。'}] },
                 { word: 'lie', wordParts: ['lie'], syllables: ['laɪ'], partOfSpeech: 'v.', definition: '躺；臥', examples: [{en: 'Nancy lay on the grass and looked at the clouds in the sky.', zh: '南希躺在草地上，看著空中的雲。'}, {en: 'Betty was mad at Ian because he lied to her.', zh: '貝蒂生伊恩的氣，因為他騙了她。'}] },
                 { word: 'draw', wordParts: ['draw'], syllables: ['drɔ'], partOfSpeech: 'v.', definition: '提取（水、錢）', examples: [{en: 'Jackson went to the bank to draw some money.', zh: '傑克森去銀行領了一些錢。'}] },
                 { word: 'spell', wordParts: ['spell'], syllables: ['spɛl'], partOfSpeech: 'n.', definition: '咒語', examples: [{en: 'The fairy put a spell on the young man and turned him into a frog.', zh: '仙子對那年輕男子下咒，並把他變成了一隻青蛙。'}, {en: 'He is under her spell.', zh: '他被她迷住了。'}] }
             ],
             'unitCF': [
                 { word: 'mark', wordParts: ['mark'], syllables: ['mɑrk'], partOfSpeech: 'v. ; n.', definition: '標記', examples: [{en: 'Please mark your answer with a red pen.', zh: '請用紅筆標出你的答案。'}, {en: 'Mark my words. You won’t get your money back from Alan.', zh: '記住我的話。你不會從艾倫那拿回錢的。'}] },
-                { word: 'foreign', wordParts: ['foreign'], syllables: ['ˋfɔrɪn'], partOfSpeech: 'adj.', definition: '外國的', examples: [{en: 'It’s important to understand and respect foreign cultures.', zh: '瞭解並尊重外國文化是重要的。'}] },
+                { word: 'foreign', wordParts: ['for', 'eign'], syllables: ['ˋfɔr', 'ɪn'], partOfSpeech: 'adj.', definition: '外國的', examples: [{en: 'It’s important to understand and respect foreign cultures.', zh: '瞭解並尊重外國文化是重要的。'}] },
                 { word: 'air', wordParts: ['air'], syllables: ['ɛr'], partOfSpeech: 'n.', definition: '空中；空氣', examples: [{en: 'The air is dirty today. Put on a mask when you go out.', zh: '今天的空氣很髒。你外出時要戴上口罩。'}, {en: 'I like to travel by air more than by train.', zh: '比起搭火車旅行，我更喜歡搭飛機。'}] },
                 { word: 'cheer', wordParts: ['cheer'], syllables: ['tʃɪr'], partOfSpeech: 'v.', definition: '歡呼', examples: [{en: 'People cheered for the runner when he crossed the finish line.', zh: '當那位跑者跨過終點線時，人們都為他歡呼。'}, {en: 'Don’t be sad. Have some chocolate to cheer yourself up.', zh: '別難過了。吃些巧克力讓自己開心點吧。'}] },
-                { word: 'noisy', wordParts: ['noisy'], syllables: ['ˋnɔɪzɪ'], partOfSpeech: 'adj.', definition: '嘈雜的', examples: [{en: 'Stop shouting outside the classroom! It’s noisy.', zh: '不要在教室外喊叫！很吵。'}] },
-                { word: 'bakery', wordParts: ['bakery'], syllables: ['ˋbekərɪ'], partOfSpeech: 'n.', definition: '麵包店', examples: [{en: 'The bakery on the corner sells nice bread and cookies.', zh: '在角落的那間麵包店有賣美味的麵包和餅乾。'}] },
+                { word: 'noisy', wordParts: ['nois', 'y'], syllables: ['ˋnɔɪz', 'ɪ'], partOfSpeech: 'adj.', definition: '嘈雜的', examples: [{en: 'Stop shouting outside the classroom! It’s noisy.', zh: '不要在教室外喊叫！很吵。'}] },
+                { word: 'bakery', wordParts: ['bak', 'er', 'y'], syllables: ['ˋbek', 'ər', 'ɪ'], partOfSpeech: 'n.', definition: '麵包店', examples: [{en: 'The bakery on the corner sells nice bread and cookies.', zh: '在角落的那間麵包店有賣美味的麵包和餅乾。'}] },
                 { word: 'god', wordParts: ['god'], syllables: ['gɑd'], partOfSpeech: 'n.', definition: '神', examples: [{en: 'For many people in Taiwan, gods play an important part in their lives.', zh: '對許多臺灣人來說，神明在他們的生活中扮演重要的角色。'}] },
                 { word: 'clap', wordParts: ['clap'], syllables: ['klæp'], partOfSpeech: 'v. ; n.', definition: '拍（手）；鼓掌', examples: [{en: 'At the end of the play, everyone stood up and clapped their hands.', zh: '戲劇結束時，每個人都起立鼓掌。'}, {en: 'Let’s give a big clap to the winner.', zh: '讓我們為獲勝者熱烈鼓掌。'}] },
                 { word: 'pack', wordParts: ['pack'], syllables: ['pæk'], partOfSpeech: 'v.', definition: '塞進；打包', examples: [{en: 'Victoria is packing for her trip to Greece.', zh: '維多莉亞正為她的希臘之旅打包行李。'}] },
@@ -552,8 +554,9 @@
         let currentPuzzle = [];
         let currentPuzzleIndex = 0;
         let currentView = 'flashcard'; 
+        let syllableHighlightTimeouts = [];
         
-        const { loginModal, leaderboardModal, loginForm, userIdInput, leaderboardBtn, closeLeaderboardBtn, leaderboardContent, flashcardView, puzzleView, slideContentEl, slideCounterEl, prevBtn, nextBtn, slideshowContainer, themeToggle, themeIconDark, themeIconLight, usageStatsEl, unitTabsEl, unitTitleEl, puzzleQuestionCounter, puzzleQuestion, puzzleSlots, puzzlePieces, puzzleFeedback, nextPuzzleBtn, backToFlashcardsBtn } = {
+        const { loginModal, leaderboardModal, loginForm, userIdInput, leaderboardBtn, closeLeaderboardBtn, leaderboardContent, flashcardView, puzzleView, slideContentEl, slideCounterEl, prevBtn, nextBtn, slideshowContainer, themeToggle, themeIconDark, themeIconLight, usageStatsEl, unitTabsEl, unitTitleEl, puzzleQuestionCounter, puzzleQuestion, puzzleSlots, puzzlePieces, puzzleFeedback, nextPuzzleBtn, backToFlashcardsBtn, prevPuzzleBtn, retryPuzzleBtn } = {
             loginModal: document.getElementById('login-modal'),
             leaderboardModal: document.getElementById('leaderboard-modal'),
             loginForm: document.getElementById('login-form'),
@@ -581,6 +584,8 @@
             puzzleFeedback: document.getElementById('puzzle-feedback'),
             nextPuzzleBtn: document.getElementById('next-puzzle-btn'),
             backToFlashcardsBtn: document.getElementById('back-to-flashcards-btn'),
+            prevPuzzleBtn: document.getElementById('prev-puzzle-btn'),
+            retryPuzzleBtn: document.getElementById('retry-puzzle-btn'),
         };
 
         function createTabs() {
@@ -679,7 +684,7 @@
                 <div>
                     <div class="flex items-center mb-1">
                         <h3 class="text-4xl md:text-5xl font-bold text-accent mr-4 capitalize speakable" data-lang="en">
-                            ${(slide.word.includes(" ") ? slide.word : slide.wordParts.join(""))}
+                            ${slide.word.includes(" ") ? slide.word : slide.wordParts.map(part => `<span class="word-part">${part}</span>`).join('')}
                         </h3>
                         <button id="speak-btn" class="text-muted hover:text-accent transition">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd" /></svg>
@@ -759,19 +764,62 @@
 
         function speakText(element) {
             if (!element || isSpeaking) return;
-            const text = element.textContent;
+
+            syllableHighlightTimeouts.forEach(clearTimeout);
+            syllableHighlightTimeouts = [];
+            
+            const isMainWordArea = element.closest('#flashcard-view') && (element.tagName === 'H3' || element.id === 'speak-btn' || element.closest('#pronunciation-container'));
+            const textToSpeak = isMainWordArea ? slidesData[currentSlide].word.replace(/[-]/g, '') : element.textContent;
             const lang = element.dataset.lang || 'en-US';
 
             if ('speechSynthesis' in window) {
                 isSpeaking = true;
                 window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
+                const utterance = new SpeechSynthesisUtterance(textToSpeak);
                 utterance.lang = lang;
                 utterance.rate = 0.8;
-                utterance.onend = () => { isSpeaking = false; };
+
+                const pronunciationContainer = document.getElementById('pronunciation-container');
+                const syllableSpans = pronunciationContainer ? Array.from(pronunciationContainer.querySelectorAll('.syllable')) : [];
+                const wordContainer = document.querySelector('h3.speakable');
+                const wordPartSpans = wordContainer ? Array.from(wordContainer.querySelectorAll('.word-part')) : [];
+
+
+                if (isMainWordArea && syllableSpans.length > 0 && wordPartSpans.length > 0) {
+                    let delay = 100; 
+                    const baseDurationPerSyllable = 350;
+
+                    syllableSpans.forEach((span, index) => {
+                        const timeoutId = setTimeout(() => {
+                            syllableSpans.forEach(s => s.classList.remove('syllable-highlight'));
+                            wordPartSpans.forEach(p => p.classList.remove('word-part-highlight'));
+                            
+                            span.classList.add('syllable-highlight');
+                            if (wordPartSpans[index]) {
+                                wordPartSpans[index].classList.add('word-part-highlight');
+                            }
+                        }, delay);
+                        syllableHighlightTimeouts.push(timeoutId);
+                        delay += baseDurationPerSyllable;
+                    });
+                }
+
+                utterance.onend = () => { 
+                    isSpeaking = false; 
+                    syllableHighlightTimeouts.forEach(clearTimeout);
+                    syllableHighlightTimeouts = [];
+                    setTimeout(() => {
+                         syllableSpans.forEach(span => span.classList.remove('syllable-highlight'));
+                         wordPartSpans.forEach(p => p.classList.remove('word-part-highlight'));
+                    }, 300);
+                };
                 utterance.onerror = (e) => { 
                     console.error('SpeechSynthesis Error:', e);
                     isSpeaking = false; 
+                    syllableHighlightTimeouts.forEach(clearTimeout);
+                    syllableHighlightTimeouts = [];
+                    syllableSpans.forEach(span => span.classList.remove('syllable-highlight'));
+                    wordPartSpans.forEach(p => p.classList.remove('word-part-highlight'));
                 };
                 window.speechSynthesis.speak(utterance);
             }
@@ -826,12 +874,17 @@
         }
 
         function renderPuzzle() {
+            nextPuzzleBtn.classList.add('hidden');
+            retryPuzzleBtn.classList.remove('hidden');
+            prevPuzzleBtn.classList.toggle('hidden', currentPuzzleIndex === 0);
+
             if (currentPuzzleIndex >= currentPuzzle.length) {
                 puzzleQuestion.textContent = "恭喜完成本單元所有拼圖！";
                 puzzleSlots.innerHTML = '';
                 puzzlePieces.innerHTML = '';
                 puzzleFeedback.innerHTML = '';
                 nextPuzzleBtn.classList.add('hidden');
+                retryPuzzleBtn.classList.add('hidden');
                 backToFlashcardsBtn.textContent = "返回主選單";
                 return;
             }
@@ -845,7 +898,6 @@
             `).join('');
 
             puzzleFeedback.textContent = '';
-            nextPuzzleBtn.classList.add('hidden');
             setupDragAndDrop();
         }
 
@@ -895,16 +947,18 @@
         async function checkPuzzleAnswer() {
             const slots = puzzleSlots.querySelectorAll('.puzzle-slot');
             const filledSlots = Array.from(slots).filter(s => s.hasChildNodes());
+            const puzzle = currentPuzzle[currentPuzzleIndex];
             
-            if (filledSlots.length === currentPuzzle[currentPuzzleIndex].wordParts.length) {
+            if (filledSlots.length === puzzle.wordParts.length) {
                 const answer = Array.from(slots).map(s => s.textContent).join('');
-                const correctAnswer = currentPuzzle[currentPuzzleIndex].word.replace(/\s/g, '');
+                const correctAnswer = puzzle.word;
                 
                 if (answer === correctAnswer) {
                     puzzleFeedback.textContent = '答對了！';
                     puzzleFeedback.style.color = 'var(--correct-color)';
                     await updateUserScore(5);
                     nextPuzzleBtn.classList.remove('hidden');
+                    retryPuzzleBtn.classList.add('hidden');
                 } else {
                     puzzleFeedback.textContent = '不對喔，再試一次！';
                     puzzleFeedback.style.color = 'var(--incorrect-color)';
@@ -1015,6 +1069,15 @@
             backToFlashcardsBtn.addEventListener('click', () => {
                 switchView('flashcard');
             });
+            prevPuzzleBtn.addEventListener('click', () => {
+                if (currentPuzzleIndex > 0) {
+                    currentPuzzleIndex--;
+                    renderPuzzle();
+                }
+            });
+            retryPuzzleBtn.addEventListener('click', () => {
+                renderPuzzle();
+            });
             
             loginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -1050,4 +1113,3 @@
     </script>
 </body>
 </html>
-
