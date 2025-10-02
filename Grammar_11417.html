@@ -166,12 +166,12 @@
         <!-- Header -->
         <header class="flex items-center justify-between mb-4">
              <div>
-                <h1 class="text-3xl font-bold">114-1-7英語文法練習-翰林版</h1>
+                <h1 class="text-3xl font-bold">114學年度-七年級上學期英語文法練習-翰林版</h1>
                 <h2 id="unit-title" class="text-xl font-semibold text-muted">Unit 1</h2>
             </div>
             <button id="theme-toggle" class="p-2 rounded-full text-muted hover:bg-gray-200 dark:hover:bg-gray-700 transition">
                 <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-                <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
             </button>
         </header>
 
@@ -212,6 +212,56 @@
         const allUnitsData = {
             'unit1': {
                 grammar: [
+                    { 
+                        title: '句子的基本成員 (詞性介紹)', 
+                        explanation: [
+                            '**主詞 (Subject)**: 句子的主角，通常是人或物。', 
+                            '**動詞 (Verb)**: 表示動作或狀態的字。', 
+                            '**名詞 (Noun)**: 人、事、物的名稱。', 
+                            '**助動詞 (Aux. Verb)**: 幫助動詞，像 is, am, are, can。', 
+                            '**副詞 (Adverb)**: 修飾動詞，說明「如何地」。'
+                        ], 
+                        structure: '一個句子就像蓋房子，需要不同的材料 (詞性)。', 
+                        examples: [
+                            {en: 'I am a student.', zh: 'I(主詞), am(動詞), student(名詞)'},
+                            {en: 'She can sing.', zh: 'She(主詞), can(助動詞), sing(動詞)'},
+                            {en: 'The dog runs fast.', zh: 'dog(名詞/主詞), runs(動詞), fast(副詞)'},
+                            {en: 'You are a writer.', zh: 'You(主詞), are(動詞), writer(名詞)'},
+                            {en: 'He is very young.', zh: 'He(主詞), is(動詞), very(副詞)'}
+                        ], 
+                        practices: [
+                          { question: '"They" are happy. "They" 是 _______?', answer: '主詞' },
+                          { question: 'I can "swim". "swim" 是 _______?', answer: '動詞' },
+                          { question: 'This is a "book". "book" 是 _______?', answer: '名詞' },
+                          { question: 'She "can" dance. "can" 是 _______?', answer: '助動詞' },
+                          { question: 'He runs "fast". "fast" 是 _______?', answer: '副詞' }
+                        ]
+                    },
+                    { 
+                        title: '疑問詞家族 (5W1H)', 
+                        explanation: [
+                            '**Who (誰)**: 問「人」。', 
+                            '**What (什麼)**: 問「事物、職業」。', 
+                            '**Where (哪裡)**: 問「地點」。', 
+                            '**When (何時)**: 問「時間」。', 
+                            '**How (如何)**: 問「狀態、方法」。'
+                        ], 
+                        structure: '疑問詞 + 動詞 + 主詞...? (問句的基本順序)', 
+                        examples: [
+                            {en: 'Who is that girl?', zh: '那個女孩是誰？'},
+                            {en: 'What is your name?', zh: '你的名字是什麼？'},
+                            {en: 'Where is my book?', zh: '我的書在哪裡？'},
+                            {en: 'When is the party?', zh: '派對是什麼時候？'},
+                            {en: 'How are you?', zh: '你好嗎？'}
+                        ], 
+                        practices: [
+                          { question: '_______ is your name? (問名字)', answer: 'What' },
+                          { question: '_______ are you from? (問地點)', answer: 'Where' },
+                          { question: '_______ is he? (問身份)', answer: 'Who' },
+                          { question: '_______ are you? (問候)', answer: 'How' },
+                          { question: '_______ is your birthday? (問時間)', answer: 'When' }
+                        ]
+                    },
                     { title: 'be 動詞直述句與否定句', explanation: ['用來描述主詞的狀態、身份或職業。', '否定句在 be 動詞後面加上 not。'], structure: '主詞 + am/is/are + (not) + a/an + 職業/形容詞.', examples: [{en:'He is a handsome boy.', zh:'他是一個帥氣的男孩。'},{en:'She is not a teacher.', zh:'她不是一位老師。'},{en:'I am a student.', zh:'我是一位學生。'},{en:'They are happy.', zh:'他們很快樂。'},{en:'This car is new.', zh:'這輛車是新的。'}], 
                       practices: [
                           { question: 'You _______ not a writer.', answer: 'are' },
@@ -249,8 +299,8 @@
                     { jumbled: ['They', 'are', 'my', 'classmates', '.'], correct: 'They are my classmates.', zh: '他們是我的同學。' },
                     { jumbled: ['Is', 'your', 'aunt', 'a', 'nurse', '?'], correct: 'Is your aunt a nurse?', zh: '你的阿姨是護士嗎？' },
                     { jumbled: ['I', 'am', 'not', 'a', 'singer', '.'], correct: 'I am not a singer.', zh: '我不是一位歌手。' },
-                    { jumbled: ['That', 'school', 'is', 'very', 'beautiful', '.'], correct: 'That school is very beautiful.', zh: '那所學校非常漂亮。' },
-                    { jumbled: ['Who', 'is', 'your', 'cousin', '?'], correct: 'Who is your cousin?', zh: '誰是你的堂/表兄弟姊妹？' }
+                    { jumbled: ['What', 'is', 'your', 'name', '?'], correct: 'What is your name?', zh: '你的名字是什麼？' },
+                    { jumbled: ['Where', 'is', 'my', 'book', '?'], correct: 'Where is my book?', zh: '我的書在哪裡？' }
                 ]
             },
             'unit2': {
@@ -453,7 +503,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-muted" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                     </div>
                     <div class="space-y-2 mb-4">
-                        ${slide.explanation.map(exp => `<p class="explanation-point text-md font-medium px-3 py-1 rounded-md speakable">${exp}</p>`).join('')}
+                        ${slide.explanation.map(exp => `<p class="explanation-point text-md font-medium px-3 py-1 rounded-md speakable">${exp.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</p>`).join('')}
                     </div>
                     <p class="text-lg font-mono p-3 rounded-lg structure-block speakable">${slide.structure}</p>
                 </div>
@@ -764,7 +814,11 @@
         slideContentEl.addEventListener('click', (e) => {
             const speakableElement = e.target.closest('.speakable');
             if (speakableElement) {
-                speakText(speakableElement.innerText);
+                // To avoid reading out practice answers, we create a clone and remove the inputs
+                const elementToRead = speakableElement.cloneNode(true);
+                elementToRead.querySelectorAll('input, .text-muted').forEach(el => el.remove());
+                let textToSpeak = elementToRead.innerText.replace(/練習：/g, '').trim();
+                speakText(textToSpeak);
             }
         });
         
@@ -812,9 +866,6 @@
     </script>
 </body>
 </html>
-
-
-
 
 
 
