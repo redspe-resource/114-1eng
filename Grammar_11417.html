@@ -171,7 +171,7 @@
             </div>
             <button id="theme-toggle" class="p-2 rounded-full text-muted hover:bg-gray-200 dark:hover:bg-gray-700 transition">
                 <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-                <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
             </button>
         </header>
 
@@ -215,25 +215,25 @@
                     { 
                         title: '句子的基本成員 (詞性介紹)', 
                         explanation: [
-                            '**主詞 (Subject)**: 句子的主角，通常是人或物。', 
-                            '**動詞 (Verb)**: 表示動作或狀態的字。', 
-                            '**名詞 (Noun)**: 人、事、物的名稱。', 
-                            '**助動詞 (Aux. Verb)**: 幫助動詞，像 is, am, are, can。', 
-                            '**副詞 (Adverb)**: 修飾動詞，說明「如何地」。'
+                            '**主詞 (Subject)**: 句子的主角，通常由「名詞」擔任。', 
+                            '**名詞 (n.)**: 人、事、物的名稱，例如: boy, school, book。', 
+                            '**形容詞 (adj.)**: 形容名詞的字，說明「...的」，例如: handsome, new, young。', 
+                            '**動詞 (v.)**: 表示「動作」或「狀態」的字，例如: run, sing, am, is, are。', 
+                            '**副詞 (adv.)**: 修飾動詞或形容詞，說明「如何地」，例如: fast, very, really。'
                         ], 
                         structure: '一個句子就像蓋房子，需要不同的材料 (詞性)。', 
                         examples: [
-                            {en: 'I am a student.', zh: 'I(主詞), am(動詞), student(名詞)'},
-                            {en: 'She can sing.', zh: 'She(主詞), can(助動詞), sing(動詞)'},
+                            {en: 'He is a handsome boy.', zh: 'He(主詞), is(動詞), handsome(形容詞), boy(名詞)'},
                             {en: 'The dog runs fast.', zh: 'dog(名詞/主詞), runs(動詞), fast(副詞)'},
-                            {en: 'You are a writer.', zh: 'You(主詞), are(動詞), writer(名詞)'},
-                            {en: 'He is very young.', zh: 'He(主詞), is(動詞), very(副詞)'}
+                            {en: 'She is a student.', zh: 'She(主詞), is(動詞), student(名詞)'},
+                            {en: 'The school is big.', zh: 'school(名詞/主詞), is(動詞), big(形容詞)'},
+                            {en: 'He is very young.', zh: 'He(主詞), is(動詞), very(副詞), young(形容詞)'}
                         ], 
                         practices: [
                           { question: '"They" are happy. "They" 是 _______?', answer: '主詞' },
-                          { question: 'I can "swim". "swim" 是 _______?', answer: '動詞' },
                           { question: 'This is a "book". "book" 是 _______?', answer: '名詞' },
-                          { question: 'She "can" dance. "can" 是 _______?', answer: '助動詞' },
+                          { question: 'The girl is "beautiful". "beautiful" 是 _______?', answer: '形容詞' },
+                          { question: 'I can "swim". "swim" 是 _______?', answer: '動詞' },
                           { question: 'He runs "fast". "fast" 是 _______?', answer: '副詞' }
                         ]
                     },
@@ -866,6 +866,5 @@
     </script>
 </body>
 </html>
-
 
 
