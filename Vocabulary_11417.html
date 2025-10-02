@@ -187,7 +187,7 @@
         <!-- Header -->
         <header class="flex items-center justify-between mb-4">
              <div>
-                <h1 class="text-3xl font-bold">英語單字練習</h1>
+                <h1 class="text-2xl md:text-3xl font-bold">114學年度-七年級上學期英語單字練習-翰林版</h1>
                 <h2 id="unit-title" class="text-xl font-semibold text-muted">Unit 1</h2>
             </div>
              <div class="flex items-center gap-2">
@@ -578,53 +578,15 @@
             }
         }
 
-        function speakText(element, useHighlight = false, rate = 1.0) {
-             if (!element || isSpeaking) return;
-            const text = element.textContent.trim();
-            const lang = element.dataset.lang || 'en-US';
-
+        function speakRawText(text, lang = 'en-US', rate = 1.0) {
+            if (!text || isSpeaking) return;
             if ('speechSynthesis' in window) {
                 isSpeaking = true;
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = lang;
                 utterance.rate = rate;
-                
-                if(useHighlight){
-                    const slide = slidesData[currentSlide];
-                    const wordPartSpans = slideContentEl.querySelectorAll('.word-part');
-                    const syllableSpans = slideContentEl.querySelectorAll('.syllable');
-                    
-                    let charIndex = 0;
-                    let partIndex = 0;
-                    
-                    utterance.onboundary = (event) => {
-                        if (event.name === 'word') {
-                           charIndex = event.charIndex;
-                           let len = 0;
-                           for(let i = 0; i < slide.wordParts.length; i++) {
-                               len += slide.wordParts[i].length;
-                               if(charIndex < len) {
-                                   partIndex = i;
-                                   break;
-                               }
-                           }
-                            wordPartSpans.forEach(s => s.classList.remove('word-part-highlight'));
-                            syllableSpans.forEach(s => s.classList.remove('syllable-highlight'));
-
-                            if (syllableSpans[partIndex]) syllableSpans[partIndex].classList.add('syllable-highlight');
-                            if (wordPartSpans[partIndex]) wordPartSpans[partIndex].classList.add('word-part-highlight');
-                        }
-                    };
-                     utterance.onend = () => {
-                        wordPartSpans.forEach(s => s.classList.remove('word-part-highlight'));
-                        syllableSpans.forEach(s => s.classList.remove('syllable-highlight'));
-                        isSpeaking = false;
-                    };
-                } else {
-                     utterance.onend = () => { isSpeaking = false; };
-                }
-               
+                utterance.onend = () => { isSpeaking = false; };
                 utterance.onerror = (e) => { 
                     console.error('SpeechSynthesis Error:', e);
                     isSpeaking = false; 
@@ -632,9 +594,48 @@
                 window.speechSynthesis.speak(utterance);
             }
         }
-        
+
+        function speakText(element, rate = 1.0) {
+            if (!element) return;
+            const text = element.textContent.trim();
+            const lang = element.dataset.lang || 'en-US';
+            speakRawText(text, lang, rate);
+        }
+
         function speakWord() {
-            speakText(document.querySelector('h3.speakable'), true);
+            if (isSpeaking) return;
+            const slide = slidesData[currentSlide];
+            const wordEl = slideContentEl.querySelector('h3.speakable');
+            if (!wordEl) return;
+
+            const textToSpeak = wordEl.textContent.trim();
+            if (!textToSpeak) return;
+            
+            speakRawText(textToSpeak, 'en-US', 1.0);
+
+            const wordPartSpans = slideContentEl.querySelectorAll('.word-part');
+            const syllableSpans = slideContentEl.querySelectorAll('.syllable');
+
+            wordPartSpans.forEach(s => s.classList.remove('word-part-highlight'));
+            syllableSpans.forEach(s => s.classList.remove('syllable-highlight'));
+
+            let delay = 0;
+            const highlightDuration = 350;
+
+            slide.wordParts.forEach((_, index) => {
+                setTimeout(() => {
+                    wordPartSpans.forEach(s => s.classList.remove('word-part-highlight'));
+                    syllableSpans.forEach(s => s.classList.remove('syllable-highlight'));
+                    if (syllableSpans[index]) syllableSpans[index].classList.add('syllable-highlight');
+                    if (wordPartSpans[index]) wordPartSpans[index].classList.add('word-part-highlight');
+                }, delay);
+                delay += highlightDuration;
+            });
+            
+            setTimeout(() => {
+                wordPartSpans.forEach(s => s.classList.remove('word-part-highlight'));
+                syllableSpans.forEach(s => s.classList.remove('syllable-highlight'));
+            }, delay);
         }
 
         async function handleTyping(e) {
@@ -774,11 +775,11 @@
                     puzzleFeedback.style.color = 'var(--correct-color)';
                     await updateUserScore(5);
                     nextPuzzleBtn.classList.remove('hidden');
-                    speakText({textContent: puzzle.word, dataset: {lang: 'en-US'}}, false, 0.8);
+                    speakRawText(puzzle.word, 'en-US', 0.8);
                 } else {
                     puzzleFeedback.textContent = '不對喔，再試一次！';
                     puzzleFeedback.style.color = 'var(--incorrect-color)';
-                     speakText({textContent: '不對喔，再試一次！', dataset: {lang: 'zh-TW'}});
+                     speakRawText('不對喔，再試一次！', 'zh-TW');
                 }
             }
         }
